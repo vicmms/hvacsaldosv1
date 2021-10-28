@@ -23,11 +23,11 @@ class CreateProductsTable extends Migration
 
             $table->text('description');
             $table->text('model');
-            $table->text('serie_number');
+            $table->text('serie_number')->nullable();
             $table->text('unit')->nullable();
 
             $table->float('price');
-            $table->float('commercial_price');
+            $table->float('commercial_price')->nullable();
             $table->float('shipping_cost')->default(0);
 
             $table->integer('quantity')->nullable();

@@ -45,7 +45,7 @@ class CreateProduct extends Component
         // $this->brands = Brand::whereHas('categories', function (Builder $query) use ($value) {
         //     $query->where('category_id', $value);
         // })->get();
-        $this->brands = Brand::all();
+        $this->brands = Brand::orderBy('name', 'asc')->get();
 
         $this->reset(['subcategory_id', 'brand_id']);
     }
