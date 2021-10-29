@@ -18,7 +18,7 @@ use Illuminate\Support\Str;
 class EditProduct extends Component
 {
 
-    public $product, $categories, $subcategories, $brands, $slug, $shipping_cost;
+    public $product, $categories, $subcategories, $brands, $slug, $shipping_cost, $city;
 
     public $category_id, $state_id;
 
@@ -32,6 +32,7 @@ class EditProduct extends Component
         'product.description' => 'required',
         'product.brand_id' => 'required',
         'product.price' => 'required',
+        'product.city' => 'required',
         'product.commercial_price' => 'required',
         'product.quantity' => 'numeric',
         'product.shipping' => 'required',

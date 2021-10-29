@@ -18,7 +18,7 @@ class CreateProduct extends Component
 
     public $categories, $subcategories = [], $brands = [];
     public $category_id = "", $subcategory_id = "", $brand_id = "", $state_id = "", $user_id;
-    public $name, $slug, $description, $price, $quantity, $commercial_price, $model, $serie_number, $shipping, $shipping_cost;
+    public $name, $slug, $description, $price, $quantity, $commercial_price, $model, $serie_number, $shipping, $shipping_cost, $city;
 
     protected $rules = [
         'category_id' => 'required',
@@ -31,6 +31,7 @@ class CreateProduct extends Component
         'price' => 'required',
         'commercial_price' => 'required',
         'serie_number' => 'required',
+        'city' => 'required',
         'model' => 'required',
         'shipping' => 'required',
         'shipping_cost' => 'required',
@@ -97,11 +98,8 @@ class CreateProduct extends Component
         $product->brand_id = $this->brand_id;
         $product->state_id = $this->state_id;
         $product->user_id = $this->user_id;
-        if ($this->subcategory_id) {
-            if (!$this->subcategory->color && !$this->subcategory->size) {
-                $product->quantity = $this->quantity;
-            }
-        }
+        $product->city = $this->city;
+        $product->quantity = $this->quantity;
 
         $product->save();
 

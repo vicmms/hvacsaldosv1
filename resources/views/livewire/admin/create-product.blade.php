@@ -40,7 +40,7 @@
     </div>
 
     {{-- Slug --}}
-    <div class="mb-4">
+    <div class="mb-4 hidden">
         <x-jet-label value="Slug" />
         <x-jet-input type="text" disabled wire:model="slug" class="w-full bg-gray-200"
             placeholder="Ingrese el slug del producto" />
@@ -70,7 +70,7 @@
     <div class="grid grid-cols-2 gap-6 mb-4">
         {{-- Precio --}}
         <div>
-            <x-jet-label value="Precio" />
+            <x-jet-label value="Precio de venta en Saldo HVAC" />
             <x-jet-input wire:model="price" type="number" class="w-full" step=".01" />
             <x-jet-input-error for="price" />
         </div>
@@ -110,14 +110,6 @@
     </div>
 
     <div class="grid grid-cols-2 gap-6 mb-4">
-        {{-- costo envio --}}
-        <div>
-            <x-jet-label value="Costo del envio" />
-            <x-jet-input type="text" class="w-full" wire:model="shipping_cost" value="0" />
-
-            <x-jet-input-error for="shipping_cost" />
-        </div>
-
         {{-- Pais / estado --}}
         <div>
             <x-jet-label value="Selecciona un estado ({{ $user->country->name }})" />
@@ -129,6 +121,11 @@
             </select>
 
             {{-- <x-jet-input-error for="country_id" /> --}}
+        </div>
+        <div>
+            <x-jet-label value="Ciudad/Localidad" />
+            <x-jet-input type="text" class="w-full" wire:model="city" placeholder="Nombre completo" />
+            <x-jet-input-error for="city" />
         </div>
     </div>
 
@@ -142,19 +139,11 @@
         <x-jet-input-error for="description" />
     </div>
 
-    @if ($subcategory_id)
-
-        @if (!$this->subcategory->color && !$this->subcategory->size)
-
-            <div>
-                <x-jet-label value="Cantidad" />
-                <x-jet-input wire:model="quantity" type="number" class="w-full" />
-                <x-jet-input-error for="quantity" />
-            </div>
-
-        @endif
-
-    @endif
+    <div>
+        <x-jet-label value="Cantidad" />
+        <x-jet-input wire:model="quantity" type="number" class="w-full" />
+        <x-jet-input-error for="quantity" />
+    </div>
 
 
     <div class="flex mt-4">

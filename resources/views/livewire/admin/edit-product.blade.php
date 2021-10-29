@@ -95,7 +95,7 @@
             </div>
 
             {{-- Slug --}}
-            <div class="mb-4">
+            <div class="mb-4 hidden">
                 <x-jet-label value="Slug" />
                 <x-jet-input type="text" disabled wire:model="slug" class="w-full bg-gray-200"
                     placeholder="Ingrese el slug del producto" />
@@ -125,7 +125,7 @@
             <div class="grid grid-cols-2 gap-6 mb-4">
                 {{-- Precio --}}
                 <div>
-                    <x-jet-label value="Precio" />
+                    <x-jet-label value="Precio de venta en Saldo HVAC" />
                     <x-jet-input wire:model="product.price" type="number" class="w-full" step=".01" />
                     <x-jet-input-error for="product.price" />
                 </div>
@@ -166,14 +166,6 @@
             </div>
 
             <div class="grid grid-cols-2 gap-6 mb-4">
-                {{-- costo envio --}}
-                <div>
-                    <x-jet-label value="Costo del envio" />
-                    <x-jet-input type="text" class="w-full" wire:model="shipping_cost" value="0" />
-
-                    <x-jet-input-error for="shipping_cost" />
-                </div>
-
                 {{-- Pais / estado --}}
                 <div>
                     <x-jet-label value="Selecciona un estado ({{ $user->country->name }})" />
@@ -186,25 +178,22 @@
 
                     {{-- <x-jet-input-error for="country_id" /> --}}
                 </div>
+                {{-- ciudad --}}
+                <div>
+                    <x-jet-label value="Ciudad/Localidad" />
+                    <x-jet-input type="text" class="w-full" wire:model="product.city"
+                        placeholder="Nombre completo" />
+                    <x-jet-input-error for="product.city" />
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <x-jet-label value="Cantidad" />
+                <x-jet-input wire:model="product.quantity" type="number" class="w-full" />
+                <x-jet-input-error for="product.quantity" />
             </div>
 
 
-
-
-            @if ($this->subcategory)
-
-
-                @if (!$this->subcategory->color && !$this->subcategory->size)
-
-                    <div class="mb-4">
-                        <x-jet-label value="Cantidad" />
-                        <x-jet-input wire:model="product.quantity" type="number" class="w-full" />
-                        <x-jet-input-error for="product.quantity" />
-                    </div>
-
-                @endif
-
-            @endif
             <div class="grid grid-cols-4 gap-6 mb-4">
                 {{-- Descrición --}}
                 <div class="mb-4 col-span-3">
