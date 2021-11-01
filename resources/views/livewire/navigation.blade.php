@@ -14,11 +14,7 @@
             <x-jet-application-mark class="block h-9 w-auto" />
         </a>
 
-        <div class="flex-1 hidden md:block">
-            @livewire('search')
-        </div>
-
-        <div class="ml-6 relative hidden md:block">
+        <div class="mr-6 relative hidden md:block">
             <x-jet-dropdown align="right" width="16">
 
                 <x-slot name="trigger">
@@ -38,6 +34,17 @@
                 </x-slot>
 
             </x-jet-dropdown>
+        </div>
+
+        <div class="flex-1 hidden md:block">
+            @livewire('search')
+        </div>
+
+        <div class="hidden md:block">
+            <a href="" alt="Preguntas" class="ml-6 mt-2 tooltip ">
+                <i class="fas fa-question-circle h-9 text-3xl text-gray-100"></i>
+                <span class="tooltiptext">Preguntas frecuentes</span>
+            </a>
         </div>
 
         <div class="mx-6 relative hidden md:block">
@@ -69,7 +76,7 @@
                         </x-jet-dropdown-link>
 
                         <x-jet-dropdown-link href="{{ route('admin.index') }}">
-                            Administrador
+                            Vender / Administrar
                         </x-jet-dropdown-link>
 
                         <div class="border-t border-gray-100"></div>
@@ -80,7 +87,7 @@
 
                             <x-jet-dropdown-link href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
-                                                                                                                                                                                                                                            this.closest('form').submit();">
+                                                                                                                                                                                                                                                                                                    this.closest('form').submit();">
                                 {{ __('Log Out') }}
                             </x-jet-dropdown-link>
                         </form>
@@ -189,7 +196,7 @@
 
                 <a href=""
                     onclick="event.preventDefault();
-                                                                                                                                                                                                                            document.getElementById('logout-form').submit() "
+                                                                                                                                                                                                                                                                                    document.getElementById('logout-form').submit() "
                     class="py-2 px-4 text-sm flex items-center text-trueGray-500 hover:bg-orange-500 hover:text-white">
 
                     <span class="flex justify-center w-9">

@@ -13,6 +13,7 @@ use App\Http\Livewire\CreateOrder;
 use App\Http\Livewire\PaymentOrder;
 
 use App\Http\Controllers\WebhooksController;
+use App\Http\Livewire\ShowProduct;
 use App\Models\Order;
 
 Route::get('home/{country?}', WelcomeController::class);
@@ -22,7 +23,7 @@ Route::get('search', SearchController::class)->name('search');
 
 Route::get('categories/{category}/{country?}', [CategoryController::class, 'show'])->name('categories.show');
 
-Route::get('products/{product}', [ProductController::class, 'show'])->name('products.show');
+Route::get('products/{product}', ShowProduct::class)->name('products.show');
 
 Route::get('shopping-cart', ShoppingCart::class)->name('shopping-cart');
 

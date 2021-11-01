@@ -41,6 +41,11 @@ class Product extends Model
         return $this->hasMany(Size::class);
     }
 
+    public function questions()
+    {
+        return $this->hasMany(Question::class);
+    }
+
     //Relacion uno a muchos inversa
     public function brand()
     {

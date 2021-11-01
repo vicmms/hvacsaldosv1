@@ -74,6 +74,16 @@ class User extends Authenticatable
         return $this->hasMany(Product::class);
     }
 
+    public function questions()
+    {
+        return $this->hasMany(Question::class);
+    }
+
+    public function answers()
+    {
+        return $this->hasMany(Answer::class);
+    }
+
     public function country()
     {
         return $this->belongsTo(Country::class);
