@@ -40,7 +40,9 @@ Route::post('/app/updateProduct', [ProductController::class, 'updateProduct']);
 Route::post('/app/deleteProduct', [ProductController::class, 'deleteProduct']);
 Route::post('/app/deleteProductPhoto', [ProductController::class, 'deleteProductPhoto']);
 
-
+// companies
+Route::post('/app/getCompany', [CompanyController::class, 'getCompany']);
+Route::post('/app/setCompany', [CompanyController::class, 'setCompany']);
 
 Route::post('/app/getCategories', [CategoryController::class, 'getCategories']);
 Route::post('/app/getSubcategories', [SubcategoryController::class, 'getSubcategories']);
