@@ -53,6 +53,10 @@
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Precio
                             </th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Fecha
+                            </th>
                             <th scope="col" class="relative px-6 py-3">
                                 <span class="sr-only">Editar</span>
                             </th>
@@ -120,6 +124,9 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     {{ $product->state->country->currency }}
                                     {{ $product->state->country->denotation . $product->price }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    {{ explode(' ', $product->created_at)[0] }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <a href="{{ route('admin.products.edit', $product) }}"
