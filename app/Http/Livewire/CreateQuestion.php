@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Product;
 use App\Models\Question;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -9,11 +10,11 @@ use Livewire\Component;
 class CreateQuestion extends Component
 {
 
-    public $question, $product_id;
+    public $question, $product;
 
-    public function mount($product_id)
+    public function mount(Product $product)
     {
-        $this->product_id = $product_id;
+        $this->product = $product;
     }
 
     public function addQuestion()
@@ -21,7 +22,7 @@ class CreateQuestion extends Component
         if (strlen($this->question)) {
             Question::create([
                 'question' => $this->question,
-                'product_id' => $this->product_id,
+                'product_id' => $this->product->id,
                 'user_id' => Auth::user()->id,
             ]);
             $this->emitTo('show-product', 'render');

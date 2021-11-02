@@ -94,9 +94,7 @@
             </div>
         </div>
 
-        @if ($product->user_id != Auth::user()->id)
-            @livewire('create-question',['product_id' => $product->id])
-        @endif
+        @livewire('create-question',['product' => $product])
 
         <div class="mt-6 text-gray-700 bg-white p-4 rounded-lg mb-4 shadow-lg">
             <h2 class="font-bold text-2xl mb-8">Preguntas Realizadas</h2>
@@ -116,18 +114,20 @@
                             <p class="w-28 text-xs text-gray-400">
                                 {{ explode(' ', $question->answer->created_at)[0] }}</p>
                         </div>
-                    @elseif($product->user_id == Auth::user()->id)
-                        <form
-                            wire:submit.prevent="saveAnswer(Object.fromEntries(new FormData($event.target)),{{ $question->id }})"
-                            class="flex">
-                            <x-jet-input name="answer" class="flex-1 bg-gray-100 p-2" required />
-                            <x-jet-secondary-button class="
-                                ml-2"
-                                placeholder="Ingrese una respuesta" type="submit">
-                                Responder
-                            </x-jet-secondary-button>
-                        </form>
-                        <x-jet-input-error for="formData.answer" />
+                    @elseif(Auth::check())
+                        @if ($product->user_id == Auth::user()->id)
+                            <form
+                                wire:submit.prevent="saveAnswer(Object.fromEntries(new FormData($event.target)),{{ $question->id }})"
+                                class="flex">
+                                <x-jet-input name="answer" class="flex-1 bg-gray-100 p-2" required />
+                                <x-jet-secondary-button class="
+                            ml-2"
+                                    placeholder="Ingrese una respuesta" type="submit">
+                                    Responder
+                                </x-jet-secondary-button>
+                            </form>
+                            <x-jet-input-error for="formData.answer" />
+                        @endif
                     @endif
                 </div>
             @endforeach
