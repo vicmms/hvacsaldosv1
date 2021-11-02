@@ -85,19 +85,7 @@
                     </div>
                 </div>
 
-                @if ($product->subcategory->size)
-
-                    @livewire('add-cart-item-size', ['product' => $product])
-
-                @elseif($product->subcategory->color)
-
-                    @livewire('add-cart-item-color', ['product' => $product])
-
-                @else
-
-                    @livewire('add-cart-item', ['product' => $product])
-
-                @endif
+                @livewire('add-cart-item', ['product' => $product])
 
                 <div class="mt-6 text-gray-700">
                     <h2 class="font-bold text-lg">Descripción</h2>
@@ -106,14 +94,40 @@
             </div>
         </div>
 
-        @livewire('create-question',['product_id' => $product->id])
-        <div class="mt-6 text-gray-700">
-            <h2 class="font-bold text-lg">Preguntas</h2>
+        @if ($product->user_id != Auth::user()->id)
+            @livewire('create-question',['product_id' => $product->id])
+        @endif
+
+        <div class="mt-6 text-gray-700 bg-white p-4 rounded-lg mb-4 shadow-lg">
+            <h2 class="font-bold text-2xl mb-8">Preguntas Realizadas</h2>
             @foreach ($questions as $question)
-                <div class="bg-white p-4 rounded-lg shadow-lg mb-4">
-                    <p>Pregunta: {{ $question->question }}</p>
+                <div class="mb-4">
+                    <div class="flex">
+                        <p class="flex-1">{{ $question->question }}</p>
+                        <p class="w-28 text-xs text-gray-400">{{ explode(' ', $question->created_at)[0] }}</p>
+                    </div>
                     @if ($question->answer)
-                        <p class="ml-4">Respuesta: {{ $question->answer->answer }}</p>
+                        <div class="ml-4 flex">
+                            <svg class="ui-pdp-icon ui-pdp-qadb__questions-list__question__answer-container__icon"
+                                xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12">
+                                <path fill="#000" fill-opacity=".25" fill-rule="evenodd" d="M0 0h1v11h11v1H0z"></path>
+                            </svg>
+                            <p class="ml-1 flex-1  text-gray-500">{{ $question->answer->answer }}</p>
+                            <p class="w-28 text-xs text-gray-400">
+                                {{ explode(' ', $question->answer->created_at)[0] }}</p>
+                        </div>
+                    @elseif($product->user_id == Auth::user()->id)
+                        <form
+                            wire:submit.prevent="saveAnswer(Object.fromEntries(new FormData($event.target)),{{ $question->id }})"
+                            class="flex">
+                            <x-jet-input name="answer" class="flex-1 bg-gray-100 p-2" required />
+                            <x-jet-secondary-button class="
+                                ml-2"
+                                placeholder="Ingrese una respuesta" type="submit">
+                                Responder
+                            </x-jet-secondary-button>
+                        </form>
+                        <x-jet-input-error for="formData.answer" />
                     @endif
                 </div>
             @endforeach

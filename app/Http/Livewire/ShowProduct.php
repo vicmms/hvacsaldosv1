@@ -2,8 +2,10 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Answer;
 use App\Models\Product;
 use App\Models\Question;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -13,18 +15,38 @@ class ShowProduct extends Component
 
     protected $listeners = ['render'];
 
-    public $product;
+    public $isDisabled = false, $formData;
 
-    public function mount(Product $product)
+    public $product, $question;
+
+    protected $rules = [
+        'formData.answer' => 'required|max:255',
+    ];
+
+    public function mount(Product $product, Question $question)
     {
         $this->product = $product;
+        $this->question = $question;
     }
 
-    // public function refreshQuestions()
+    // public function updatedAnswer()
     // {
-    //     $message = "wrong answer";
-    //     echo "<script type='text/javascript'>alert('$message');</script>";
+    //     $this->isDisabled = empty($this->answer) ? true : false;
     // }
+
+    public function saveAnswer($formData, $question_id)
+    {
+        $this->formData = $formData;
+        $this->validate();
+        // dd($formData);
+        if (strlen($formData['answer'])) {
+            Answer::create([
+                'answer' => $formData['answer'],
+                'question_id' => $question_id,
+                'user_id' => Auth::user()->id
+            ]);
+        }
+    }
 
     public function render()
     {

@@ -18,13 +18,15 @@ class CreateQuestion extends Component
 
     public function addQuestion()
     {
-        Question::create([
-            'question' => $this->question,
-            'product_id' => $this->product_id,
-            'user_id' => Auth::user()->id,
-        ]);
-        $this->emitTo('show-product', 'render');
-        $this->question = "";
+        if (strlen($this->question)) {
+            Question::create([
+                'question' => $this->question,
+                'product_id' => $this->product_id,
+                'user_id' => Auth::user()->id,
+            ]);
+            $this->emitTo('show-product', 'render');
+            $this->question = "";
+        }
     }
 
     public function render()
