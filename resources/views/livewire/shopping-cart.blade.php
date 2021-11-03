@@ -5,7 +5,7 @@
         </div>
 
         @if (Cart::count())
-        
+
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                     <tr>
@@ -31,7 +31,7 @@
                 <tbody class="bg-white divide-y divide-gray-200">
 
                     @foreach (Cart::content() as $item)
-                        
+
                         {{-- <tr>
                             <td>
                                 <div class="flex">
@@ -95,18 +95,17 @@
                                 <div class="flex items-center">
                                     <div class="flex-shrink-0 h-10 w-10">
                                         <img class="h-10 w-10 rounded-full object-cover object-center"
-                                            src="{{ $item->options->image }}"
-                                            alt="">
+                                            src="{{ $item->options->image }}" alt="">
                                     </div>
                                     <div class="ml-4">
                                         <div class="text-sm font-medium text-gray-900">
-                                            {{$item->name}}
+                                            {{ $item->name }}
                                         </div>
                                         <div class="text-sm text-gray-500">
                                             @if ($item->options->color)
                                                 <span>
                                                     Color: {{ __($item->options->color) }}
-                                                </span>    
+                                                </span>
                                             @endif
 
                                             @if ($item->options->size)
@@ -122,14 +121,15 @@
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                         
+
                                 <div class="text-sm text-gray-500">
-                                    <span>USD {{ $item->price }}</span>
+                                    <span>{{ session('currency') }}
+                                        {{ session('denotation') . $item->price }}</span>
                                     <a class="ml-6 cursor-pointer hover:text-red-600"
-                                        wire:click="delete('{{$item->rowId}}')"
+                                        wire:click="delete('{{ $item->rowId }}')"
                                         wire:loading.class="text-red-600 opacity-25"
-                                        wire:target="delete('{{$item->rowId}}')">
-                                        <i class="fas fa-trash"></i>  
+                                        wire:target="delete('{{ $item->rowId }}')">
+                                        <i class="fas fa-trash"></i>
                                     </a>
                                 </div>
                             </td>
@@ -141,8 +141,9 @@
 
                                     @elseif($item->options->color)
 
-                                        @livewire('update-cart-item-color', ['rowId' => $item->rowId], key($item->rowId))
-                                        
+                                        @livewire('update-cart-item-color', ['rowId' => $item->rowId],
+                                        key($item->rowId))
+
                                     @else
 
                                         @livewire('update-cart-item', ['rowId' => $item->rowId], key($item->rowId))
@@ -152,7 +153,8 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                 <div class="text-sm text-gray-500">
-                                    USD {{$item->price * $item->qty}}
+                                    {{ session('currency') }}
+                                    {{ session('denotation') . $item->price * $item->qty }}
                                 </div>
                             </td>
                         </tr>
@@ -163,8 +165,7 @@
             </table>
 
             <div class="px-6 py-4">
-                <a class="text-sm cursor-pointer hover:underline mt-3 inline-block" 
-                    wire:click="destroy">
+                <a class="text-sm cursor-pointer hover:underline mt-3 inline-block" wire:click="destroy">
                     <i class="fas fa-trash"></i>
                     Borrar carrito de compras
                 </a>
@@ -194,7 +195,7 @@
                 <div>
                     <p class="text-gray-700">
                         <span class="font-bold text-lg">Total:</span>
-                        USD {{ Cart::subTotal() }}
+                        {{ session('currency') }} {{ session('denotation') . Cart::subTotal() }}
                     </p>
                 </div>
 

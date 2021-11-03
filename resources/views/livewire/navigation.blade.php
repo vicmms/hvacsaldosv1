@@ -41,7 +41,7 @@
         </div>
 
         <div class="hidden md:block">
-            <a href="" alt="Preguntas" class="ml-6 mt-2 tooltip ">
+            <a href="https://www.saldohvac.com/faq-s" target="_blank" alt="Preguntas" class="ml-6 mt-1 tooltip ">
                 <i class="fas fa-question-circle h-9 text-3xl text-gray-100"></i>
                 <span class="tooltiptext">Preguntas frecuentes</span>
             </a>
@@ -87,7 +87,7 @@
 
                             <x-jet-dropdown-link href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
-                                                                                                                                                                                                                                                                                                    this.closest('form').submit();">
+                                                                                                                                                                                                                                                                                                                this.closest('form').submit();">
                                 {{ __('Log Out') }}
                             </x-jet-dropdown-link>
                         </form>
@@ -196,7 +196,7 @@
 
                 <a href=""
                     onclick="event.preventDefault();
-                                                                                                                                                                                                                                                                                    document.getElementById('logout-form').submit() "
+                                                                                                                                                                                                                                                                                                document.getElementById('logout-form').submit() "
                     class="py-2 px-4 text-sm flex items-center text-trueGray-500 hover:bg-orange-500 hover:text-white">
 
                     <span class="flex justify-center w-9">

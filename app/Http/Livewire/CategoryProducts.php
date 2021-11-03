@@ -34,7 +34,6 @@ class CategoryProducts extends Component
 
         $country_id = array_key_exists($this->country, $countries)  ? $countries[$this->country] : 'MX';
 
-        $user  = Auth::user();
         // if (Auth::user()) {
         //     // $role = $user->getRoleNames()->first();
         //     $this->products = $this->category->products()

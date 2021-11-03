@@ -64,7 +64,8 @@
                                         </a>
                                     </h1>
 
-                                    <p class="font-bold text-trueGray-700">US$ {{ $product->price }}</p>
+                                    <p class="font-bold text-trueGray-700">{{ $product->state->country->currency }}
+                                        {{ $product->state->country->denotation . $product->price }}</p>
                                 </div>
                             </article>
                         </li>

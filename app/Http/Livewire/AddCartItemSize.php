@@ -63,7 +63,9 @@ class AddCartItemSize extends Component
             'qty' => $this->qty,
             'price' => $this->product->price,
             'weight' => 550,
-            'options' => $this->options
+            'options' => $this->options,
+            'denotation' => $this->product->state->country->denotation,
+            'currency' => $this->product->state->country->currency,
         ]);
 
         $this->quantity = qty_available($this->product->id, $this->color_id, $this->size_id);

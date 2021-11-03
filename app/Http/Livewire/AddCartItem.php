@@ -34,13 +34,16 @@ class AddCartItem extends Component
 
     public function addItem()
     {
+        session(['currency' => $this->product->state->country->currency]);
+        session(['denotation' => $this->product->state->country->denotation]);
         Cart::add([
             'id' => $this->product->id,
             'name' => $this->product->name,
             'qty' => $this->qty,
             'price' => $this->product->price,
             'weight' => 550,
-            'options' => $this->options
+            'options' => $this->options,
+
         ]);
 
         $this->quantity = qty_available($this->product->id);

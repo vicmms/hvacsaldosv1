@@ -7,6 +7,7 @@
 
                     <li class="bg-white rounded-lg shadow {{ $loop->last ? '' : 'sm:mr-4' }}">
                         <article>
+                            {{ $x }}
                             <figure>
                                 <img class="h-48 w-full object-cover object-center"
                                     src="{{ count($product->images) ? asset($product->images->first()->url) : asset('/images/image-not-found.png') }}"

@@ -19,14 +19,13 @@
         </x-slot>
 
         <x-slot name="content">
-
             <ul>
                 @forelse (Cart::content() as $item)
                     <li class="flex p-2 border-b border-gray-200">
                         <img class="h-15 w-20 object-cover mr-4" src="{{ asset($item->options->image) }}" alt="">
 
                         <article class="flex-1">
-                            <h1 class="font-bold">{{ $item->name }}</h1>
+                            <h1 class="font-bold">{{ $item->nombre }}</h1>
 
                             <div class="flex">
                                 <p>Cant: {{ $item->qty }}</p>
@@ -40,7 +39,8 @@
 
                             </div>
 
-                            <p>USD {{ $item->price }}</p>
+                            <p>{{ session('currency') }}
+                                {{ session('denotation') . $item->price }}</p>
                         </article>
                     </li>
                 @empty
@@ -54,8 +54,9 @@
 
             @if (Cart::count())
                 <div class="py-2 px-3">
-                    <p class="text-lg text-gray-700 mt-2 mb-3"><span class="font-bold">Total:</span> USD
-                        {{ Cart::subtotal() }}</p>
+                    <p class="text-lg text-gray-700 mt-2 mb-3"><span class="font-bold">Total:</span>
+                        {{ session('currency') }}
+                        {{ session('denotation') . Cart::subtotal() }}</p>
 
 
                     <x-button-enlace href="{{ route('shopping-cart') }}" color="orange" class="w-full">
