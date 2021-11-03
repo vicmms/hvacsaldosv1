@@ -1,7 +1,7 @@
 <div>
     <x-jet-form-section submit="save" class="mb-6">
         <x-slot name="title">
-            Crear nueva categoría
+            Agregar nueva categoría
         </x-slot>
 
         <x-slot name="description">
@@ -44,13 +44,11 @@
 
                 <div class="grid grid-cols-4">
                     @foreach ($brands as $brand)
-                        
+
                         <x-jet-label>
-                            <x-jet-checkbox
-                            wire:model.defer="createForm.brands"
-                            name="brands[]"
-                            value="{{$brand->id}}" />
-                            {{$brand->name}}
+                            <x-jet-checkbox wire:model.defer="createForm.brands" name="brands[]"
+                                value="{{ $brand->id }}" />
+                            {{ $brand->name }}
                         </x-jet-label>
 
                     @endforeach
@@ -63,7 +61,8 @@
                     Imagen
                 </x-jet-label>
 
-                <input wire:model="createForm.image" accept="image/*" type="file" class="mt-1" name="" id="{{$rand}}">
+                <input wire:model="createForm.image" accept="image/*" type="file" class="mt-1" name=""
+                    id="{{ $rand }}">
                 <x-jet-input-error for="createForm.image" />
             </div>
         </x-slot>
@@ -105,17 +104,20 @@
                         <tr>
                             <td class="py-2">
                                 <span class="inline-block w-8 text-center mr-2">
-                                    {!!$category->icon!!}
+                                    {!! $category->icon !!}
                                 </span>
 
-                                <a href="{{route('admin.categories.show', $category)}}" class="uppercase underline hover:text-blue-600">
-                                    {{$category->name}}
+                                <a href="{{ route('admin.categories.show', $category) }}"
+                                    class="uppercase underline hover:text-blue-600">
+                                    {{ $category->name }}
                                 </a>
                             </td>
                             <td class="py-2">
                                 <div class="flex divide-x divide-gray-300 font-semibold">
-                                    <a class="pr-2 hover:text-blue-600 cursor-pointer" wire:click="edit('{{$category->slug}}')">Editar</a>
-                                    <a class="pl-2 hover:text-red-600 cursor-pointer" wire:click="$emit('deleteCategory', '{{$category->slug}}')">Eliminar</a>
+                                    <a class="pr-2 hover:text-blue-600 cursor-pointer"
+                                        wire:click="edit('{{ $category->slug }}')">Editar</a>
+                                    <a class="pl-2 hover:text-red-600 cursor-pointer"
+                                        wire:click="$emit('deleteCategory', '{{ $category->slug }}')">Eliminar</a>
                                 </div>
                             </td>
                         </tr>
@@ -138,9 +140,11 @@
 
                 <div>
                     @if ($editImage)
-                        <img class="w-full h-64 object-cover object-center" src="{{$editImage->temporaryUrl()}}" alt="">
+                        <img class="w-full h-64 object-cover object-center" src="{{ $editImage->temporaryUrl() }}"
+                            alt="">
                     @else
-                        <img class="w-full h-64 object-cover object-center" src="{{Storage::url($editForm['image'])}}" alt="">
+                        <img class="w-full h-64 object-cover object-center" src="{{ Storage::url($editForm['image']) }}"
+                            alt="">
                     @endif
                 </div>
 
@@ -179,13 +183,11 @@
 
                     <div class="grid grid-cols-4">
                         @foreach ($brands as $brand)
-                            
+
                             <x-jet-label>
-                                <x-jet-checkbox
-                                wire:model.defer="editForm.brands"
-                                name="brands[]"
-                                value="{{$brand->id}}" />
-                                {{$brand->name}}
+                                <x-jet-checkbox wire:model.defer="editForm.brands" name="brands[]"
+                                    value="{{ $brand->id }}" />
+                                {{ $brand->name }}
                             </x-jet-label>
 
                         @endforeach
@@ -198,7 +200,8 @@
                         Imagen
                     </x-jet-label>
 
-                    <input wire:model="editImage" accept="image/*" type="file" class="mt-1" name="" id="{{$rand}}">
+                    <input wire:model="editImage" accept="image/*" type="file" class="mt-1" name=""
+                        id="{{ $rand }}">
                     <x-jet-input-error for="editImage" />
                 </div>
             </div>
