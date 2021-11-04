@@ -32,6 +32,6 @@ class MergeTheCartLogout
         Cart::erase(auth()->user()->id);
 
         //nuevo registro
-        Cart::store(auth()->user()->id);
+        // Cart::store(auth()->user()->id);
     }
 }

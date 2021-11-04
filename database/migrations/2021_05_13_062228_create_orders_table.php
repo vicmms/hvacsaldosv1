@@ -23,19 +23,19 @@ class CreateOrdersTable extends Migration
 
             $table->string('contact');
 
-            $table->string('phone');
+            $table->string('phone')->nullable();
 
-            $table->enum('status', [Order::PENDIENTE,Order::RECIBIDO, Order::ENVIADO, Order::ENTREGADO, Order::ANULADO])->default(Order::PENDIENTE);
+            $table->enum('status', [Order::PENDIENTE, Order::RECIBIDO, Order::ENVIADO, Order::ENTREGADO, Order::ANULADO])->default(Order::RECIBIDO);
 
-            $table->enum('envio_type', [1, 2]);
+            $table->enum('envio_type', [1, 2])->nullable();
 
-            $table->float('shipping_cost');
+            $table->float('shipping_cost')->nullable();
 
             $table->float('total');
 
             $table->json('content');
 
-           /*  $table->unsignedBigInteger('department_id')->nullable();
+            /*  $table->unsignedBigInteger('department_id')->nullable();
             $table->foreign('department_id')->references('id')->on('departments');
 
             $table->unsignedBigInteger('city_id')->nullable();

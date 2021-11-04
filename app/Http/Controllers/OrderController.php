@@ -22,14 +22,14 @@ class OrderController extends Controller
         $orders = $orders->get();
 
 
-        $pendiente = Order::where('status', 1)->where('user_id', auth()->user()->id)->count();
-        $recibido = Order::where('status', 2)->where('user_id', auth()->user()->id)->count();
-        $enviado = Order::where('status', 3)->where('user_id', auth()->user()->id)->count();
-        $entregado = Order::where('status', 4)->where('user_id', auth()->user()->id)->count();
-        $anulado = Order::where('status', 5)->where('user_id', auth()->user()->id)->count();
+        $solicitudes = Order::where('status', 2)->where('user_id', auth()->user()->id)->count();
+        $pagados = Order::where('status', 3)->where('user_id', auth()->user()->id)->count();
+        $entregados = Order::where('status', 4)->where('user_id', auth()->user()->id)->count();
+        $cancelados = Order::where('status', 5)->where('user_id', auth()->user()->id)->count();
+        $todos = $solicitudes + $pagados + $entregados + $cancelados;
 
         // return view('dashboard');
-        // return view('orders.index', compact('orders', 'pendiente', 'recibido', 'enviado', 'entregado', 'anulado'));
+        return view('orders.index', compact('solicitudes', 'pagados', 'entregados', 'cancelados', 'todos', 'orders'));
     }
 
     public function show(Order $order)
@@ -63,5 +63,10 @@ class OrderController extends Controller
         }
 
         return redirect()->route('orders.show', $order);
+    }
+
+    public function success()
+    {
+        return view('orders.success');
     }
 }

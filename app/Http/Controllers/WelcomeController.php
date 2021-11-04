@@ -20,18 +20,18 @@ class WelcomeController extends Controller
 
     public function __invoke($country = "MX")
     {
+        session(['country' => $country]);
+        // if (auth()->user()) {
 
-        if (auth()->user()) {
+        //     $pendiente = Order::where('status', 1)->where('user_id', auth()->user()->id)->count();
 
-            $pendiente = Order::where('status', 1)->where('user_id', auth()->user()->id)->count();
+        //     if ($pendiente) {
 
-            if ($pendiente) {
+        //         $mensaje = "Usted tiene $pendiente ordenes pendientes. <a class='font-bold' href='" . route('orders.index') . "?status=1'>Ir a pagar</a>";
 
-                $mensaje = "Usted tiene $pendiente ordenes pendientes. <a class='font-bold' href='" . route('orders.index') . "?status=1'>Ir a pagar</a>";
-
-                session()->flash('flash.banner', $mensaje);
-            }
-        }
+        //         session()->flash('flash.banner', $mensaje);
+        //     }
+        // }
 
         $categories = Category::all();
 
