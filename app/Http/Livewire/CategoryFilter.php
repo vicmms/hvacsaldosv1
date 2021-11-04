@@ -54,6 +54,7 @@ class CategoryFilter extends Component
         $productsQuery = Product::join('states', 'states.id', '=', 'state_id')
             ->select('products.*', 'states.country_id')
             ->where('category_id', $this->category->id)
+            ->where('status', 2)
             ->where('country_id', $country_id);
 
         if ($this->subcategoria) {

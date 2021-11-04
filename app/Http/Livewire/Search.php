@@ -12,10 +12,11 @@ class Search extends Component
 
     public $open = false;
 
-    public function updatedSearch($value){
+    public function updatedSearch($value)
+    {
         if ($value) {
             $this->open = true;
-        }else{
+        } else {
             $this->open = false;
         }
     }
@@ -26,14 +27,17 @@ class Search extends Component
         //Tv de 32" Full HD
 
         if ($this->search) {
-            $products = Product::where('name', 'LIKE' ,'%' . $this->search . '%')
-                                ->where('status', 2)
-                                ->take(8)
-                                ->get();
+            $products = Product::join('states', 'states.id', '=', 'state_id')
+                ->select('products.*', 'states.country_id')
+                ->where('products.name', 'LIKE', '%' . $this->search . '%')
+                ->where('status', 2)
+                ->where('country_id', session('country_id'))
+                ->take(8)
+                ->get();
         } else {
             $products = [];
         }
-        
+
         return view('livewire.search', compact('products'));
     }
 }

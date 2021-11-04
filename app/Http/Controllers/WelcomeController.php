@@ -20,7 +20,16 @@ class WelcomeController extends Controller
 
     public function __invoke($country = "MX")
     {
+        $countries['MX'] = 1;
+        // $countries['COL'] = 2;
+        // $countries['PER'] = 3;
+        $countries['EC'] = 4;
+        $countries['CR'] = 5;
+        $countries['CL'] = 6;
+
+        $country_id = $countries[$country];
         session(['country' => $country]);
+        session(['country_id' => $country_id]);
         // if (auth()->user()) {
 
         //     $pendiente = Order::where('status', 1)->where('user_id', auth()->user()->id)->count();
