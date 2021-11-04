@@ -10,12 +10,13 @@
 
             <div class="px-6 py-4">
 
-                <x-jet-input wire:model="search" type="text" class="w-full" placeholder="Escriba algo para filtrar" />
+                <x-jet-input wire:model="search" type="text" class="w-full"
+                    placeholder="Escriba algo para filtrar" />
 
             </div>
 
             @if (count($users))
-                
+
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
@@ -44,28 +45,28 @@
 
                         @foreach ($users as $user)
 
-                            <tr wire:key="{{$user->email}}">
+                            <tr wire:key="{{ $user->email }}">
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-gray-900">
-                                        {{$user->id}}
+                                        {{ $user->id }}
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
 
                                     <div class="text-sm text-gray-900">
-                                        {{$user->name}}
+                                        {{ $user->name }}
                                     </div>
 
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-gray-900">
-                                        {{$user->email}}
+                                        {{ $user->email }}
                                     </div>
 
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     <div class="text-sm text-gray-900">
-                                        
+
                                         @if (count($user->roles))
                                             Admin
                                         @else
@@ -75,14 +76,23 @@
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    
                                     <label>
-                                        <input {{count($user->roles) ? 'checked' : ''}} value="1" type="radio" name="{{$user->email}}" wire:change="assignRole({{$user->id}}, $event.target.value)">
-                                        Si
+                                        <input {{ $user->getRolenames()->first() == 'admin' ? 'checked' : '' }}
+                                            value="2" type="radio" name="{{ $user->email }}"
+                                            wire:change="assignRole({{ $user->id }}, $event.target.value)">
+                                        SP Admin
+                                    </label>
+                                    <label>
+                                        <input {{ $user->getRolenames()->first() == 'user' ? 'checked' : '' }}
+                                            value="1" type="radio" name="{{ $user->email }}"
+                                            wire:change="assignRole({{ $user->id }}, $event.target.value)">
+                                        Admin
                                     </label>
 
                                     <label class="ml-2">
-                                        <input {{count($user->roles) ? '' : 'checked'}} value="0" type="radio" name="{{$user->email}}" wire:change="assignRole({{$user->id}}, $event.target.value)">
+                                        <input {{ count($user->roles) ? '' : 'checked' }} value="0" type="radio"
+                                            name="{{ $user->email }}"
+                                            wire:change="assignRole({{ $user->id }}, $event.target.value)">
                                         No
                                     </label>
                                 </td>
@@ -91,7 +101,7 @@
                         @endforeach
                         <!-- More people... -->
 
-                        
+
                     </tbody>
                 </table>
 
@@ -102,9 +112,9 @@
             @endif
 
             @if ($users->hasPages())
-                    
+
                 <div class="px-6 py-4">
-                    {{$users->links()}}
+                    {{ $users->links() }}
                 </div>
 
             @endif

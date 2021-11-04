@@ -15,28 +15,39 @@ class UserComponent extends Component
     public $search;
 
 
-    public function updatingSearch(){
+    public function updatingSearch()
+    {
         $this->resetPage();
     }
 
-    public function assignRole(User $user, $value){
+    public function assignRole(User $user, $value)
+    {
 
-        if ($value == '1') {
-            $user->assignRole('admin');
-        }else{
-            $user->removeRole('admin');
+        switch ($value) {
+            case '1':
+                $user->assignRole('user');
+                $user->removeRole('admin');
+                break;
+            case '2':
+                $user->assignRole('admin');
+                $user->removeRole('user');
+                break;
+
+            default:
+                $user->removeRole('admin');
+                $user->removeRole('user');
+                break;
         }
-
     }
 
     public function render()
     {
 
         $users = User::where('email', '<>', auth()->user()->email)
-                    ->where(function($query){
-                        $query->where('name', 'LIKE', '%' . $this->search . '%');
-                        $query->orWhere('email', 'LIKE', '%' . $this->search . '%');
-                    })->paginate();
+            ->where(function ($query) {
+                $query->where('name', 'LIKE', '%' . $this->search . '%');
+                $query->orWhere('email', 'LIKE', '%' . $this->search . '%');
+            })->paginate();
 
         return view('livewire.admin.user-component', compact('users'))->layout('layouts.admin');
     }
