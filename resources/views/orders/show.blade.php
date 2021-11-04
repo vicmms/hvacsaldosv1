@@ -6,7 +6,8 @@
         <div class="bg-white rounded-lg shadow-lg px-12 py-8 mb-6 flex items-center">
 
             <div class="relative">
-                <div class="{{ ($order->status >= 2 && $order->status != 5) ? 'bg-blue-400' : 'bg-gray-400' }}  rounded-full h-12 w-12 flex items-center justify-center">
+                <div
+                    class="{{ $order->status >= 2 && $order->status != 5 ? 'bg-blue-400' : 'bg-gray-400' }}  rounded-full h-12 w-12 flex items-center justify-center">
                     <i class="fas fa-check text-white"></i>
                 </div>
 
@@ -15,10 +16,13 @@
                 </div>
             </div>
 
-            <div class="{{ ($order->status >= 3 && $order->status != 5) ? 'bg-blue-400' : 'bg-gray-400' }} h-1 flex-1 mx-2"></div>
+            <div
+                class="{{ $order->status >= 3 && $order->status != 5 ? 'bg-blue-400' : 'bg-gray-400' }} h-1 flex-1 mx-2">
+            </div>
 
             <div class="relative">
-                <div class="{{ ($order->status >= 3 && $order->status != 5) ? 'bg-blue-400' : 'bg-gray-400' }} rounded-full h-12 w-12 flex items-center justify-center">
+                <div
+                    class="{{ $order->status >= 3 && $order->status != 5 ? 'bg-blue-400' : 'bg-gray-400' }} rounded-full h-12 w-12 flex items-center justify-center">
                     <i class="fas fa-truck text-white"></i>
                 </div>
 
@@ -27,10 +31,13 @@
                 </div>
             </div>
 
-            <div class="{{ ($order->status >= 4 && $order->status != 5) ? 'bg-blue-400' : 'bg-gray-400' }} h-1 flex-1 mx-2"></div>
+            <div
+                class="{{ $order->status >= 4 && $order->status != 5 ? 'bg-blue-400' : 'bg-gray-400' }} h-1 flex-1 mx-2">
+            </div>
 
             <div class="relative">
-                <div class="{{ ($order->status >= 4 && $order->status != 5) ? 'bg-blue-400' : 'bg-gray-400' }} rounded-full h-12 w-12 flex items-center justify-center">
+                <div
+                    class="{{ $order->status >= 4 && $order->status != 5 ? 'bg-blue-400' : 'bg-gray-400' }} rounded-full h-12 w-12 flex items-center justify-center">
                     <i class="fas fa-check text-white"></i>
                 </div>
 
@@ -49,15 +56,15 @@
                 Orden-{{ $order->id }}</p>
 
             @if ($order->status == 1)
-            
-                <x-button-enlace class="ml-auto" href="{{route('orders.payment', $order)}}">
+
+                <x-button-enlace class="ml-auto" href="{{ route('orders.payment', $order) }}">
                     Ir a pagar
                 </x-button-enlace>
 
             @endif
         </div>
 
-        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+        {{-- <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
             <div class="grid grid-cols-2 gap-6 text-gray-700">
                 <div>
                     <p class="text-lg font-semibold uppercase">Envío</p>
@@ -82,7 +89,7 @@
                     <p class="text-sm">Teléfono de contacto: {{ $order->phone }}</p>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         <div class="bg-white rounded-lg shadow-lg p-6 text-gray-700 mb-6">
             <p class="text-xl font-semibold mb-4">Resumen</p>
@@ -98,41 +105,38 @@
                 </thead>
 
                 <tbody class="divide-y divide-gray-200">
-                    @foreach ($items as $item)
-                        <tr>
-                            <td>
-                                <div class="flex">
-                                    <img class="h-15 w-20 object-cover mr-4" src="{{ $item->options->image }}"
-                                        alt="">
-                                    <article>
-                                        <h1 class="font-bold">{{ $item->name }}</h1>
-                                        <div class="flex text-xs">
+                    <tr>
+                        <td>
+                            <div class="flex">
+                                <img class="h-15 w-20 object-cover mr-4" src="{{ $items->options->image }}" alt="">
+                                <article>
+                                    <h1 class="font-bold">{{ $items->name }}</h1>
+                                    <div class="flex text-xs">
 
-                                            @isset($item->options->color)
-                                                Color: {{ __($item->options->color) }}
-                                            @endisset
+                                        @isset($items->options->color)
+                                            Color: {{ __($items->options->color) }}
+                                        @endisset
 
-                                            @isset($item->options->size)
-                                                - {{ $item->options->size }}
-                                            @endisset
-                                        </div>
-                                    </article>
-                                </div>
-                            </td>
+                                        @isset($items->options->size)
+                                            - {{ $items->options->size }}
+                                        @endisset
+                                    </div>
+                                </article>
+                            </div>
+                        </td>
 
-                            <td class="text-center">
-                                {{ $item->price }} USD
-                            </td>
+                        <td class="text-center">
+                            {{ $items->price }} USD
+                        </td>
 
-                            <td class="text-center">
-                                {{ $item->qty }}
-                            </td>
+                        <td class="text-center">
+                            {{ $items->qty }}
+                        </td>
 
-                            <td class="text-center">
-                                {{ $item->price * $item->qty }} USD
-                            </td>
-                        </tr>
-                    @endforeach
+                        <td class="text-center">
+                            {{ $items->price * $items->qty }} USD
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>

@@ -37,6 +37,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('orders/{order}/payment', PaymentOrder::class)->name('orders.payment');
 
+    Route::get('order/success', [OrderController::class, 'success'])->name('order.success');
+
     Route::get('orders/{order}/pay', [OrderController::class, 'pay'])->name('orders.pay');
 
     Route::post('webhooks', WebhooksController::class);

@@ -10,7 +10,7 @@
             <span class="text-sm hidden md:block">Categorías</span>
         </a>
 
-        <a href="/home/{{ $country }}" class="mx-6">
+        <a href="/home/{{ session('country') }}" class="mx-6">
             <x-jet-application-mark class="block h-9 w-auto" />
         </a>
 
@@ -19,11 +19,11 @@
 
                 <x-slot name="trigger">
                     <img class="w-8 h-8 rounded-full object-cover object-center cursor-pointer"
-                        src="{{ asset('images/admin/flags/' . $country . '.jpg') }}" alt="Mexico">
+                        src="{{ asset('images/admin/flags/' . session('country') . '.jpg') }}" alt="Mexico">
                 </x-slot>
                 <x-slot name="content">
                     @foreach ($tlds as $tld)
-                        @if ($tld['tld'] != $country && strlen($tld['tld']))
+                        @if ($tld['tld'] != session('country') && strlen($tld['tld']))
                             <x-jet-dropdown-link href="/home/{{ $tld['tld'] }}">
                                 <img class="w-8 h-8 rounded-full object-cover object-center cursor-pointer"
                                     src="{{ asset('images/admin/flags/' . $tld['tld'] . '.jpg') }}" alt="">
@@ -87,7 +87,7 @@
 
                             <x-jet-dropdown-link href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
-                                                                                                                                                                                                                                                                                                                this.closest('form').submit();">
+                                                                                                                                                                                                                                                                                                                        this.closest('form').submit();">
                                 {{ __('Log Out') }}
                             </x-jet-dropdown-link>
                         </form>
@@ -196,7 +196,7 @@
 
                 <a href=""
                     onclick="event.preventDefault();
-                                                                                                                                                                                                                                                                                                document.getElementById('logout-form').submit() "
+                                                                                                                                                                                                                                                                                                        document.getElementById('logout-form').submit() "
                     class="py-2 px-4 text-sm flex items-center text-trueGray-500 hover:bg-orange-500 hover:text-white">
 
                     <span class="flex justify-center w-9">
