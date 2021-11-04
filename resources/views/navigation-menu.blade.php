@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
-                    <a href="/home/{{ Auth::user()->tld }}">
+                    <a href="/home/{{ session('country') }}">
                         <x-jet-application-mark class="block h-9 w-auto" color="dark" />
                     </a>
                 </div>
