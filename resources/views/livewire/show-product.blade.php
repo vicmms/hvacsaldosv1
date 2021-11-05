@@ -77,8 +77,8 @@
                                 {{ $product->shipping ? 'Envío disponible' : 'Sin envío disponible' }}
                             </p>
                             @if ($product->shipping)
-                                {{-- <p>{{ $product->shipping_cost ? 'Costo de envío: ' . $product->shipping_cost : 'Sin costo extra' }}
-                                </p> --}}
+                                <p>{{ $product->shipping_cost ? 'Costo de envío: ' . $product->shipping_cost : 'Sin costo extra' }}
+                                </p>
 
                             @endif
                         </div>
