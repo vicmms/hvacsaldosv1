@@ -67,6 +67,9 @@ class ProductController extends Controller
         $product->quantity = $request->input('quantity');
         $product->user_id = $request->input('user_id');
         $product->state_id = $request->input('state_id');
+        $product->city = $request->input('city');
+
+
         $product->save();
 
         if ($request->input('photos')) {
@@ -120,6 +123,7 @@ class ProductController extends Controller
                 'quantity' => $request->input('quantity'),
                 'state_id' => $request->input('state_id'),
                 'status' => $request->input('status'),
+                'city' => $request->input('city')
             ]);
         $product = Product::find($request->input('id'));
         if ($request->input('photos')) {
