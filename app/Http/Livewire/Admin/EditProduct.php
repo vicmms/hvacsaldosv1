@@ -80,7 +80,6 @@ class EditProduct extends Component
     {
         $this->subcategories = Subcategory::all();
 
-        // $this->brands = Brand::all();
         $this->brands = Brand::join('brand_category', 'brands.id', 'brand_category.brand_id')
                     ->where('brand_category.category_id', $value)
                     ->orderBy('name', 'asc')
