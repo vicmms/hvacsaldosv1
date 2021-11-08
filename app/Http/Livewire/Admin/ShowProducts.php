@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Support\Facades\Storage;
 
 use Livewire\WithPagination;
 
@@ -15,6 +16,8 @@ class ShowProducts extends Component
     use WithPagination;
     use HasRoles;
     public $search;
+
+    protected $listeners = ['delete'];
 
     public function updatingSearch()
     {
@@ -40,5 +43,23 @@ class ShowProducts extends Component
         }
 
         return view('livewire.admin.show-products', compact('products'))->layout('layouts.admin');
+    }
+    public function delete($product_id)
+    {
+        $product = Product::where('id', $product_id)->first();
+
+        $images = $product->images;
+
+        foreach ($images as $image) {
+            // Storage::delete($image->url);
+            if(file_exists($image->url)){
+                unlink($image->url);
+            }
+            $image->delete();
+        }
+
+        $product->delete();
+
+        return redirect()->route('admin.index');
     }
 }

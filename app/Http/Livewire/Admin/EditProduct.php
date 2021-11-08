@@ -119,7 +119,9 @@ class EditProduct extends Component
     public function deleteImage(Image $image)
     {
         // Storage::delete([$image->url]);
-        unlink($image->url);
+        if(file_exists($image->url)){
+            unlink($image->url);
+        }
         $image->delete();
 
         $this->product = $this->product->fresh();
@@ -131,7 +133,9 @@ class EditProduct extends Component
         $images = $this->product->images;
 
         foreach ($images as $image) {
-            Storage::delete($image->url);
+            if(file_exists($image->url)){
+                unlink($image->url);
+            }
             $image->delete();
         }
 
