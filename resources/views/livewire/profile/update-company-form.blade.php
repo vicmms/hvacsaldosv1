@@ -1,10 +1,10 @@
 <x-jet-form-section submit="save">
     <x-slot name="title">
-        {{ __('Profile Information') }}
+        {{ __('Información de la empresa') }}
     </x-slot>
 
     <x-slot name="description">
-        {{ __('Update your account\'s profile information and email address.') }}
+        {{ __('Actualiza la información de tu empresa') }}
     </x-slot>
 
     <x-slot name="form">
@@ -26,11 +26,11 @@
 
     <x-slot name="actions">
         <x-jet-action-message class="mr-3" on="saved">
-            {{ __('Saved.') }}
+            {{ __('Actualizado') }}
         </x-jet-action-message>
 
         <x-jet-button wire:loading.attr="disabled" wire:target="save">
-            {{ __('Save') }}
+            {{ __('Actualizar') }}
         </x-jet-button>
     </x-slot>
 </x-jet-form-section>

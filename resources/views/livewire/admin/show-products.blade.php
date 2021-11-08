@@ -66,7 +66,7 @@
 
                         @foreach ($products as $product)
                             <tr>
-                                <td class="px-6 py-4 whitespace-nowrap">
+                                <td class="px-6 py-4 whitespace-nowrap max-w-md">
                                     <div class="flex items-center">
                                         <div class="flex-shrink-0 h-10 w-10">
                                             @if ($product->images->count())
@@ -79,7 +79,7 @@
                                         </div>
                                         <div class="ml-4">
                                             <div class="text-sm font-medium text-gray-900">
-                                                {{ $product->name }}
+                                                {{ Str::limit($product->name, 35) }}
                                             </div>
                                         </div>
                                     </div>
