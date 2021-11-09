@@ -17,8 +17,6 @@ class ShowCategory extends Component
     protected $rules = [
         'createForm.name' => 'required',
         'createForm.slug' => 'required|unique:subcategories,slug',
-        'createForm.color' => 'required',
-        'createForm.size' => 'required',
     ];
 
     protected $validationAttributes = [
@@ -58,7 +56,7 @@ class ShowCategory extends Component
     }
 
     public function getSubcategories(){
-        $this->subcategories = Subcategory::where('category_id', $this->category->id)->get();
+        $this->subcategories = Subcategory::all();
     }
 
     public function save(){
