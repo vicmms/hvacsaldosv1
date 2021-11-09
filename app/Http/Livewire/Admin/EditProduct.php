@@ -19,7 +19,7 @@ use Illuminate\Support\Str;
 class EditProduct extends Component
 {
 
-    public $product, $categories, $subcategories, $brands, $slug, $currencies, $city;
+    public $product, $categories, $subcategories, $brands, $slug, $currencies, $city, $isRejected;
 
     public $category_id, $state_id;
 
@@ -47,6 +47,8 @@ class EditProduct extends Component
     public function mount(Product $product)
     {
         $this->product = $product;
+
+        $this->isRejected = $this->product->status == 3 ? true : false;
 
         $this->currencies = Currency::all();
 

@@ -48,7 +48,11 @@
 
         @role('admin')
             @livewire('admin.status-product', ['product' => $product], key('status-product-' . $product->id))
+            @if ($isRejected)
+                @livewire('admin.rejection-record', ['rejections' => $product->rejections])
+            @endif
         @endrole
+        
 
         {{-- <div class="bg-white shadow-xl rounded-lg p-6">
 
