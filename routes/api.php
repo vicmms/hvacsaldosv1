@@ -8,6 +8,8 @@ use App\Http\Controllers\api\ProductController;
 use App\Http\Controllers\api\SubcategoryController;
 use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\CompanyController;
+use App\Http\Controllers\api\AppInfoController;
+
 use Illuminate\Routing\Router;
 
 /*
@@ -48,3 +50,6 @@ Route::post('/app/setCompany', [CompanyController::class, 'setCompany']);
 Route::post('/app/getCategories', [CategoryController::class, 'getCategories']);
 Route::post('/app/getSubcategories', [SubcategoryController::class, 'getSubcategories']);
 Route::post('/app/getBrands', [BrandController::class, 'getBrands']);
+
+//App info
+Route::post('/app/getReleaseCurrent', [AppInfoController::class, 'getReleaseCurrent']);
