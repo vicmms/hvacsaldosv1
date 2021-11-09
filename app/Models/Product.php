@@ -46,6 +46,10 @@ class Product extends Model
         return $this->hasMany(Question::class);
     }
 
+    public function rejections(){
+        return $this->hasMany(Rejection::class);
+    }
+
     //Relacion uno a muchos inversa
     public function brand()
     {
