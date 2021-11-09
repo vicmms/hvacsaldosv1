@@ -47,6 +47,7 @@ class CreateProduct extends Component
         //     $query->where('category_id', $value);
         // })->get();
         $this->brands = Brand::join('brand_category', 'brands.id', 'brand_category.brand_id')
+                    ->select('brands.*')
                     ->where('brand_category.category_id', $value)
                     ->orderBy('name', 'asc')
                     ->get();
@@ -112,6 +113,11 @@ class CreateProduct extends Component
     public function render()
     {
         $user = Auth::user();
+        $this->brands = Brand::join('brand_category', 'brands.id', 'brand_category.brand_id')
+                    ->select('brands.*')
+                    ->where('brand_category.category_id', $this->category_id)
+                    ->orderBy('name', 'asc')
+                    ->get();
         return view('livewire.admin.create-product', compact('user'))->layout('layouts.admin');
     }
 }
