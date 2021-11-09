@@ -57,8 +57,9 @@
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Fecha
                             </th>
-                            <th scope="col" class="relative px-6 py-3">
-                                <span class="sr-only">Editar</span>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Acciones
                             </th>
                         </tr>
                     </thead>
@@ -66,7 +67,7 @@
 
                         @foreach ($products as $product)
                             <tr>
-                                <td class="px-6 py-4 whitespace-nowrap max-w-md">
+                                <td class="px-4 py-4 whitespace-nowrap">
                                     <div class="flex items-center">
                                         <div class="flex-shrink-0 h-10 w-10">
                                             @if ($product->images->count())
@@ -79,30 +80,31 @@
                                         </div>
                                         <div class="ml-4">
                                             <div class="text-sm font-medium text-gray-900">
-                                                {{ Str::limit($product->name, 35) }}
+                                                {{ Str::limit($product->name, 30) }}
                                             </div>
                                         </div>
                                     </div>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
+                                <td class="px-4 py-4 whitespace-nowrap">
 
                                     <div class="text-sm text-gray-900">
-                                        {{ $product->category->name }}
+                                        
+                                        {{ Str::limit($product->category->name, 20) }}
                                     </div>
 
                                 </td>
 
                                 @role('admin')
-                                    <td class="px-6 py-4 whitespace-nowrap">
+                                    <td class="px-4 py-4 whitespace-nowrap">
 
                                         <div class="text-sm text-gray-900">
-                                            {{ $product->user->name }}
+                                            {{ Str::limit($product->user->name, 20) }}
                                         </div>
 
                                     </td>
                                 @endrole
 
-                                <td class="px-6 py-4 whitespace-nowrap">
+                                <td class="px-4 py-4 whitespace-nowrap">
                                     @switch($product->status)
                                         @case(1)
                                             <span
@@ -121,16 +123,17 @@
                                     @endswitch
 
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">
                                     {{ $product->state->country->currency }}
                                     {{ $product->state->country->denotation . $product->price }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">
                                     {{ explode(' ', $product->created_at)[0] }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                <td class="px-4 py-4 whitespace-nowrap text-center text-sm font-medium">
                                     <a href="{{ route('admin.products.edit', $product) }}"
-                                        class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                        class="text-gray-400 hover:text-indigo-600"><i class="fas fa-pen"></i></a>
+                                    <i class="fas fa-trash text-red-400 hover:text-red-600 ml-2 cursor-pointer" wire:click="$emit('deleteProduct', {{$product}})"></i>
                                 </td>
                             </tr>
 
@@ -156,6 +159,34 @@
 
         </x-table-responsive>
     </div>
+    @push('script')
+    <script>
 
+        Livewire.on('deleteProduct', (product) => {
+            Swal.fire({
+                title: '¿Eliminar producto?',
+                text: "Se perderá toda la información relacionada!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Eliminar!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emitTo('admin.show-products', 'delete', product['id']);
+
+                    Swal.fire(
+                        'Realizado!',
+                        'Producto eliminado',
+                        'success'
+                    )
+                }
+            })
+
+        });
+
+        
+    </script>
+@endpush
 
 </div>
