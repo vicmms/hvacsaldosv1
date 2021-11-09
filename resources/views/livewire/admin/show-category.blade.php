@@ -30,7 +30,7 @@
                 <x-jet-input-error for="createForm.slug" />
             </div>
 
-            <div class="col-span-6 sm:col-span-4">
+            {{-- <div class="col-span-6 sm:col-span-4">
                 <div class="flex">
                     <p>¿Está subcategoría necesita especifiquemos color?</p>
 
@@ -48,9 +48,9 @@
                 </div>
 
                 <x-jet-input-error for="createForm.color" />
-            </div>
+            </div> --}}
 
-            <div class="col-span-6 sm:col-span-4">
+            {{-- <div class="col-span-6 sm:col-span-4">
                 <div class="flex">
                     <p>¿Está subcategoría necesita especifiquemos talla?</p>
 
@@ -68,7 +68,7 @@
                 </div>
 
                 <x-jet-input-error for="createForm.size" />
-            </div>
+            </div> --}}
 
             
         </x-slot>
@@ -159,7 +159,7 @@
                     <x-jet-input-error for="editForm.slug" />
                 </div>
 
-                <div>
+                {{-- <div>
                     <div class="flex">
                         <p>¿Está subcategoría necesita especifiquemos color?</p>
     
@@ -177,9 +177,9 @@
                     </div>
     
                     <x-jet-input-error for="createForm.color" />
-                </div>
+                </div> --}}
     
-                <div>
+                {{-- <div>
                     <div class="flex">
                         <p>¿Está subcategoría necesita especifiquemos talla?</p>
     
@@ -197,7 +197,7 @@
                     </div>
     
                     <x-jet-input-error for="createForm.size" />
-                </div>
+                </div> --}}
 
                
             </div>

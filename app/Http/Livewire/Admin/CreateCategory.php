@@ -24,8 +24,6 @@ class CreateCategory extends Component
         
         'name' => null,
         'slug' => null,
-        'icon' => null,
-        'image' => null,
         'brands' => [],
     ];
 
@@ -33,8 +31,6 @@ class CreateCategory extends Component
         'open' => false,
         'name' => null,
         'slug' => null,
-        'icon' => null,
-        'image' => null,
         'brands' => [],
     ];
 
@@ -43,21 +39,16 @@ class CreateCategory extends Component
     protected $rules = [
         'createForm.name' => 'required',
         'createForm.slug' => 'required|unique:categories,slug',
-        'createForm.icon' => 'required',
-        'createForm.image' => 'required|image|max:1024',
         'createForm.brands' => 'required',
     ];
 
     protected $validationAttributes = [
         'createForm.name' => 'nombre',
         'createForm.slug' => 'slug',
-        'createForm.icon' => 'ícono',
         'createForm.image' => 'imagen',
         'createForm.brands' => 'marcas',
         'editForm.name' => 'nombre',
         'editForm.slug' => 'slug',
-        'editForm.icon' => 'ícono',
-        'editImage' => 'imagen',
         'editForm.brands' => 'marcas'
     ];
 
@@ -86,13 +77,10 @@ class CreateCategory extends Component
     public function save(){
         $this->validate();
 
-        $image = $this->createForm['image']->store('categories');
 
         $category = Category::create([
             'name' => $this->createForm['name'],
             'slug' => $this->createForm['slug'],
-            'icon' => $this->createForm['icon'],
-            'image' => $image
         ]);
 
         $category->brands()->attach($this->createForm['brands']);
@@ -106,7 +94,6 @@ class CreateCategory extends Component
 
     public function edit(Category $category){
 
-        $this->reset(['editImage']);
         $this->resetValidation();
 
         $this->category = $category;
@@ -114,8 +101,6 @@ class CreateCategory extends Component
         $this->editForm['open'] = true;
         $this->editForm['name'] = $category->name;
         $this->editForm['slug'] = $category->slug;
-        $this->editForm['icon'] = $category->icon;
-        $this->editForm['image'] = $category->image;
         $this->editForm['brands'] = $category->brands->pluck('id');
     }
 
@@ -124,28 +109,18 @@ class CreateCategory extends Component
         $rules = [
             'editForm.name' => 'required',
             'editForm.slug' => 'required|unique:categories,slug,' . $this->category->id,
-            'editForm.icon' => 'required',
             'editForm.brands' => 'required',
         ];
 
-        if ($this->editImage) {
-            $rules['editImage'] = 'required|image|max:1024';
-        }
-
         $this->validate($rules);
-
-        if ($this->editImage) {
-            Storage::delete($this->editForm['image']);
-            $this->editForm['image'] = $this->editImage->store('categories');
-        }
 
         $this->category->update($this->editForm);
 
         $this->category->brands()->sync($this->editForm['brands']);
 
-        $this->reset(['editForm', 'editImage']);
-
         $this->getCategories();
+
+        $this->editForm['open'] = false;
     }
 
     public function delete(Category $category){

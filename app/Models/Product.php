@@ -52,6 +52,11 @@ class Product extends Model
         return $this->belongsTo(Brand::class);
     }
 
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class);
+    }
+
     public function state()
     {
         return $this->belongsTo(State::class);

@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Admin;
 
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Currency;
 use App\Models\Image;
 use Livewire\Component;
 
@@ -18,7 +19,7 @@ use Illuminate\Support\Str;
 class EditProduct extends Component
 {
 
-    public $product, $categories, $subcategories, $brands, $slug, $shipping_cost, $city;
+    public $product, $categories, $subcategories, $brands, $slug, $currencies, $city;
 
     public $category_id, $state_id;
 
@@ -27,7 +28,6 @@ class EditProduct extends Component
         'product.subcategory_id' => 'required',
         'product.name' => 'required',
         'product.model' => 'required',
-        'product.serie_number' => 'required',
         'slug' => 'required|unique:products,slug',
         'product.description' => 'required',
         'product.brand_id' => 'required',
@@ -37,6 +37,9 @@ class EditProduct extends Component
         'product.quantity' => 'numeric',
         'product.shipping' => 'required',
         'product.state_id' => 'required',
+        'product.unit' => 'required',
+        'product.currency_id' => 'required',
+        'product.quantity' => 'required',
     ];
 
     protected $listeners = ['refreshProduct', 'delete'];
@@ -45,7 +48,7 @@ class EditProduct extends Component
     {
         $this->product = $product;
 
-        $this->shipping_cost = $product->shipping_cost;
+        $this->currencies = Currency::all();
 
         $this->categories = Category::all();
 
@@ -70,11 +73,6 @@ class EditProduct extends Component
     {
         $this->slug = Str::slug($value);
     }
-
-    // public function updatedShippingCost($value)
-    // {
-    //     $this->shipping_cost = $value;
-    // }
 
     public function updatedProductCategoryId($value)
     {
@@ -101,16 +99,9 @@ class EditProduct extends Component
         $rules = $this->rules;
         $rules['slug'] = 'required|unique:products,slug,' . $this->product->id;
 
-        if ($this->product->subcategory_id) {
-            if (!$this->subcategory->color && !$this->subcategory->size) {
-                $rules['product.quantity'] = 'required|numeric';
-            }
-        }
-
         $this->validate($rules);
 
         $this->product->slug = $this->slug;
-        $this->product->shipping_cost = $this->shipping_cost; //alternativa
 
         $this->product->save();
 
