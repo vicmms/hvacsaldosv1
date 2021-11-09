@@ -114,6 +114,8 @@ class EditProduct extends Component
         $this->product->save();
 
         $this->emit('saved');
+
+        return redirect()->route('admin.index');
     }
 
     public function deleteImage(Image $image)
