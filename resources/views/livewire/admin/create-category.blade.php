@@ -30,15 +30,6 @@
 
             <div class="col-span-6 sm:col-span-4">
                 <x-jet-label>
-                    Ícono
-                </x-jet-label>
-
-                <x-jet-input wire:model.defer="createForm.icon" type="text" class="w-full mt-1" />
-                <x-jet-input-error for="createForm.icon" />
-            </div>
-
-            <div class="col-span-6 sm:col-span-4">
-                <x-jet-label>
                     Marcas
                 </x-jet-label>
 
@@ -56,15 +47,6 @@
                 <x-jet-input-error for="createForm.brands" />
             </div>
 
-            <div class="col-span-6 sm:col-span-4">
-                <x-jet-label>
-                    Imagen
-                </x-jet-label>
-
-                <input wire:model="createForm.image" accept="image/*" type="file" class="mt-1" name=""
-                    id="{{ $rand }}">
-                <x-jet-input-error for="createForm.image" />
-            </div>
         </x-slot>
 
 
@@ -107,8 +89,8 @@
                                     {!! $category->icon !!}
                                 </span>
 
-                                <a href="{{ route('admin.categories.show', $category) }}"
-                                    class="uppercase underline hover:text-blue-600">
+                                 <a {{--href="{{ route('admin.categories.show', $category) }}" --}}
+                                    class="uppercase">
                                     {{ $category->name }}
                                 </a>
                             </td>
@@ -139,16 +121,6 @@
             <div class="space-y-3">
 
                 <div>
-                    @if ($editImage)
-                        <img class="w-full h-64 object-cover object-center" src="{{ $editImage->temporaryUrl() }}"
-                            alt="">
-                    @else
-                        <img class="w-full h-64 object-cover object-center" src="{{ Storage::url($editForm['image']) }}"
-                            alt="">
-                    @endif
-                </div>
-
-                <div>
                     <x-jet-label>
                         Nombre
                     </x-jet-label>
@@ -169,15 +141,6 @@
 
                 <div>
                     <x-jet-label>
-                        Ícono
-                    </x-jet-label>
-
-                    <x-jet-input wire:model.defer="editForm.icon" type="text" class="w-full mt-1" />
-                    <x-jet-input-error for="editForm.icon" />
-                </div>
-
-                <div>
-                    <x-jet-label>
                         Marcas
                     </x-jet-label>
 
@@ -194,24 +157,15 @@
                     </div>
                     <x-jet-input-error for="editForm.brands" />
                 </div>
-
-                <div>
-                    <x-jet-label>
-                        Imagen
-                    </x-jet-label>
-
-                    <input wire:model="editImage" accept="image/*" type="file" class="mt-1" name=""
-                        id="{{ $rand }}">
-                    <x-jet-input-error for="editImage" />
-                </div>
             </div>
         </x-slot>
 
         <x-slot name="footer">
-            <x-jet-danger-button wire:click="update" wire:loading.attr="disabled" wire:target="editImage, update">
+            <x-jet-danger-button wire:click="update" wire:loading.attr="disabled" wire:target="update">
                 Actualizar
             </x-jet-danger-button>
         </x-slot>
 
     </x-jet-dialog-modal>
+
 </div>
