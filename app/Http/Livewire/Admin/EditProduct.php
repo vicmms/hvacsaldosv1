@@ -81,7 +81,8 @@ class EditProduct extends Component
         $this->subcategories = Subcategory::all();
 
         $this->brands = Brand::join('brand_category', 'brands.id', 'brand_category.brand_id')
-                    ->where('brand_category.category_id', $value)
+                    ->select('brands.*')
+                    ->where('brand_category.category_id', $this->category_id)
                     ->orderBy('name', 'asc')
                     ->get();
 
@@ -114,6 +115,8 @@ class EditProduct extends Component
         $this->product->save();
 
         $this->emit('saved');
+
+        return redirect()->route('admin.index');
     }
 
     public function deleteImage(Image $image)
@@ -148,6 +151,11 @@ class EditProduct extends Component
     public function render()
     {
         $user = Auth::user();
+        $this->brands = Brand::join('brand_category', 'brands.id', 'brand_category.brand_id')
+                    ->select('brands.*')
+                    ->where('brand_category.category_id', $this->category_id)
+                    ->orderBy('name', 'asc')
+                    ->get();
         return view('livewire.admin.edit-product', compact('user'))->layout('layouts.admin');
     }
 }
