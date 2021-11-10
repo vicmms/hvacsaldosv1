@@ -20,7 +20,7 @@
             <div class="px-6 py-4">
 
                 <x-jet-input type="text" wire:model="search" class="w-full"
-                    placeholder="Ingrese el nombre del procucto que quiere buscar" />
+                    placeholder="Buscar..." />
 
             </div>
 
@@ -130,8 +130,8 @@
 
                                 </td>
                                 <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ $product->state->country->currency }}
-                                    {{ $product->state->country->denotation . $product->price }}
+                                    {{ $product->currency ? $product->currency->currency : '' }}
+                                    {{ $product->currency ? $product->currency->symbol : '$'}} {{ $product->price }}
                                 </td>
                                 <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">
                                     {{ explode(' ', $product->created_at)[0] }}

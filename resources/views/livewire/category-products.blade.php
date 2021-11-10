@@ -18,8 +18,9 @@
                                     <h1 class="text-lg font-semibold">
                                         {{ Str::limit($product->name, 15) }}
                                     </h1>
-                                    <p class="font-bold text-trueGray-700">{{ $product->state->country->currency }}
-                                        {{ $product->state->country->denotation . $product->price }}
+                                    <p class="font-bold text-trueGray-700">
+                                        {{ $product->currency ? $product->currency->currency : '' }}
+                                        {{ $product->currency ? $product->currency->symbol : '$'}}{{ $product->price }}
                                     </p>
                                 </div>
                             </article>

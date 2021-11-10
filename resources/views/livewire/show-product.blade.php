@@ -52,13 +52,13 @@
                         href="">{{ $product->serie_number ? $product->serie_number : 'No especificado' }}</a></p>
 
                 <p class="text-2xl font-semibold text-trueGray-700 my-4">Precio de Venta:
-                    {{ $product->state->country->currency }}
-                    {{ $product->state->country->denotation . $product->price }}
+                    {{ $product->currency ? $product->currency->currency : '' }}
+                    {{ $product->currency ? $product->currency->symbol : '$' }}{{ $product->price }}
                 </p>
                 <p class="text-xl font-semibold  my-4">Precio Comercial:
                     <del class="text-red-800">
-                        {{ $product->state->country->currency }}
-                        {{ $product->state->country->denotation . $product->commercial_price }}
+                        {{ $product->currency ? $product->currency->currency : '' }}
+                        {{ $product->currency ? $product->currency->symbol : '$'}}{{ $product->commercial_price }}
                     </del>
                 </p>
 
