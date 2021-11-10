@@ -148,7 +148,7 @@
                 {{-- Precio --}}
                 <div>
                     <x-jet-label value="Precio de venta en Saldo HVAC*" />
-                    <x-jet-input wire:model="product.price" type="number" class="w-full" step=".01" />
+                    <x-jet-input wire:model="product.price" type="number" class="w-full" step="1" onkeypress="return event.charCode >= 48 && event.charCode <= 57"/>
                     <x-jet-input-error for="product.price" />
                 </div>
 
@@ -156,7 +156,7 @@
                 <div>
                     <x-jet-label value="Precio comercial*" />
                     <x-jet-input wire:model="product.commercial_price" type="number" class="w-full"
-                        step=".01" />
+                    step="1" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
                     <x-jet-input-error for="product.commercial_price" />
                 </div>
                 {{-- moneda --}}
