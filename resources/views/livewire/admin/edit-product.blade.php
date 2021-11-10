@@ -48,17 +48,36 @@
 
         @role('admin')
             @livewire('admin.status-product', ['product' => $product], key('status-product-' . $product->id))
-            @if ($isRejected)
-                @livewire('admin.rejection-record', ['rejections' => $product->rejections])
-            @endif
         @endrole
-        
+        @if ($isRejected)
+            @livewire('admin.rejection-record', ['rejections' => $product->rejections])
+        @endif
 
         {{-- <div class="bg-white shadow-xl rounded-lg p-6">
 
         </div> --}}
 
         <div class="bg-white shadow-xl rounded-lg p-6">
+            @switch($product->status)
+                @case(1)
+                    <span
+                        class="mb-4 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                        En revisión
+                    </span>
+                @break
+                @case(2)
+                    <span class="mb-4 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                        Publicado
+                    </span>
+                @break
+                @case(3)
+                    <span class="mb-4 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                        Rechazado
+                    </span>
+                @break
+                @default
+
+            @endswitch
             <div class="grid grid-cols-2 gap-6 mb-4">
 
                 {{-- Categoría --}}
@@ -147,7 +166,8 @@
                         <option value="" selected disabled>Seleccione una moneda</option>
 
                         @foreach ($currencies as $currency)
-                            <option value="{{ $currency->id }}">{{ $currency->currency .  $currency->symbol}}</option>
+                            <option value="{{ $currency->id }}">{{ $currency->currency . $currency->symbol }}
+                            </option>
                         @endforeach
                     </select>
 
@@ -165,7 +185,8 @@
                 {{-- unidad --}}
                 <div>
                     <x-jet-label value="Unidad*" />
-                    <x-jet-input wire:model="product.unit" type="text" class="w-full" placeholder="pza, paquete, caja, etc."/>
+                    <x-jet-input wire:model="product.unit" type="text" class="w-full"
+                        placeholder="pza, paquete, caja, etc." />
                     <x-jet-input-error for="product.unit" />
                 </div>
             </div>
@@ -241,8 +262,15 @@
                     Actualizado
                 </x-jet-action-message>
 
+                @if ($isRejected)
+                    <x-jet-danger-button class="mr-4" wire:loading.attr="disabled" wire:target="save(true)"
+                        wire:click="save(true)">
+                        Actualizar y enviar a revisión
+                    </x-jet-danger-button>
+                @endif
+
                 <x-jet-button wire:loading.attr="disabled" wire:target="save" wire:click="save">
-                    Actualizar producto
+                    Actualizar
                 </x-jet-button>
             </div>
         </div>

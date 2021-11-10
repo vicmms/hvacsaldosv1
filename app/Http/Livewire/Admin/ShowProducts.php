@@ -60,6 +60,6 @@ class ShowProducts extends Component
 
         $product->delete();
 
-        return redirect()->route('admin.index');
+        // return redirect()->route('admin.index');
     }
 }
