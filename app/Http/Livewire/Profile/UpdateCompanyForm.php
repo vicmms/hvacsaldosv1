@@ -15,8 +15,10 @@ class UpdateCompanyForm extends Component
         $company = DB::table('companies')
             ->where('user_id', Auth::user()->id)
             ->first();
-        $this->name = $company->name;
-        $this->data = $company->tax_data;
+        if($company){
+            $this->name = $company->name;
+            $this->data = $company->tax_data;
+        }
     }
 
     public function save()
