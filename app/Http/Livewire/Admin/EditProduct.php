@@ -96,8 +96,11 @@ class EditProduct extends Component
         return Subcategory::find($this->product->subcategory_id);
     }
 
-    public function save()
+    public function save($revision = false)
     {
+        if($revision)
+            $this->product->status = 1;
+
         $rules = $this->rules;
         $rules['slug'] = 'required|unique:products,slug,' . $this->product->id;
 

@@ -16,26 +16,30 @@ class StatusProduct extends Component
     }
 
     public function save(){
-        $this->product->status = $this->status;
+        if($this->status != 3){
+            $this->product->status = $this->status;
         $this->product->save();
 
         $this->emit('saved');
 
         return redirect()->route('admin.index');
+        }
     }
 
     public function rechazar(){
-        Rejection::create([
-            'message' => $this->message,
-            'product_id' => $this->product->id
-        ]);
-
-        $this->product->status = $this->status;
-        $this->product->save();
-
-        $this->emit('saved');
-
-        return redirect()->route('admin.index');
+        if($this->status == 3){
+            Rejection::create([
+                'message' => $this->message,
+                'product_id' => $this->product->id
+            ]);
+    
+            $this->product->status = $this->status;
+            $this->product->save();
+    
+            $this->emit('saved');
+    
+            return redirect()->route('admin.index');
+        }
     }
 
     public function changeModal(){

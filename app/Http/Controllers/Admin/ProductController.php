@@ -15,7 +15,6 @@ class ProductController extends Controller
         $file = $request->file('file');
 
         $extension = $file->getClientOriginalExtension();
-
         if($extension == 'png' || $extension == 'PNG'){
             $imagenOriginal = imagecreatefrompng($file);
         }else{
