@@ -108,6 +108,10 @@ class EditProduct extends Component
 
         $this->product->slug = $this->slug;
 
+        $this->product->price = str_replace(',','', $this->product->price);
+
+        $this->product->commercial_price = str_replace(',','', $this->product->commercial_price);
+
         $this->product->save();
 
         $this->emit('saved');
