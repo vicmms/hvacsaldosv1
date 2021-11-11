@@ -26,7 +26,7 @@
 
             @if ($products->count())
 
-                <table class="min-w-full divide-y divide-gray-200">
+                <table class="min-w-full divide-y divide-gray-200" id="showProducts">
                     <thead class="bg-gray-50">
                         <tr>
                             <th scope="col"
@@ -131,7 +131,7 @@
                                 </td>
                                 <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">
                                     {{ $product->currency ? $product->currency->currency : '' }}
-                                    {{ $product->currency ? $product->currency->symbol : '$'}} {{ $product->price }}
+                                    {{ $product->currency ? $product->currency->symbol : '$'}} {{ number_format($product->price, 0, '.', ',') }}
                                 </td>
                                 <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">
                                     {{ explode(' ', $product->created_at)[0] }}

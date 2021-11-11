@@ -88,8 +88,8 @@ class CreateProduct extends Component
         $product->name = $this->name;
         $product->slug = $this->slug;
         $product->description = $this->description;
-        $product->price = $this->price;
-        $product->commercial_price = $this->commercial_price;
+        $product->price = str_replace(',','', $this->price);
+        $product->commercial_price = str_replace(',','', $this->commercial_price);
         $product->model = $this->model;
         $product->shipping = $this->shipping;
         $product->serie_number = $this->serie_number;
