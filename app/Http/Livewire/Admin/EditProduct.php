@@ -19,9 +19,9 @@ use Illuminate\Support\Str;
 class EditProduct extends Component
 {
 
-    public $product, $categories, $subcategories, $brands, $slug, $currencies, $city, $isRejected;
+    public $product, $categories, $subcategories, $brands, $slug, $currencies, $city, $isRejected, $modalImages;
 
-    public $category_id, $state_id;
+    public $category_id, $state_id, $firstTime;
 
     protected $rules = [
         'product.category_id' => 'required',
@@ -63,6 +63,10 @@ class EditProduct extends Component
         $this->slug = $this->product->slug;
 
         $this->brands = Brand::all();
+
+        $this->modalImages = false;
+
+        $this->firstTime = true;
     }
 
 
@@ -81,10 +85,10 @@ class EditProduct extends Component
         $this->subcategories = Subcategory::all();
 
         $this->brands = Brand::join('brand_category', 'brands.id', 'brand_category.brand_id')
-                    ->select('brands.*')
-                    ->where('brand_category.category_id', $this->category_id)
-                    ->orderBy('name', 'asc')
-                    ->get();
+            ->select('brands.*')
+            ->where('brand_category.category_id', $this->category_id)
+            ->orderBy('name', 'asc')
+            ->get();
 
         /* $this->reset(['subcategory_id', 'brand_id']); */
         $this->product->subcategory_id = "";
@@ -98,7 +102,7 @@ class EditProduct extends Component
 
     public function save($revision = false)
     {
-        if($revision)
+        if ($revision)
             $this->product->status = 1;
 
         $rules = $this->rules;
@@ -108,9 +112,9 @@ class EditProduct extends Component
 
         $this->product->slug = $this->slug;
 
-        $this->product->price = str_replace(',','', $this->product->price);
+        $this->product->price = str_replace(',', '', $this->product->price);
 
-        $this->product->commercial_price = str_replace(',','', $this->product->commercial_price);
+        $this->product->commercial_price = str_replace(',', '', $this->product->commercial_price);
 
         $this->product->save();
 
@@ -122,7 +126,7 @@ class EditProduct extends Component
     public function deleteImage(Image $image)
     {
         // Storage::delete([$image->url]);
-        if(file_exists($image->url)){
+        if (file_exists($image->url)) {
             unlink($image->url);
         }
         $image->delete();
@@ -136,7 +140,7 @@ class EditProduct extends Component
         $images = $this->product->images;
 
         foreach ($images as $image) {
-            if(file_exists($image->url)){
+            if (file_exists($image->url)) {
                 unlink($image->url);
             }
             $image->delete();
@@ -147,15 +151,24 @@ class EditProduct extends Component
         return redirect()->route('admin.index');
     }
 
+    public function modalImages()
+    {
+        $this->modalImages = !$this->modalImages;
+
+        if($this->modalImages){
+            $this->emit('showModalImages', $this->product->images);
+        }
+    }
+
 
     public function render()
     {
         $user = Auth::user();
         $this->brands = Brand::join('brand_category', 'brands.id', 'brand_category.brand_id')
-                    ->select('brands.*')
-                    ->where('brand_category.category_id', $this->category_id)
-                    ->orderBy('name', 'asc')
-                    ->get();
+            ->select('brands.*')
+            ->where('brand_category.category_id', $this->category_id)
+            ->orderBy('name', 'asc')
+            ->get();
         return view('livewire.admin.edit-product', compact('user'))->layout('layouts.admin');
     }
 }

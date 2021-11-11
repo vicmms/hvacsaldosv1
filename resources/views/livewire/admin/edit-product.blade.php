@@ -1,4 +1,14 @@
 <div>
+    <style>
+        .cover-image {
+            height: 550px !important;
+            object-fit: contain;
+        }
+        .flex-direction-nav a {
+            overflow: unset !important;
+        }
+
+    </style>
     <header class="bg-white shadow">
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center">
@@ -42,7 +52,31 @@
                     @endforeach
 
                 </ul>
+                <x-jet-danger-button wire:click="modalImages()" class="mt-6">
+                    <i class="fas fa-search-plus mr-1"></i>Ver imagenes
+                </x-jet-danger-button>
             </section>
+
+
+            <x-jet-dialog-modal wire:model="modalImages">
+
+                <x-slot name="title">
+                    <span class="font-bold text-2xl">{{ $product->name }}</span>
+                </x-slot>
+
+                <x-slot name="content">
+                    <div class="space-y-3 fs" wire:ignore>
+                        {{-- se llena desde js --}}
+                    </div>
+                </x-slot>
+
+                <x-slot name="footer">
+                    <x-jet-danger-button wire:click="modalImages" >
+                        cerrar
+                    </x-jet-danger-button>
+                </x-slot>
+
+            </x-jet-dialog-modal>
 
         @endif
 
@@ -66,12 +100,14 @@
                     </span>
                 @break
                 @case(2)
-                    <span class="mb-4 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                    <span
+                        class="mb-4 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                         Publicado
                     </span>
                 @break
                 @case(3)
-                    <span class="mb-4 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                    <span
+                        class="mb-4 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
                         Rechazado
                     </span>
                 @break
@@ -148,15 +184,17 @@
                 {{-- Precio --}}
                 <div>
                     <x-jet-label value="Precio de venta en Saldo HVAC*" />
-                    <x-jet-input wire:model="product.price" type="text" class="w-full formatter" step="1" onkeyup="formatter(this)" onkeypress="return event.charCode >= 48 && event.charCode <= 57"/>
+                    <x-jet-input wire:model="product.price" type="text" class="w-full formatter" step="1"
+                        onkeyup="formatter(this)" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
                     <x-jet-input-error for="product.price" />
                 </div>
 
                 {{-- Precio commercial --}}
                 <div>
                     <x-jet-label value="Precio comercial*" />
-                    <x-jet-input wire:model="product.commercial_price" type="text" class="w-full formatter" onkeyup="formatter(this)"
-                    step="1" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" />
+                    <x-jet-input wire:model="product.commercial_price" type="text" class="w-full formatter"
+                        onkeyup="formatter(this)" step="1"
+                        onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" />
                     <x-jet-input-error for="product.commercial_price" />
                 </div>
                 {{-- moneda --}}
@@ -293,7 +331,6 @@
 
     </div>
 
-
     @push('script')
         <script>
             Dropzone.options.myAwesomeDropzone = {
@@ -408,6 +445,27 @@
                     }
                 })
             })
+
+            Livewire.on('showModalImages', (images) => {
+                console.log('show')
+                $('.slides').empty();
+                $('.fs').empty();
+                $('.fs').append(
+                    `
+                    <div class="flexslider" wire:ignore>
+                            <ul class="slides">
+                                
+                            </ul>
+                        </div>
+                    `
+                );
+                images.forEach(image => {
+                    $('.slides').append('<li><img src="/'+image['url']+'" class="cover-image"></li>');
+                });
+                $('.flexslider').flexslider(); 
+                $('.flex-next').text('');
+                $('.flex-prev').text('');
+            });
         </script>
     @endpush
 

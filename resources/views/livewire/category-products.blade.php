@@ -20,7 +20,7 @@
                                     </h1>
                                     <p class="font-bold text-trueGray-700">
                                         {{ $product->currency ? $product->currency->currency : '' }}
-                                        {{ $product->currency ? $product->currency->symbol : '$'}}{{ $product->price }}
+                                        {{ $product->currency ? $product->currency->symbol : '$'}}{{ number_format($product->price, 0, '.', ',') }}
                                     </p>
                                 </div>
                             </article>

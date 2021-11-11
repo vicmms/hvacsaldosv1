@@ -53,12 +53,12 @@
 
                 <p class="text-2xl font-semibold text-trueGray-700 my-4">Precio de Venta:
                     {{ $product->currency ? $product->currency->currency : '' }}
-                    {{ $product->currency ? $product->currency->symbol : '$' }}{{ $product->price }}
+                    {{ $product->currency ? $product->currency->symbol : '$' }}{{ number_format($product->price, 0, '.', ',') }}
                 </p>
                 <p class="text-xl font-semibold  my-4">Precio Comercial:
                     <del class="text-red-800">
                         {{ $product->currency ? $product->currency->currency : '' }}
-                        {{ $product->currency ? $product->currency->symbol : '$'}}{{ $product->commercial_price }}
+                        {{ $product->currency ? $product->currency->symbol : '$'}}{{ number_format($product->commercial_price, 0, '.', ',') }}
                     </del>
                 </p>
 
