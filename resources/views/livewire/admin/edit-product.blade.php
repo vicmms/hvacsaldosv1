@@ -4,6 +4,7 @@
             height: 550px !important;
             object-fit: contain;
         }
+
         .flex-direction-nav a {
             overflow: unset !important;
         }
@@ -71,7 +72,7 @@
                 </x-slot>
 
                 <x-slot name="footer">
-                    <x-jet-danger-button wire:click="modalImages" >
+                    <x-jet-danger-button wire:click="modalImages">
                         cerrar
                     </x-jet-danger-button>
                 </x-slot>
@@ -287,10 +288,12 @@
                     </div>
                     <x-jet-input-error for="product.description" />
                 </div>
-                <div class="mt-4">
-                    <img src="https://chart.googleapis.com/chart?cht=qr&chl={{ $product->id }}&chs=120x120&chld=L|0"
-                        class="qr-code img-thumbnail img-responsive mx-auto" />
-
+                <div class="mt-4 text-center">
+                    <a class="hover:text-orange-400" href="{{ route('imprimirQr', $product) }}" target="_blank">
+                        <img src="https://chart.googleapis.com/chart?cht=qr&chl={{ $product->id }}&chs=120x120&chld=L|0"
+                            class="qr-code img-thumbnail img-responsive mx-auto" />
+                        Imprimir
+                    </a>
                 </div>
 
             </div>
@@ -460,9 +463,9 @@
                     `
                 );
                 images.forEach(image => {
-                    $('.slides').append('<li><img src="/'+image['url']+'" class="cover-image"></li>');
+                    $('.slides').append('<li><img src="/' + image['url'] + '" class="cover-image"></li>');
                 });
-                $('.flexslider').flexslider(); 
+                $('.flexslider').flexslider();
                 $('.flex-next').text('');
                 $('.flex-prev').text('');
             });
