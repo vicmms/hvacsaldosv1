@@ -20,13 +20,13 @@
             <div class="px-6 py-4">
 
                 <x-jet-input type="text" wire:model="search" class="w-full"
-                    placeholder="Ingrese el nombre del procucto que quiere buscar" />
+                    placeholder="Buscar..." />
 
             </div>
 
             @if ($products->count())
 
-                <table class="min-w-full divide-y divide-gray-200">
+                <table class="min-w-full divide-y divide-gray-200" id="showProducts">
                     <thead class="bg-gray-50">
                         <tr>
                             <th scope="col"
@@ -130,8 +130,8 @@
 
                                 </td>
                                 <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ $product->state->country->currency }}
-                                    {{ $product->state->country->denotation . $product->price }}
+                                    {{ $product->currency ? $product->currency->currency : '' }}
+                                    {{ $product->currency ? $product->currency->symbol : '$'}} {{ number_format($product->price, 0, '.', ',') }}
                                 </td>
                                 <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">
                                     {{ explode(' ', $product->created_at)[0] }}

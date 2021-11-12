@@ -1,4 +1,4 @@
-<div class="bg-white shadow-xl rounded-lg p-6 mb-4 max-h-96 overflow-scroll">
+<div class="bg-white shadow-xl rounded-lg p-6 mb-4 max-h-96 overflow-y-scroll">
     <p class="text-2xl text-center font-semibold mb-2">Historial de rechazos</p>
 
     @foreach ($rejections as $rejection)

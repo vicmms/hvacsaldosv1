@@ -38,9 +38,13 @@
                                 @endisset
 
                             </div>
-
-                            <p>{{ session('currency') }}
-                                {{ session('denotation') . $item->price }}</p>
+                            <p>
+                                {{$item->name}}
+                            </p>
+                            {{-- <p>
+                                {{ $item->currency ? $item->currency->currency : '' }}
+                                {{ $item->currency ? $item->currency->symbol : '$'}}{{ $item->price }}
+                            </p> --}}
                         </article>
                     </li>
                 @empty
@@ -54,9 +58,9 @@
 
             @if (Cart::count())
                 <div class="py-2 px-3">
-                    <p class="text-lg text-gray-700 mt-2 mb-3"><span class="font-bold">Total:</span>
+                    {{-- <p class="text-lg text-gray-700 mt-2 mb-3"><span class="font-bold">Total:</span>
                         {{ session('currency') }}
-                        {{ session('denotation') . Cart::subtotal() }}</p>
+                        {{ session('denotation') . Cart::subtotal() }}</p> --}}
 
 
                     <x-button-enlace href="{{ route('shopping-cart') }}" color="orange" class="w-full">

@@ -1,4 +1,14 @@
 <div>
+    <style>
+        .cover-image {
+            height: 550px !important;
+            object-fit: contain;
+        }
+        .flex-direction-nav a {
+            overflow: unset !important;
+        }
+
+    </style>
     <header class="bg-white shadow">
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center">
@@ -42,23 +52,68 @@
                     @endforeach
 
                 </ul>
+                <x-jet-danger-button wire:click="modalImages()" class="mt-6">
+                    <i class="fas fa-search-plus mr-1"></i>Ver imagenes
+                </x-jet-danger-button>
             </section>
+
+
+            <x-jet-dialog-modal wire:model="modalImages">
+
+                <x-slot name="title">
+                    <span class="font-bold text-2xl">{{ $product->name }}</span>
+                </x-slot>
+
+                <x-slot name="content">
+                    <div class="space-y-3 fs" wire:ignore>
+                        {{-- se llena desde js --}}
+                    </div>
+                </x-slot>
+
+                <x-slot name="footer">
+                    <x-jet-danger-button wire:click="modalImages" >
+                        cerrar
+                    </x-jet-danger-button>
+                </x-slot>
+
+            </x-jet-dialog-modal>
 
         @endif
 
         @role('admin')
             @livewire('admin.status-product', ['product' => $product], key('status-product-' . $product->id))
-            @if ($isRejected)
-                @livewire('admin.rejection-record', ['rejections' => $product->rejections])
-            @endif
         @endrole
-        
+        @if ($isRejected)
+            @livewire('admin.rejection-record', ['rejections' => $product->rejections])
+        @endif
 
         {{-- <div class="bg-white shadow-xl rounded-lg p-6">
 
         </div> --}}
 
         <div class="bg-white shadow-xl rounded-lg p-6">
+            @switch($product->status)
+                @case(1)
+                    <span
+                        class="mb-4 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                        En revisión
+                    </span>
+                @break
+                @case(2)
+                    <span
+                        class="mb-4 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                        Publicado
+                    </span>
+                @break
+                @case(3)
+                    <span
+                        class="mb-4 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                        Rechazado
+                    </span>
+                @break
+                @default
+
+            @endswitch
             <div class="grid grid-cols-2 gap-6 mb-4">
 
                 {{-- Categoría --}}
@@ -129,15 +184,17 @@
                 {{-- Precio --}}
                 <div>
                     <x-jet-label value="Precio de venta en Saldo HVAC*" />
-                    <x-jet-input wire:model="product.price" type="number" class="w-full" step=".01" />
+                    <x-jet-input wire:model="product.price" type="text" class="w-full formatter" step="1"
+                        onkeyup="formatter(this)" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
                     <x-jet-input-error for="product.price" />
                 </div>
 
                 {{-- Precio commercial --}}
                 <div>
                     <x-jet-label value="Precio comercial*" />
-                    <x-jet-input wire:model="product.commercial_price" type="number" class="w-full"
-                        step=".01" />
+                    <x-jet-input wire:model="product.commercial_price" type="text" class="w-full formatter"
+                        onkeyup="formatter(this)" step="1"
+                        onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" />
                     <x-jet-input-error for="product.commercial_price" />
                 </div>
                 {{-- moneda --}}
@@ -147,7 +204,8 @@
                         <option value="" selected disabled>Seleccione una moneda</option>
 
                         @foreach ($currencies as $currency)
-                            <option value="{{ $currency->id }}">{{ $currency->currency .  $currency->symbol}}</option>
+                            <option value="{{ $currency->id }}">{{ $currency->currency . $currency->symbol }}
+                            </option>
                         @endforeach
                     </select>
 
@@ -165,7 +223,8 @@
                 {{-- unidad --}}
                 <div>
                     <x-jet-label value="Unidad*" />
-                    <x-jet-input wire:model="product.unit" type="text" class="w-full" placeholder="pza, paquete, caja, etc."/>
+                    <x-jet-input wire:model="product.unit" type="text" class="w-full"
+                        placeholder="pza, paquete, caja, etc." />
                     <x-jet-input-error for="product.unit" />
                 </div>
             </div>
@@ -241,8 +300,15 @@
                     Actualizado
                 </x-jet-action-message>
 
+                @if ($isRejected)
+                    <x-jet-danger-button class="mr-4" wire:loading.attr="disabled" wire:target="save(true)"
+                        wire:click="save(true)">
+                        Actualizar y enviar a revisión
+                    </x-jet-danger-button>
+                @endif
+
                 <x-jet-button wire:loading.attr="disabled" wire:target="save" wire:click="save">
-                    Actualizar producto
+                    Actualizar
                 </x-jet-button>
             </div>
         </div>
@@ -264,7 +330,6 @@
 
 
     </div>
-
 
     @push('script')
         <script>
@@ -380,6 +445,27 @@
                     }
                 })
             })
+
+            Livewire.on('showModalImages', (images) => {
+                console.log('show')
+                $('.slides').empty();
+                $('.fs').empty();
+                $('.fs').append(
+                    `
+                    <div class="flexslider" wire:ignore>
+                            <ul class="slides">
+                                
+                            </ul>
+                        </div>
+                    `
+                );
+                images.forEach(image => {
+                    $('.slides').append('<li><img src="/'+image['url']+'" class="cover-image"></li>');
+                });
+                $('.flexslider').flexslider(); 
+                $('.flex-next').text('');
+                $('.flex-prev').text('');
+            });
         </script>
     @endpush
 

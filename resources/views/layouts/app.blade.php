@@ -43,6 +43,7 @@
 
     {{-- FlexSlider --}}
     <script src="{{ asset('vendor/FlexSlider/jquery.flexslider-min.js') }}"></script>
+
 </head>
 
 <body class="font-sans antialiased">
@@ -85,8 +86,9 @@
             }
         }
     </script>
-
+    {{-- formatter --}}
     @stack('script')
+    <script src="{{asset('js/formatter.js')}}"></script>
 
 </body>
 

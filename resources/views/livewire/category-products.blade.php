@@ -5,25 +5,26 @@
 
                 @foreach ($products as $product)
 
-                    <li class="bg-white rounded-lg shadow {{ $loop->last ? '' : 'sm:mr-4' }}">
-                        <article>
-                            <figure>
-                                <img class="h-48 w-full object-cover object-center"
-                                    src="{{ count($product->images) ? asset($product->images->first()->url) : asset('/images/image-not-found.png') }}"
-                                    alt="">
-                            </figure>
+                    <li class="bg-white rounded-lg shadow {{ $loop->last ? '' : 'sm:mr-4' }} border-2 border-orange-50">
+                        <a href="{{ route('products.show', $product) }}">
+                            <article>
+                                <figure class="border-b-2 border-orange-50">
+                                    <img class="h-48 w-full object-cover object-center"
+                                        src="{{ count($product->images) ? asset($product->images->first()->url) : asset('/images/image-not-found.png') }}"
+                                        alt="">
+                                </figure>
 
-                            <div class="py-4 px-6">
-                                <h1 class="text-lg font-semibold">
-                                    <a href="{{ route('products.show', $product) }}">
+                                <div class="py-4 px-6">
+                                    <h1 class="text-lg font-semibold">
                                         {{ Str::limit($product->name, 15) }}
-                                    </a>
-                                </h1>
-
-                                <p class="font-bold text-trueGray-700">{{ $product->state->country->currency }}
-                                    {{ $product->state->country->denotation . $product->price }}</p>
-                            </div>
-                        </article>
+                                    </h1>
+                                    <p class="font-bold text-trueGray-700">
+                                        {{ $product->currency ? $product->currency->currency : '' }}
+                                        {{ $product->currency ? $product->currency->symbol : '$'}}{{ number_format($product->price, 0, '.', ',') }}
+                                    </p>
+                                </div>
+                            </article>
+                        </a>
                     </li>
                 @endforeach
 
