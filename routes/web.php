@@ -6,6 +6,7 @@ use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PdfController;
 use App\Http\Controllers\ProductController;
 use App\Http\Livewire\ShoppingCart;
 use App\Http\Livewire\CreateOrder;
@@ -43,3 +44,5 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('webhooks', WebhooksController::class);
 });
+
+Route::get('imprimirQR/{product}', [PdfController::class, 'imprimirQr'])->name('imprimirQr');
