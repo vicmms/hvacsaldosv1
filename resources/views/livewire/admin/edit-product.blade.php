@@ -344,6 +344,16 @@
                 acceptedFiles: 'image/*',
                 paramName: "file", // The name that will be used to transfer the file
                 maxFilesize: 2, // MB
+                maxFiles: 4,
+                init: function() {
+                    this.on("addedfiles", function(listFiles) {
+                        contImages = Object.keys(listFiles).length;
+                        Livewire.emit('refreshProduct', contImages);
+                    });
+                    this.on("maxfilesexceeded", function() {
+                        Livewire.emit('maxFiles');
+                    });
+                },
                 complete: function(file) {
                     this.removeFile(file);
                 },
@@ -351,6 +361,15 @@
                     Livewire.emit('refreshProduct');
                 }
             };
+
+            Livewire.on('maxFiles', () => {
+                Swal.fire({
+                    icon: 'warning',
+                    text: 'Se pueden subir como máximo 4 fotos y un video',
+                    title: 'No se cargaron todos los archivos',
+                    showConfirmButton: true,
+                })
+            })
 
 
             Livewire.on('deleteProduct', () => {
@@ -450,7 +469,6 @@
             })
 
             Livewire.on('showModalImages', (images) => {
-                console.log('show')
                 $('.slides').empty();
                 $('.fs').empty();
                 $('.fs').append(
