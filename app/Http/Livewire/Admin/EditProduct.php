@@ -70,8 +70,13 @@ class EditProduct extends Component
     }
 
 
-    public function refreshProduct()
+    public function refreshProduct($files = null, $isMaxImages = false)
     {
+        $contImages = $this->product->images()->count();
+        if (($files && $contImages > 3) || $isMaxImages)
+            $this->emit('maxFiles');
+        // if (($files + $contImages) > 4))
+        //     $this->emit('maxFiles');
         $this->product = $this->product->fresh();
     }
 
@@ -155,7 +160,7 @@ class EditProduct extends Component
     {
         $this->modalImages = !$this->modalImages;
 
-        if($this->modalImages){
+        if ($this->modalImages) {
             $this->emit('showModalImages', $this->product->images);
         }
     }

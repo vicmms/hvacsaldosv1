@@ -60,15 +60,32 @@
                 </div>
             @endif
 
+            <div class="flex items-center justify-end my-6">
+                <input type="checkbox" name="politicas" id="politicas" class="form-control mr-2" onclick="Enable(this, 'btnRegister')">
+                <span class="text-sm">
+                    He leido y acepto las
+                    <a class="underline text-sm text-gray-600 hover:text-gray-900"
+                        href="https://www.saldohvac.com/privacidad">
+                        {{ __('politicas de privacidad y seguridad ') }}
+                    </a>
+
+                </span>
+            </div>
+
             <div class="flex items-center justify-end mt-4">
                 <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
                     {{ __('Ya tengo una cuenta') }}
                 </a>
 
-                <x-jet-button class="ml-4">
+                <x-jet-button class="ml-4" id="btnRegister" disabled>
                     {{ __('Register') }}
                 </x-jet-button>
             </div>
         </form>
     </x-jet-authentication-card>
+    <script>
+        Enable = function(checkbox, btnId) {
+            document.getElementById(btnId).disabled = !checkbox.checked; 
+        }
+    </script>
 </x-guest-layout>
