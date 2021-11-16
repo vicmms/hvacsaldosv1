@@ -38,7 +38,7 @@
             <section class="bg-white shadow-xl rounded-lg p-6 mb-4">
                 <h1 class="text-2xl text-center font-semibold mb-2">Imagenes del producto</h1>
 
-                <ul class="flex flex-wrap">
+                <ul class="flex flex-wrap" id="images_list">
                     @foreach ($product->images as $image)
 
                         <li class="relative" wire:key="image-{{ $image->id }}">
@@ -347,12 +347,14 @@
                 maxFiles: 4,
                 init: function() {
                     this.on("addedfiles", function(listFiles) {
+                        currentImages = document.getElementById("images_list") ? document.getElementById("images_list").getElementsByTagName("li").length : 0;
                         contImages = Object.keys(listFiles).length;
-                        Livewire.emit('refreshProduct', contImages);
+                        isMaxImages = currentImages + contImages > 4 ? true : false;
+                        Livewire.emit('refreshProduct', contImages, isMaxImages);
                     });
-                    this.on("maxfilesexceeded", function() {
-                        Livewire.emit('maxFiles');
-                    });
+                    // this.on("maxfilesexceeded", function() {
+                    //     Livewire.emit('maxFiles');
+                    // });
                 },
                 complete: function(file) {
                     this.removeFile(file);

@@ -31,8 +31,6 @@ class ProductController extends Controller
             $product->images()->create([
                 'url' => "images/admin/products/" . $nombrearchivo
             ]);
-        }else{
-            dd($product);
         }
     }
 }

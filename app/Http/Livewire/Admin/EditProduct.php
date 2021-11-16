@@ -70,11 +70,13 @@ class EditProduct extends Component
     }
 
 
-    public function refreshProduct($files = null)
+    public function refreshProduct($files = null, $isMaxImages = false)
     {
         $contImages = $this->product->images()->count();
-        if(($files && $contImages > 3) || ($files + $contImages) > 4)
-        $this->emit('maxFiles');
+        if (($files && $contImages > 3) || $isMaxImages)
+            $this->emit('maxFiles');
+        // if (($files + $contImages) > 4))
+        //     $this->emit('maxFiles');
         $this->product = $this->product->fresh();
     }
 
