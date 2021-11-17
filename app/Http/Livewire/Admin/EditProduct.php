@@ -115,7 +115,7 @@ class EditProduct extends Component
 
         $this->validate($rules);
 
-        $this->product->slug = $this->slug;
+        $this->product->slug = $this->slug . " " . rand(10, 99) . Auth::user()->id;
 
         $this->product->price = str_replace(',', '', $this->product->price);
 

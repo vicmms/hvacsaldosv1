@@ -28,7 +28,7 @@ Route::get('products/{product}', ShowProduct::class)->name('products.show');
 
 Route::get('shopping-cart', ShoppingCart::class)->name('shopping-cart');
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
 
