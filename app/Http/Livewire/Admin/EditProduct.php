@@ -61,7 +61,7 @@ class EditProduct extends Component
 
         $this->subcategories = Subcategory::all();
 
-        $this->slug = $this->product->slug;
+        $this->slug = $this->product->slug . " " . rand(10, 99) . Auth::user()->id;
 
         $this->brands = Brand::all();
 
