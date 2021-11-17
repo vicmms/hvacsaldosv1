@@ -17,7 +17,7 @@
                     Productos
                 </h1>
 
-                <x-jet-danger-button wire:click="$emit('deleteProduct', {{$product}})">
+                <x-jet-danger-button wire:click="$emit('deleteProduct', {{ $product }})">
                     Eliminar
                 </x-jet-danger-button>
             </div>
@@ -33,25 +33,35 @@
                 id="my-awesome-dropzone"></form>
         </div>
 
-        @if ($product->images->count())
+        @if ($product->images->count() || $product->videos->count())
 
             <section class="bg-white shadow-xl rounded-lg p-6 mb-4">
                 <h1 class="text-2xl text-center font-semibold mb-2">Imagenes del producto</h1>
 
                 <ul class="flex flex-wrap" id="images_list">
-                    @foreach ($product->images as $image)
+                    @if ($product->images->count())
+                        @foreach ($product->images as $image)
 
-                        <li class="relative" wire:key="image-{{ $image->id }}">
-                            <img class="w-32 h-20 object-cover" src="{{ asset($image->url) }}" alt="">
-                            <x-jet-danger-button class="absolute right-2 top-2"
-                                wire:click="deleteImage({{ $image->id }})" wire:loading.attr="disabled"
-                                wire:target="deleteImage({{ $image->id }})">
+                            <li class="relative mr-1" wire:key="image-{{ $image->id }}">
+                                <img class="w-32 h-20 object-cover rounded-md" src="{{ asset($image->url) }}" alt="">
+                                <button class="absolute right-2 top-2 bg-red-500 text-white rounded-full px-2"
+                                    wire:click="deleteImage({{ $image->id }})" wire:loading.attr="disabled"
+                                    wire:target="deleteImage({{ $image->id }})">
+                                    x
+                                </button>
+                            </li>
+                        @endforeach
+                    @endif
+                    @if ($product->videos->count())
+                        <li class="relative mr-1" wire:key="image-{{ $product->videos->first()->id }}">
+                            <img class="w-32 h-20 object-cover" src="{{ asset('images/video.png') }}" alt="">
+                            <button class="absolute right-2 top-2 bg-red-500 text-white rounded-full px-2"
+                                wire:click="deleteVideo({{ $product->videos->first()->id }})" wire:loading.attr="disabled"
+                                wire:target="deleteVideo({{ $product->videos->first()->id }})">
                                 x
-                            </x-jet-danger-button>
+                            </button>
                         </li>
-
-                    @endforeach
-
+                    @endif
                 </ul>
                 <x-jet-danger-button wire:click="modalImages()" class="mt-6">
                     <i class="fas fa-search-plus mr-1"></i>Ver imagenes
@@ -341,20 +351,25 @@
                     'X-CSRF-TOKEN': "{{ csrf_token() }}"
                 },
                 dictDefaultMessage: "Arrastre una imagen al recuadro",
-                acceptedFiles: 'image/*',
+                acceptedFiles: 'image/*, video/mp4',
                 paramName: "file", // The name that will be used to transfer the file
-                maxFilesize: 2, // MB
-                maxFiles: 4,
+                maxFilesize: 10, // MB
                 init: function() {
                     this.on("addedfiles", function(listFiles) {
-                        currentImages = document.getElementById("images_list") ? document.getElementById("images_list").getElementsByTagName("li").length : 0;
+                        currentImages = document.getElementById("images_list") ? document.getElementById(
+                            "images_list").getElementsByTagName("li").length : 0;
                         contImages = Object.keys(listFiles).length;
                         isMaxImages = currentImages + contImages > 4 ? true : false;
-                        Livewire.emit('refreshProduct', contImages, isMaxImages);
+                        Livewire.emit('refreshProduct', isMaxImages);
                     });
-                    // this.on("maxfilesexceeded", function() {
-                    //     Livewire.emit('maxFiles');
-                    // });
+                    this.on("error", function(file, message) {
+                        message = message['message'] ? message['errors']['file'][0] : message;
+                        Swal.fire({
+                            icon: 'warning',
+                            title: message,
+                            showConfirmButton: true,
+                        })
+                    });
                 },
                 complete: function(file) {
                     this.removeFile(file);
@@ -377,13 +392,13 @@
             Livewire.on('deleteProduct', (product) => {
 
                 Swal.fire({
-                title: '¿Eliminar '+product['name']+'?',
-                text: "Se perderá toda la información relacionada con este producto!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Eliminar!'
+                    title: '¿Eliminar ' + product['name'] + '?',
+                    text: "Se perderá toda la información relacionada con este producto!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Eliminar!'
                 }).then((result) => {
                     if (result.isConfirmed) {
 
@@ -479,7 +494,7 @@
                     `
                     <div class="flexslider" wire:ignore>
                             <ul class="slides">
-                                
+
                             </ul>
                         </div>
                     `

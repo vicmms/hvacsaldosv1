@@ -50,6 +50,10 @@ class Product extends Model
         return $this->hasMany(Rejection::class);
     }
 
+    public function Videos(){
+        return $this->hasMany(Video::class);
+    }
+
     //Relacion uno a muchos inversa
     public function brand()
     {
