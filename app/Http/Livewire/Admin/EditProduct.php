@@ -10,6 +10,7 @@ use Livewire\Component;
 
 use App\Models\Product;
 use App\Models\Subcategory;
+use App\Models\Video;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -70,11 +71,11 @@ class EditProduct extends Component
     }
 
 
-    public function refreshProduct($files = null, $isMaxImages = false)
+    public function refreshProduct($isMaxImages = false)
     {
         $contImages = $this->product->images()->count();
-        if (($files && $contImages > 3) || $isMaxImages)
-            $this->emit('maxFiles');
+        // if ($isMaxImages)
+        //     $this->emit('maxFiles');
         // if (($files + $contImages) > 4))
         //     $this->emit('maxFiles');
         $this->product = $this->product->fresh();
@@ -135,6 +136,17 @@ class EditProduct extends Component
             unlink($image->url);
         }
         $image->delete();
+
+        $this->product = $this->product->fresh();
+    }
+
+    public function deleteVideo(Video $video)
+    {
+        // Storage::delete([$image->url]);
+        if (file_exists($video->url)) {
+            unlink($video->url);
+        }
+        $video->delete();
 
         $this->product = $this->product->fresh();
     }
