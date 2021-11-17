@@ -25,6 +25,11 @@
             </div>
 
             <div class="flex items-center justify-end mt-4">
+                <a href="/" class="flex-1 ml-4">
+                    <button type="button" class="underline text-sm text-gray-600 hover:text-gray-900">
+                        {{ __('Regresar') }}
+                    </button>
+                </a>
                 <x-jet-button>
                     {{ __('Email Password Reset Link') }}
                 </x-jet-button>

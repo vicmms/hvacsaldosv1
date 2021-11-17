@@ -86,7 +86,7 @@ class CreateProduct extends Component
         $product = new Product();
 
         $product->name = $this->name;
-        $product->slug = $this->slug;
+        $product->slug = $this->slug . " " . rand(10,99) . Auth::user()->id;
         $product->description = $this->description;
         $product->price = str_replace(',','', $this->price);
         $product->commercial_price = str_replace(',','', $this->commercial_price);

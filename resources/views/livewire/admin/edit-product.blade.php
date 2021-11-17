@@ -17,7 +17,7 @@
                     Productos
                 </h1>
 
-                <x-jet-danger-button wire:click="$emit('deleteProduct')">
+                <x-jet-danger-button wire:click="$emit('deleteProduct', {{$product}})">
                     Eliminar
                 </x-jet-danger-button>
             </div>
@@ -38,7 +38,7 @@
             <section class="bg-white shadow-xl rounded-lg p-6 mb-4">
                 <h1 class="text-2xl text-center font-semibold mb-2">Imagenes del producto</h1>
 
-                <ul class="flex flex-wrap">
+                <ul class="flex flex-wrap" id="images_list">
                     @foreach ($product->images as $image)
 
                         <li class="relative" wire:key="image-{{ $image->id }}">
@@ -344,6 +344,18 @@
                 acceptedFiles: 'image/*',
                 paramName: "file", // The name that will be used to transfer the file
                 maxFilesize: 2, // MB
+                maxFiles: 4,
+                init: function() {
+                    this.on("addedfiles", function(listFiles) {
+                        currentImages = document.getElementById("images_list") ? document.getElementById("images_list").getElementsByTagName("li").length : 0;
+                        contImages = Object.keys(listFiles).length;
+                        isMaxImages = currentImages + contImages > 4 ? true : false;
+                        Livewire.emit('refreshProduct', contImages, isMaxImages);
+                    });
+                    // this.on("maxfilesexceeded", function() {
+                    //     Livewire.emit('maxFiles');
+                    // });
+                },
                 complete: function(file) {
                     this.removeFile(file);
                 },
@@ -352,27 +364,38 @@
                 }
             };
 
+            Livewire.on('maxFiles', () => {
+                Swal.fire({
+                    icon: 'warning',
+                    text: 'Se pueden subir como máximo 4 fotos y un video',
+                    title: 'No se cargaron todos los archivos',
+                    showConfirmButton: true,
+                })
+            })
 
-            Livewire.on('deleteProduct', () => {
+
+            Livewire.on('deleteProduct', (product) => {
 
                 Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
+                title: '¿Eliminar '+product['name']+'?',
+                text: "Se perderá toda la información relacionada con este producto!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Eliminar!'
                 }).then((result) => {
                     if (result.isConfirmed) {
 
                         Livewire.emitTo('admin.edit-product', 'delete');
 
-                        Swal.fire(
-                            'Deleted!',
-                            'Your file has been deleted.',
-                            'success'
-                        )
+                        Swal.fire({
+                            title: 'Realizado!',
+                            text: 'Producto eliminado exitosamente',
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 1000,
+                        })
                     }
                 })
 
@@ -450,7 +473,6 @@
             })
 
             Livewire.on('showModalImages', (images) => {
-                console.log('show')
                 $('.slides').empty();
                 $('.fs').empty();
                 $('.fs').append(

@@ -70,8 +70,13 @@ class EditProduct extends Component
     }
 
 
-    public function refreshProduct()
+    public function refreshProduct($files = null, $isMaxImages = false)
     {
+        $contImages = $this->product->images()->count();
+        if (($files && $contImages > 3) || $isMaxImages)
+            $this->emit('maxFiles');
+        // if (($files + $contImages) > 4))
+        //     $this->emit('maxFiles');
         $this->product = $this->product->fresh();
     }
 
@@ -110,7 +115,7 @@ class EditProduct extends Component
 
         $this->validate($rules);
 
-        $this->product->slug = $this->slug;
+        $this->product->slug = $this->slug . " " . rand(10, 99) . Auth::user()->id;
 
         $this->product->price = str_replace(',', '', $this->product->price);
 
@@ -155,7 +160,7 @@ class EditProduct extends Component
     {
         $this->modalImages = !$this->modalImages;
 
-        if($this->modalImages){
+        if ($this->modalImages) {
             $this->emit('showModalImages', $this->product->images);
         }
     }

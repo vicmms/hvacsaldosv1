@@ -21,6 +21,11 @@ class Search extends Component
         }
     }
 
+    public function resetSearch(){
+        $this->open = false;
+        $this->search = "";
+    }
+
     public function render()
     {
 

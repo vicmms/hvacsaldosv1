@@ -1,5 +1,12 @@
 <x-app-layout>
-
+    @if (Auth::check())
+        @if (!Auth::user()->email_verified_at)
+            <div class="w-full bg-yellow-400 text-center text-white font-semibold">
+                <a href="/email/verify"><i class="fas fa-exclamation-circle"></i> Verifica tu correo para evitar
+                    restricciones en tu cuenta</a>
+            </div>
+        @endif
+    @endif
     <div class="container py-8">
         @foreach ($categories as $category)
 

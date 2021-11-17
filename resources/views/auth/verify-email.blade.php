@@ -5,12 +5,12 @@
         </x-slot>
 
         <div class="mb-4 text-sm text-gray-600">
-            {{ __('Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
+            {{ __('Gracias por registrarte! Antes de empezar por favor verifica tu correo electrónico, te hemos enviado un correo con los pasos a seguir, o bien puedes solicitar que te reenviemos ese correo dando clic en el siguiente botón') }}
         </div>
 
         @if (session('status') == 'verification-link-sent')
             <div class="mb-4 font-medium text-sm text-green-600">
-                {{ __('A new verification link has been sent to the email address you provided during registration.') }}
+                {{ __('Se ha enviado un nuevo link de verificvación al correo proporcionado') }}
             </div>
         @endif
 
@@ -20,18 +20,25 @@
 
                 <div>
                     <x-jet-button type="submit">
-                        {{ __('Resend Verification Email') }}
+                        {{ __('Reenviar verificación') }}
                     </x-jet-button>
                 </div>
             </form>
+            <div>
+                <a href="/">
+                    <button class="underline text-sm text-gray-600 hover:text-gray-900">
+                        {{ __('Regresar') }}
+                    </button>
+                </a>
+            </div>
 
-            <form method="POST" action="{{ route('logout') }}">
+            {{-- <form method="POST" action="{{ route('logout') }}">
                 @csrf
-
+                
                 <button type="submit" class="underline text-sm text-gray-600 hover:text-gray-900">
-                    {{ __('Log Out') }}
+                    {{ __('Cerrar sesión') }}
                 </button>
-            </form>
+            </form> --}}
         </div>
     </x-jet-authentication-card>
 </x-guest-layout>
