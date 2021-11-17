@@ -17,7 +17,7 @@
                     Productos
                 </h1>
 
-                <x-jet-danger-button wire:click="$emit('deleteProduct')">
+                <x-jet-danger-button wire:click="$emit('deleteProduct', {{$product}})">
                     Eliminar
                 </x-jet-danger-button>
             </div>
@@ -374,26 +374,28 @@
             })
 
 
-            Livewire.on('deleteProduct', () => {
+            Livewire.on('deleteProduct', (product) => {
 
                 Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
+                title: '¿Eliminar '+product['name']+'?',
+                text: "Se perderá toda la información relacionada con este producto!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Eliminar!'
                 }).then((result) => {
                     if (result.isConfirmed) {
 
                         Livewire.emitTo('admin.edit-product', 'delete');
 
-                        Swal.fire(
-                            'Deleted!',
-                            'Your file has been deleted.',
-                            'success'
-                        )
+                        Swal.fire({
+                            title: 'Realizado!',
+                            text: 'Producto eliminado exitosamente',
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 1000,
+                        })
                     }
                 })
 

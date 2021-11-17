@@ -19,8 +19,7 @@
 
             <div class="px-6 py-4">
 
-                <x-jet-input type="text" wire:model="search" class="w-full"
-                    placeholder="Buscar..." />
+                <x-jet-input type="text" wire:model="search" class="w-full" placeholder="Buscar..." />
 
             </div>
 
@@ -88,7 +87,7 @@
                                 <td class="px-4 py-4 whitespace-nowrap">
 
                                     <div class="text-sm text-gray-900">
-                                        
+
                                         {{ Str::limit($product->category->name, 20) }}
                                     </div>
 
@@ -131,7 +130,8 @@
                                 </td>
                                 <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">
                                     {{ $product->currency ? $product->currency->currency : '' }}
-                                    {{ $product->currency ? $product->currency->symbol : '$'}} {{ number_format($product->price, 0, '.', ',') }}
+                                    {{ $product->currency ? $product->currency->symbol : '$' }}
+                                    {{ number_format($product->price, 0, '.', ',') }}
                                 </td>
                                 <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">
                                     {{ explode(' ', $product->created_at)[0] }}
@@ -139,7 +139,8 @@
                                 <td class="px-4 py-4 whitespace-nowrap text-center text-sm font-medium">
                                     <a href="{{ route('admin.products.edit', $product) }}"
                                         class="text-gray-400 hover:text-indigo-600"><i class="fas fa-pen"></i></a>
-                                    <i class="fas fa-trash text-red-400 hover:text-red-600 ml-2 cursor-pointer" wire:click="$emit('deleteProduct', {{$product}})"></i>
+                                    <i class="fas fa-trash text-red-400 hover:text-red-600 ml-2 cursor-pointer"
+                                        wire:click="$emit('deleteProduct', {{ $product }})"></i>
                                 </td>
                             </tr>
 
@@ -166,33 +167,32 @@
         </x-table-responsive>
     </div>
     @push('script')
-    <script>
+        <script>
+            Livewire.on('deleteProduct', (product) => {
+                Swal.fire({
+                    title: '¿Eliminar ' + product['name'] + '?',
+                    text: "Se perderá toda la información relacionada con este producto!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Eliminar!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Livewire.emitTo('admin.show-products', 'delete', product['id']);
 
-        Livewire.on('deleteProduct', (product) => {
-            Swal.fire({
-                title: '¿Eliminar producto?',
-                text: "Se perderá toda la información relacionada!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Eliminar!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    Livewire.emitTo('admin.show-products', 'delete', product['id']);
+                        Swal.fire({
+                            title: 'Realizado!',
+                            text: 'Producto eliminado exitosamente',
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 1000,
+                        })
+                    }
+                })
 
-                    Swal.fire(
-                        'Realizado!',
-                        'Producto eliminado',
-                        'success'
-                    )
-                }
-            })
-
-        });
-
-        
-    </script>
-@endpush
+            });
+        </script>
+    @endpush
 
 </div>
