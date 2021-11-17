@@ -13,7 +13,7 @@ class Question extends Model
 
     function product()
     {
-        return $this->belonsTo(Product::class);
+        return $this->belongsTo(Product::class);
     }
 
     function user()
