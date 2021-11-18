@@ -9,6 +9,7 @@ use App\Models\Image;
 use App\Models\Product;
 use App\Models\State;
 use App\Models\User;
+use App\Models\Currency;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
@@ -33,6 +34,10 @@ class ProductController extends Controller
     public function getCountries(Request $request)
     {
         return Country::all();
+    }
+    public function getCurrencies(Request $request)
+    {
+        return Currency::all();
     }
 
     public function getProductById(Request $request)
@@ -67,6 +72,7 @@ class ProductController extends Controller
         $product->quantity = $request->input('quantity');
         $product->user_id = $request->input('user_id');
         $product->state_id = $request->input('state_id');
+        $product->currency_id = $request->input('currency_id');
         $product->city = $request->input('city');
 <<<<<<< HEAD
 
@@ -126,7 +132,11 @@ class ProductController extends Controller
                 'quantity' => $request->input('quantity'),
                 'state_id' => $request->input('state_id'),
                 'status' => $request->input('status'),
+<<<<<<< HEAD
                 'city' => $request->input('city')
+=======
+                'currency_id'=> $request->input('currency_id')
+>>>>>>> badbcd584251639dd6b5c6a353575f8658945c74
             ]);
         $product = Product::find($request->input('id'));
         if ($request->input('photos')) {
