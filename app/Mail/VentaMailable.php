@@ -22,7 +22,7 @@ class VentaMailable extends Mailable
      *
      * @return void
      */
-    public function __construct(Collection|null $orders, User $user)
+    public function __construct(Collection $orders, User $user)
     {
         $this->orders = $orders;
         $this->user = $user;
