@@ -42,6 +42,8 @@ Route::post('/app/setProduct', [ProductController::class, 'setProduct']);
 Route::post('/app/updateProduct', [ProductController::class, 'updateProduct']);
 Route::post('/app/deleteProduct', [ProductController::class, 'deleteProduct']);
 Route::post('/app/deleteProductPhoto', [ProductController::class, 'deleteProductPhoto']);
+Route::post('/app/getCurrencies', [ProductController::class, 'getCurrencies']);
+
 
 // companies
 Route::post('/app/getCompany', [CompanyController::class, 'getCompany']);
