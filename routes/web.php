@@ -15,10 +15,18 @@ use App\Http\Livewire\PaymentOrder;
 
 use App\Http\Controllers\WebhooksController;
 use App\Http\Livewire\ShowProduct;
+use App\Mail\VentaMailable;
 use App\Models\Order;
+use Illuminate\Mail\Markdown;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('home/{country?}', WelcomeController::class);
 Route::get('/', WelcomeController::class);
+
+Route::get('/mail', function(){
+    $user = Auth::user();
+    return new VentaMailable(null, $user);
+});
 
 Route::get('search', SearchController::class)->name('search');
 
