@@ -73,6 +73,7 @@ class ProductController extends Controller
         $product->user_id = $request->input('user_id');
         $product->state_id = $request->input('state_id');
         $product->currency_id = $request->input('currency_id');
+        $product->city = $request->input('city');
         $product->save();
 
         if ($request->input('photos')) {
