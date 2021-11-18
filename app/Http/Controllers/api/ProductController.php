@@ -128,7 +128,7 @@ class ProductController extends Controller
                 'quantity' => $request->input('quantity'),
                 'state_id' => $request->input('state_id'),
                 'status' => $request->input('status'),
-                'city' => $request->input('city')
+                'city' => $request->input('city'),
                 'currency_id'=> $request->input('currency_id')
             ]);
         $product = Product::find($request->input('id'));
