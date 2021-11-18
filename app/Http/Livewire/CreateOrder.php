@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Mail\VentaMailable;
 use App\Models\City;
 use Livewire\Component;
 
@@ -10,6 +11,7 @@ use App\Models\District;
 use App\Models\Order;
 use App\Models\User;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Support\Facades\Mail;
 
 class CreateOrder extends Component
 {
@@ -69,6 +71,9 @@ class CreateOrder extends Component
 
     public function create_order()
     {
+        $this->user = User::join('companies', 'companies.user_id', 'users.id')
+            ->select('users.*', 'companies.name as company_name', 'companies.tax_data')
+            ->first();
         foreach (Cart::content() as $item) {
 
             $order = new Order();
@@ -84,6 +89,8 @@ class CreateOrder extends Component
 
             discount($item);
         }
+        $mail = new VentaMailable(Cart::content(), $this->user);
+        Mail::to('victor.morales@nanodela.com')->send($mail);
 
         Cart::destroy();
 
