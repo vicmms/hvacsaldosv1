@@ -128,11 +128,8 @@ class ProductController extends Controller
                 'quantity' => $request->input('quantity'),
                 'state_id' => $request->input('state_id'),
                 'status' => $request->input('status'),
-<<<<<<< HEAD
                 'city' => $request->input('city')
-=======
                 'currency_id'=> $request->input('currency_id')
->>>>>>> badbcd584251639dd6b5c6a353575f8658945c74
             ]);
         $product = Product::find($request->input('id'));
         if ($request->input('photos')) {
