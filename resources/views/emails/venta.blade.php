@@ -1,7 +1,7 @@
 
 @component('mail::message')
     <div class="cover-image">
-        <img src="{{asset('images/saldo-hvac-blue.png')}}" alt="">
+        <img src="https://plataforma.saldohvac.com/{{'images/saldo-hvac-blue.png'}}" alt="">
     </div>
     <h1>Nueva venta en espera de ser procesada</h1>
     <p>{{ $user->name }} ha soliciado comprar los siguientes articulos</p>
@@ -20,7 +20,7 @@
                 @foreach ($orders as $order)
                     <tr>
                         <td>
-                            <img class="thumbnail" src="{{ asset($order->options->image) }}" alt="">
+                            <img class="thumbnail" src="https://plataforma.saldohvac.com/{{ $order->options->image }}" alt="">
                         </td>
                         <td>{{ $order->name }}</td>
                         <td>{{ $order->qty }}</td>
