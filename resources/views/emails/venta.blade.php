@@ -1,7 +1,7 @@
 
 @component('mail::message')
     <div class="cover-image">
-        <img src="https://plataforma.saldohvac.com/{{'images/saldo-hvac-blue.png'}}" alt="">
+        <img src="https://plataforma.saldohvac.com/images/saldo-hvac-blue.png" alt="">
     </div>
     <h1>Nueva venta en espera de ser procesada</h1>
     <p>{{ $user->name }} ha soliciado comprar los siguientes articulos</p>
@@ -21,6 +21,7 @@
                     <tr>
                         <td>
                             <img class="thumbnail" src="https://plataforma.saldohvac.com/{{ $order->options->image }}" alt="">
+                            {{ $order->options->image }}
                         </td>
                         <td>{{ $order->name }}</td>
                         <td>{{ $order->qty }}</td>
