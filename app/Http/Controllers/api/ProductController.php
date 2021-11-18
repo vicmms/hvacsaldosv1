@@ -67,6 +67,7 @@ class ProductController extends Controller
         $product->quantity = $request->input('quantity');
         $product->user_id = $request->input('user_id');
         $product->state_id = $request->input('state_id');
+        $product->city = $request->input('city');
         $product->save();
 
         if ($request->input('photos')) {
