@@ -22,14 +22,14 @@ class EditProduct extends Component
 
     public $product, $categories, $subcategories, $brands, $slug, $currencies, $city, $isRejected, $modalImages;
 
-    public $category_id, $state_id, $firstTime;
+    public $category_id, $state_id, $firstTime, $currency_id;
 
     protected $rules = [
         'product.category_id' => 'required',
         'product.subcategory_id' => 'required',
         'product.name' => 'required',
         'product.model' => 'required',
-        'slug' => 'required|unique:products,slug',
+        
         'product.description' => 'required',
         'product.brand_id' => 'required',
         'product.price' => 'required',
@@ -47,6 +47,8 @@ class EditProduct extends Component
 
     public function mount(Product $product)
     {
+        $product->currency_id == 0 ? $product->currency_id = "" : false;
+        
         $this->product = $product;
 
         $this->isRejected = $this->product->status == 3 ? true : false;
@@ -61,13 +63,12 @@ class EditProduct extends Component
 
         $this->subcategories = Subcategory::all();
 
-        $this->slug = $this->product->slug . " " . rand(10, 99) . Auth::user()->id;
-
         $this->brands = Brand::all();
 
         $this->modalImages = false;
 
         $this->firstTime = true;
+
     }
 
 
@@ -81,10 +82,10 @@ class EditProduct extends Component
         $this->product = $this->product->fresh();
     }
 
-    public function updatedProductName($value)
-    {
-        $this->slug = Str::slug($value);
-    }
+    // public function updatedProductName($value)
+    // {
+    //     $this->slug = Str::slug($value);
+    // }
 
     public function updatedProductCategoryId($value)
     {
@@ -112,11 +113,11 @@ class EditProduct extends Component
             $this->product->status = 1;
 
         $rules = $this->rules;
-        $rules['slug'] = 'required|unique:products,slug,' . $this->product->id;
+        // $rules['slug'] = 'required|unique:products,slug,' . $this->product->id;
 
         $this->validate($rules);
 
-        $this->product->slug = $this->slug . " " . rand(10, 99) . Auth::user()->id;
+        $this->product->slug = Str::slug($this->product->name) . " " . rand(10, 99) . Auth::user()->id;
 
         $this->product->price = str_replace(',', '', $this->product->price);
 
