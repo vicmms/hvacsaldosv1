@@ -13,9 +13,9 @@ class AppInfoController extends Controller
     public function getReleaseCurrent(){
         $releaseCurrent [] = array( 
                              "enabled" => true,
-                             "current"=> "5",
-                             "title" => "Se encuentra en mantenimiento", 
-                             "msg"=> "Existe una actualización que debe ser instalada inmediatamente",
+                             "current"=> "7",
+                             "title" => "Actualización requerida", 
+                             "msg"=> "Existe una actualización que debe instalarse",
                              "btn"=> "Descargar");
       
         // $majorMsg->btn = "Descargar";
