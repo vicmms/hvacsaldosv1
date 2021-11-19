@@ -56,7 +56,8 @@
                         <li class="relative mr-1" wire:key="image-{{ $product->videos->first()->id }}">
                             <img class="w-32 h-20 object-cover" src="{{ asset('images/video.png') }}" alt="">
                             <button class="absolute right-2 top-2 bg-red-500 text-white rounded-full px-2"
-                                wire:click="deleteVideo({{ $product->videos->first()->id }})" wire:loading.attr="disabled"
+                                wire:click="deleteVideo({{ $product->videos->first()->id }})"
+                                wire:loading.attr="disabled"
                                 wire:target="deleteVideo({{ $product->videos->first()->id }})">
                                 x
                             </button>
@@ -120,6 +121,12 @@
                     <span
                         class="mb-4 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
                         Rechazado
+                    </span>
+                @break
+                @case(4)
+                    <span
+                        class="mb-4 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-200 text-gray-800">
+                        Sin publicar
                     </span>
                 @break
                 @default
@@ -317,6 +324,13 @@
                     <x-jet-danger-button class="mr-4" wire:loading.attr="disabled" wire:target="save(true)"
                         wire:click="save(true)">
                         Actualizar y enviar a revisión
+                    </x-jet-danger-button>
+                @endif
+
+                @if ($isNew)
+                    <x-jet-danger-button class="mr-4" wire:loading.attr="disabled" wire:target="save(true)"
+                        wire:click="save(true)">
+                        Actualizar y Publicar
                     </x-jet-danger-button>
                 @endif
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Mail\NewProductMailable;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Currency;
@@ -10,6 +11,7 @@ use App\Models\Subcategory;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
 use Illuminate\Support\Str;
@@ -102,8 +104,13 @@ class CreateProduct extends Component
         $product->quantity = $this->quantity;
         $product->unit = $this->unit;
         $product->currency_id = $this->currency_id;
+        $product->status = 4;
 
         $product->save();
+
+        // $mail = new NewProductMailable($this->user);
+        // $emails = array("administracion@saldohvac.com");
+        // Mail::to($emails)->send($mail);
 
         return redirect()->route('admin.products.edit', $product);
     }

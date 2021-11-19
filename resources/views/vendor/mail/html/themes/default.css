@@ -315,3 +315,11 @@ img {
 .sangria{
     margin-left: 1.5rem;
 }
+.rejected{
+    background-color: #ffaaaa;
+    border-left: 2px solid rgb(148, 0, 0);
+    padding: 15px 10px;
+}
+.rejected p{
+    color: #2f0000 !important;
+}
