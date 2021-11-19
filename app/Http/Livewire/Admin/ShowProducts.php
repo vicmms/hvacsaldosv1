@@ -32,8 +32,13 @@ class ShowProducts extends Component
         if ($role == 'admin') {
             $products = Product::join('users', 'users.id', '=', 'user_id')
                 ->select('products.*', 'users.name as username')
-                ->where('products.name', 'like', '%' . $this->search . '%')
-                ->orWhere('users.name', 'like', '%' . $this->search . '%')
+                ->where('products.status', '<>', 4)
+                ->where(function($query){
+                    $query->where('products.name', 'LIKE', '%'.$this->search.'%')
+                          ->orWhere('users.name', 'LIKE', '%'.$this->search.'%');
+                })
+                // ->where('products.name', 'like', '%' . $this->search . '%')
+                // ->orWhere('users.name', 'like', '%' . $this->search . '%')
                 ->orderBy('status', 'asc')
                 ->orderBy('created_at', 'desc')
                 ->paginate(10);
