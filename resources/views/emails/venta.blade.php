@@ -35,10 +35,6 @@
     <p>Nombre: {{ $user->name }}</p>
     <p>Correo: {{ $user->email }}</p>
     <p>Empresa: {{ $user->company_name }}</p>
-    {{-- <p>Datos fiscales:</p>
-    <div class="sangria">
-        {{$user->tax_data}}
-    </div> --}}
     @component('mail::button', ['url' => 'https://plataforma.saldohvac.com/admin/orders'])
         Ver Ordenes
     @endcomponent
