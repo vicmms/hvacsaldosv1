@@ -45,6 +45,9 @@
     {{-- FlexSlider --}}
     <script src="{{ asset('vendor/FlexSlider/jquery.flexslider-min.js') }}"></script>
 
+    {{-- pusher --}}
+    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+
 </head>
 
 <body class="font-sans antialiased">

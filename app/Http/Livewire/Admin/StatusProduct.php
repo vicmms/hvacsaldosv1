@@ -6,6 +6,7 @@ use App\Mail\AcceptedProduct;
 use App\Mail\RejectedProduct;
 use App\Models\Rejection;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
@@ -32,7 +33,9 @@ class StatusProduct extends Component
 
             $this->emit('saved');
 
-            return redirect()->route('admin.index');
+            event(new \App\Events\NavNotification(Auth::user(), "pusher notification"));
+
+            // return redirect()->route('admin.index');
         }
     }
 

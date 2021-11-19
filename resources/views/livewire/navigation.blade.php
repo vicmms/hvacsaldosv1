@@ -1,4 +1,18 @@
 <header class="bg-blue-1 sticky top-0" style="z-index: 900" x-data="dropdown()">
+    {{-- <script>
+
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+    
+        var pusher = new Pusher('3d9b40bd878ed43b82cf', {
+          cluster: 'us2'
+        });
+    
+        var channel = pusher.subscribe('nav-channel');
+        channel.bind('nav-event', function(data) {
+          alert(JSON.stringify(data));
+        });
+      </script> --}}
     <div class="container flex items-center h-16 justify-between md:justify-start">
         <a :class="{'bg-opacity-100 text-orange-500' : open}" x-on:click="show()"
             class="flex flex-col items-center justify-center order-last md:order-first px-6 md:px-4 bg-white bg-opacity-25 text-white cursor-pointer font-semibold h-full">

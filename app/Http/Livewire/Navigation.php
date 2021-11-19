@@ -27,7 +27,6 @@ class Navigation extends Component
 
     public function render()
     {
-
         $categories = $this->categories;
         $subcategories = $this->subcategories;
         $country = $this->country;
