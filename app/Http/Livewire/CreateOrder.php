@@ -90,8 +90,8 @@ class CreateOrder extends Component
             discount($item);
         }
         $mail = new VentaMailable(Cart::content(), $this->user);
-        Mail::to('victor.morales@nanodela.com')->send($mail);
-        Mail::to('victor.mmsauz@gmail.com')->send($mail);
+        $emails = array("administracion@saldohvac.com", "victor.morales@nanodela.com");
+        Mail::to($emails)->send($mail);
 
         Cart::destroy();
 
