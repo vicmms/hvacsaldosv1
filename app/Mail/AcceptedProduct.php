@@ -12,7 +12,7 @@ class AcceptedProduct extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $subject = "Producto aprovado";
+    public $subject = "Producto aprobado";
 
     public $product;
 
