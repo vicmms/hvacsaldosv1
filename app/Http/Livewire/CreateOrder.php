@@ -91,6 +91,7 @@ class CreateOrder extends Component
         }
         $mail = new VentaMailable(Cart::content(), $this->user);
         Mail::to('victor.morales@nanodela.com')->send($mail);
+        Mail::to('victor.mmsauz@gmail.com')->send($mail);
 
         Cart::destroy();
 

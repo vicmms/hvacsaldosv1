@@ -17,6 +17,7 @@ body {
     margin: 0;
     padding: 0;
     width: 100% !important;
+    
 }
 
 p,
@@ -198,7 +199,7 @@ img {
 }
 
 .table td {
-    color: #74787e;
+    color: #4e4f52;
     font-size: 15px;
     line-height: 18px;
     margin: 0;
@@ -209,6 +210,12 @@ img {
 .content-cell {
     max-width: 100vw;
     padding: 32px;
+}
+
+.inner-body .content-cell {
+    background-image: url("https://plataforma.saldohvac.com/images/saldo-hvac-transparent-blue.png");
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 /* Buttons */
@@ -304,4 +311,7 @@ img {
 .cover-image img{
     margin: 0px auto;
     position: absolute;
+}
+.sangria{
+    margin-left: 1.5rem;
 }
