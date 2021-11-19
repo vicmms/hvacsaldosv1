@@ -5,10 +5,10 @@
 
                 @foreach ($products as $product)
 
-                    <li class="bg-white rounded-lg shadow {{ $loop->last ? '' : 'sm:mr-4' }} border-2 border-orange-50">
+                    <li class="bg-white rounded-lg shadow {{ $loop->last ? '' : 'sm:mr-4' }} border-2">
                         <a href="{{ route('products.show', $product) }}">
                             <article>
-                                <figure class="border-b-2 border-orange-50">
+                                <figure class="border-b-4 border-orange-500">
                                     <img class="h-48 w-full object-cover object-center"
                                         src="{{ count($product->images) ? asset($product->images->first()->url) : asset('/images/image-not-found.png') }}"
                                         alt="">
