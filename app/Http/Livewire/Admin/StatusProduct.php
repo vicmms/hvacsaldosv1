@@ -42,7 +42,7 @@ class StatusProduct extends Component
 
             event(new \App\Events\NavNotification($this->product));
 
-            // return redirect()->route('admin.index');
+            return redirect()->route('admin.index');
         }
     }
 
@@ -68,7 +68,7 @@ class StatusProduct extends Component
 
             event(new \App\Events\NavNotification());
 
-            // return redirect()->route('admin.index');
+            return redirect()->route('admin.index');
         }
     }
 
