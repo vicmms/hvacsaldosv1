@@ -143,7 +143,7 @@ class EditProduct extends Component
         $this->emit('saved');
 
         event(new \App\Events\NavNotification());
-        // return redirect()->route('admin.index');
+        return redirect()->route('admin.index');
     }
 
     public function createNotification($notification, $user_id, $isAdmin){
