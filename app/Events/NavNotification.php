@@ -16,9 +16,9 @@ class NavNotification implements ShouldBroadcast
 
     public $notifications;
 
-    public function __construct($notifications)
+    public function __construct()
     {
-        $this->notifications = $notifications;
+        // $this->notifications = $notifications;
     }
 
     public function broadcastOn()

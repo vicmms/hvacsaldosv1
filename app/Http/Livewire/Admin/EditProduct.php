@@ -6,10 +6,12 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Currency;
 use App\Models\Image;
+use App\Models\Notification;
 use Livewire\Component;
 
 use App\Models\Product;
 use App\Models\Subcategory;
+use App\Models\User;
 use App\Models\Video;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
@@ -111,25 +113,45 @@ class EditProduct extends Component
 
     public function save($revision = false)
     {
-        if ($revision)
-            $this->product->status = 1;
-
         $rules = $this->rules;
-        // $rules['slug'] = 'required|unique:products,slug,' . $this->product->id;
-
         $this->validate($rules);
 
+        if ($revision){
+            $notification = 'Tu producto se ha mandado a revisión, te avisaremos por este medio y correo electrónico cuando sea validado.';
+            $user_id = Auth::user()->id;
+            $this->createNotification($notification, $user_id, false);
+
+            $notification = 'Se ha solicitado la revisión de un nuevo producto.';
+            $users = User::whereHas(
+                'roles', function($q){
+                    $q->where('name', 'admin');
+                })
+                ->where('country_id', Auth::user()->country_id)
+                ->get();
+            foreach ($users as $user) {
+                $this->createNotification($notification, $user->id, true);
+            }
+            $this->product->status = 1;
+        }
+
         $this->product->slug = Str::slug($this->product->name) . " " . rand(10, 99) . Auth::user()->id;
-
         $this->product->price = str_replace(',', '', $this->product->price);
-
         $this->product->commercial_price = str_replace(',', '', $this->product->commercial_price);
 
         $this->product->save();
 
         $this->emit('saved');
 
-        return redirect()->route('admin.index');
+        event(new \App\Events\NavNotification());
+        // return redirect()->route('admin.index');
+    }
+
+    public function createNotification($notification, $user_id, $isAdmin){
+        Notification::create([
+            'notification' => $notification,
+            'user_id' => $user_id,
+            'admin' => $isAdmin
+        ]);
     }
 
     public function deleteImage(Image $image)

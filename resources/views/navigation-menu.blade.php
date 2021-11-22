@@ -1,17 +1,4 @@
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
-    <script>
-        // Enable pusher logging - don't include this in production
-        Pusher.logToConsole = true;
-
-        var pusher = new Pusher('3d9b40bd878ed43b82cf', {
-            cluster: 'us2'
-        });
-
-        var channel = pusher.subscribe('nav-channel');
-        channel.bind('nav-event', function(data) {
-            window.livewire.emit('newNotification', data);
-        });
-    </script>
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -58,13 +45,7 @@
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">
-                <div class="relative">
-                    @if ($notifications)
-                        <span
-                            class="absolute left-2 bottom-3 bg-red-500 text-white rounded-full text-xs px-1">{{ $notifications }}</span>
-                    @endif
-                    <i class="fas fa-bell text-xl mt-1"></i>
-                </div>
+                @livewire('notifications-bell')
                 <!-- Teams Dropdown -->
                 @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
                     <div class="ml-3 relative">
@@ -304,4 +285,17 @@
             </div>
         </div>
     </div>
+    @push('script')
+    <script>
+        var pusher = new Pusher('3d9b40bd878ed43b82cf', {
+            cluster: 'us2'
+        });
+
+        var channel = pusher.subscribe('nav-channel');
+        channel.bind('nav-event', function() {
+            console.log('pusher')
+            livewire.emit('newBellNotification');
+        });
+    </script>
+    @endpush
 </nav>

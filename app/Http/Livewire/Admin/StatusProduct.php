@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Admin;
 
 use App\Mail\AcceptedProduct;
 use App\Mail\RejectedProduct;
+use App\Models\Notification;
 use App\Models\Rejection;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -15,50 +16,73 @@ class StatusProduct extends Component
 
     public $product, $status, $isOpen, $message, $buyer;
 
-    public function mount(){
+    public function mount()
+    {
         $this->status = $this->product->status;
         $isOpen = 0;
         $this->buyer = User::where('id', $this->product->user_id)->first();
     }
 
-    public function save(){
-        if($this->status != 3){
+    public function save()
+    {
+        if ($this->status != 3) {
             $this->product->status = $this->status;
-            if($this->product->status == 2){
+            // si es aprobado el producto
+            if ($this->product->status == 2) {
                 $mail = new AcceptedProduct($this->product);
                 Mail::to($this->buyer->email)->send($mail);
+                $notification = 'Tu producto ha sido aprobado y ya está disponible en la página de saldo HVAC.';
+                $user_id = $this->product->user_id;
+                $this->createNotification($notification, $user_id, false);
             }
 
             $this->product->save();
 
             $this->emit('saved');
 
-            event(new \App\Events\NavNotification(Auth::user(), "pusher notification"));
+            event(new \App\Events\NavNotification($this->product));
 
             // return redirect()->route('admin.index');
         }
     }
 
-    public function rechazar(){
-        if($this->status == 3){
+    public function rechazar()
+    {
+        if ($this->status == 3) {
             Rejection::create([
                 'message' => $this->message,
                 'product_id' => $this->product->id
             ]);
-    
+
             $this->product->status = $this->status;
             $this->product->save();
-    
+
             $this->emit('saved');
 
             $mail = new RejectedProduct($this->product);
             Mail::to($this->buyer->email)->send($mail);
-    
-            return redirect()->route('admin.index');
+
+            $notification = 'Tu producto no ha podido ser aprobado para su publicación, por favor revisa las observaciones realizadas. <a href="https://plataforma.saldohvac.com/admin/products/'.$this->product->slug.'/edit">Ver observaciones</a>';
+            $user_id = $this->product->user_id;
+            $this->createNotification($notification, $user_id, false);
+
+            event(new \App\Events\NavNotification());
+
+            // return redirect()->route('admin.index');
         }
     }
 
-    public function changeModal(){
+    public function createNotification($notification, $user_id, $isAdmin)
+    {
+        Notification::create([
+            'notification' => $notification,
+            'user_id' => $user_id,
+            'admin' => $isAdmin
+        ]);
+    }
+
+    public function changeModal()
+    {
         $this->isOpen = !$this->isOpen;
     }
 

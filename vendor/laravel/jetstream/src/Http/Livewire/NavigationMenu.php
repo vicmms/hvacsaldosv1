@@ -2,6 +2,7 @@
 
 namespace Laravel\Jetstream\Http\Livewire;
 
+use App\Models\Notification;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -17,10 +18,8 @@ class NavigationMenu extends Component
         'refresh-navigation-menu' => '$refresh', 'newNotification'
     ];
 
-    public $notifications = 0;
-
-    public function newNotification($data){
-        $this->notifications = Auth::user()->id;
+    public function mount()
+    {
     }
     
     public function render()
