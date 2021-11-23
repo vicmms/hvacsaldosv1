@@ -124,7 +124,7 @@ class EditProduct extends Component
             $notification = 'Se ha solicitado la revisión de un nuevo producto.';
             $users = User::whereHas(
                 'roles', function($q){
-                    $q->where('name', 'admin');
+                    $q->where('name', 'admin')->orWhere('name', 'user');
                 })
                 ->where('country_id', Auth::user()->country_id)
                 ->get();
