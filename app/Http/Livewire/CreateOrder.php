@@ -8,9 +8,11 @@ use Livewire\Component;
 
 use App\Models\Department;
 use App\Models\District;
+use App\Models\Notification;
 use App\Models\Order;
 use App\Models\User;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class CreateOrder extends Component
@@ -93,9 +95,38 @@ class CreateOrder extends Component
         $emails = array("administracion@saldohvac.com", "victor.morales@nanodela.com");
         Mail::to($emails)->send($mail);
 
+        $notification = 'Tienes nuevos pedidos en espera de ser procesados para su compra. <a class="text-blue-600 underline" href="https://plataforma.saldohvac.com/admin/orders?status=2">Ver pedidos</a>';
+
+        $users = User::whereHas(
+            'roles',
+            function ($q) {
+                $q->where('name', 'admin')
+                    ->orWhere('name', 'user');
+            }
+        )
+            ->where('country_id', Auth::user()->country_id)
+            ->get();
+        foreach ($users as $user) {
+            $this->createNotification($notification, $user->id, true);
+        }
+
+        $notification = 'Tu compra ha sido solicitada correctamente, estaremos comunicandonos contigo lo antes posible para que puedas concluir con la compra. <a class="text-blue-600 underline" href="https://plataforma.saldohvac.com/orders">Ver mis pedidos</a>';
+        $this->createNotification($notification, Auth::user()->id, false);
+
         Cart::destroy();
 
+        event(new \App\Events\NavNotification());
+
         return redirect()->route('order.success');
+    }
+
+    public function createNotification($notification, $user_id, $isAdmin)
+    {
+        Notification::create([
+            'notification' => $notification,
+            'user_id' => $user_id,
+            'admin' => $isAdmin
+        ]);
     }
 
     public function render()

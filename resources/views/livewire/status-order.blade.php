@@ -10,7 +10,7 @@
             </div>
 
             <div class="absolute -left-1.5 mt-0.5">
-                <p>Recibido</p>
+                <p>Solicitado</p>
             </div>
         </div>
 
@@ -24,7 +24,7 @@
             </div>
 
             <div class="absolute -left-1 mt-0.5">
-                <p>Enviado</p>
+                <p>Pagado</p>
             </div>
         </div>
 
@@ -55,22 +55,22 @@
             <div class="flex space-x-3 mt-2">
                 <x-jet-label>
                     <input wire:model="status" type="radio" name="status" value="2" class="mr-2">
-                    RECIBIDO
+                    Solicitado
                 </x-jet-label>
 
                 <x-jet-label>
                     <input wire:model="status" type="radio" name="status" value="3" class="mr-2">
-                    ENVIADO
+                    Pagado
                 </x-jet-label>
 
                 <x-jet-label>
                     <input wire:model="status" type="radio" name="status" value="4" class="mr-2">
-                    ENTREGADO
+                    Entregado
                 </x-jet-label>
 
                 <x-jet-label>
                     <input wire:model="status" type="radio" name="status" value="5" class="mr-2">
-                    ANULADO
+                    Cancelado
                 </x-jet-label>
             </div>
 
