@@ -92,7 +92,7 @@
 
         @endif
 
-        @role('admin')
+        @role('admin|user')
             @livewire('admin.status-product', ['product' => $product], key('status-product-' . $product->id))
         @endrole
         @if ($isRejected)

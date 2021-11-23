@@ -22,25 +22,22 @@
                         Ordenes
                     </x-jet-nav-link>
 
-                    <x-jet-nav-link href="{{ route('admin.categories.index') }}"
-                        :active="request()->routeIs('admin.categories.*')">
-                        Categorias
-                    </x-jet-nav-link>
+                    @role('admin')
+                        <x-jet-nav-link href="{{ route('admin.categories.index') }}"
+                            :active="request()->routeIs('admin.categories.*')">
+                            Categorias
+                        </x-jet-nav-link>
 
-                    <x-jet-nav-link href="{{ route('admin.brands.index') }}"
-                        :active="request()->routeIs('admin.brands.*')">
-                        Marcas
-                    </x-jet-nav-link>
+                        <x-jet-nav-link href="{{ route('admin.brands.index') }}"
+                            :active="request()->routeIs('admin.brands.*')">
+                            Marcas
+                        </x-jet-nav-link>
 
-                    {{-- <x-jet-nav-link href="{{ route('admin.departments.index') }}"
-                        :active="request()->routeIs('admin.departments.index')">
-                        Departamentos
-                    </x-jet-nav-link> --}}
-
-                    <x-jet-nav-link href="{{ route('admin.users.index') }}"
-                        :active="request()->routeIs('admin.users.index')">
-                        Usuarios
-                    </x-jet-nav-link>
+                        <x-jet-nav-link href="{{ route('admin.users.index') }}"
+                            :active="request()->routeIs('admin.users.index')">
+                            Usuarios
+                        </x-jet-nav-link>
+                    @endrole
                 </div>
             </div>
 
@@ -286,16 +283,16 @@
         </div>
     </div>
     @push('script')
-    <script>
-        var pusher = new Pusher('3d9b40bd878ed43b82cf', {
-            cluster: 'us2'
-        });
+        <script>
+            var pusher = new Pusher('3d9b40bd878ed43b82cf', {
+                cluster: 'us2'
+            });
 
-        var channel = pusher.subscribe('nav-channel');
-        channel.bind('nav-event', function() {
-            console.log('pusher')
-            livewire.emit('newBellNotification');
-        });
-    </script>
+            var channel = pusher.subscribe('nav-channel');
+            channel.bind('nav-event', function() {
+                console.log('pusher')
+                livewire.emit('newBellNotification');
+            });
+        </script>
     @endpush
 </nav>
