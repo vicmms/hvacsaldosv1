@@ -31,7 +31,7 @@ class StatusProduct extends Component
             if ($this->product->status == 2) {
                 $mail = new AcceptedProduct($this->product);
                 Mail::to($this->buyer->email)->send($mail);
-                $notification = 'Tu producto ha sido aprobado y ya está disponible en la página de saldo HVAC.';
+                $notification = 'Tu producto ha sido aprobado y ya está disponible en la página de saldo HVAC. <a class="block underline text-blue-900" href="/products/'.$this->product->slug.'">Ver producto</a>';
                 $user_id = $this->product->user_id;
                 $product_id = $this->product->id;
                 $this->createNotification($notification, $user_id, $product_id, false);
@@ -63,7 +63,7 @@ class StatusProduct extends Component
             $mail = new RejectedProduct($this->product);
             Mail::to($this->buyer->email)->send($mail);
 
-            $notification = 'Tu producto no ha podido ser aprobado para su publicación, por favor revisa las observaciones realizadas. <a href="https://plataforma.saldohvac.com/admin/products/'.$this->product->slug.'/edit">Ver observaciones</a>';
+            $notification = 'Tu producto no ha podido ser aprobado para su publicación, por favor revisa las observaciones realizadas. <a class="block underline text-blue-900" href="/admin/products/'.$this->product->slug.'/edit">Revisar observaciones</a>';
             $user_id = $this->product->user_id;
             $product_id = $this->product->id;
             $this->createNotification($notification, $user_id, $product_id, false);

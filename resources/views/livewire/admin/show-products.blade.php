@@ -19,7 +19,7 @@
 
             <div class="px-6 py-4 grid grid-cols-4">
                 <div class="flex">
-                    <h2 class="self-center font-semibold mr-2">Filtrar por status: </h2>
+                    <h2 class="self-center font-semibold mr-2">Status: </h2>
                     <select name="" id="" class="form-control" wire:model="status">
                         <option value="0" selected>Todos</option>
                         <option value="1">En revisión</option>

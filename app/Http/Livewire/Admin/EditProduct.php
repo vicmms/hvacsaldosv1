@@ -122,7 +122,7 @@ class EditProduct extends Component
             $product_id = $this->product->id;
             $this->createNotification($notification, $user_id, $product_id, false);
 
-            $notification = 'Se ha solicitado la revisión de un nuevo producto. <a class="block underline text-blue-900" href="">Ver solicitudes</a>';
+            $notification = 'Se ha solicitado la revisión de un nuevo producto. <a class="block underline text-blue-900" href="/admin?status=1">Ver solicitudes</a>';
             $users = User::whereHas(
                 'roles', function($q){
                     $q->where('name', 'admin')->orWhere('name', 'user');
