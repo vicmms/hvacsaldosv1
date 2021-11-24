@@ -16,23 +16,30 @@
         <x-slot name="content">
             <ul class="max-h-96 overflow-y-scroll">
                 @forelse ($notifications as $notification)
-                    <li class="flex p-2 border-b border-gray-200">
-                        <p>{!! $notification->notification !!}</p>
+                    <li class="p-2 border-b border-gray-200">
+                        <div class="flex mb-1">
+                            @if ($notification->image_url)
+                                <a href="{{asset('admin/products/'.$notification->product_slug.'/edit')}}">
+                                    <img src="{{asset($notification->image_url)}}" class="w-11 max-h-12 object-cover mx-2" alt="{{$notification->product_name}}">
+                                </a>
+                            @endif
+                            <p class="flex-1">{!! $notification->notification !!}</p>
+                        </div>
                         @if (strtotime(date('Y-m-d H:i:s')) - strtotime($notification->created_at) < 60)
-                            <p>Hace {{ round(strtotime(date('Y-m-d H:i:s')) - strtotime($notification->created_at)) }}
+                            <p class="text-right text-gray-700">Hace {{ round(strtotime(date('Y-m-d H:i:s')) - strtotime($notification->created_at)) }}
                                 segundos.</p>
                         @else
                             @if (strtotime(date('Y-m-d H:i:s')) - strtotime($notification->created_at) < 3600)
-                                <p>Hace
+                                <p class="text-right text-gray-700">Hace
                                     {{ round((strtotime(date('Y-m-d H:i:s')) - strtotime($notification->created_at)) / 60) }}
                                     minutos.</p>
                             @else
                                 @if (strtotime(date('Y-m-d H:i:s')) - strtotime($notification->created_at) < 86400)
-                                    <p>Hace
+                                    <p class="text-right text-gray-700">Hace
                                         {{ round((strtotime(date('Y-m-d H:i:s')) - strtotime($notification->created_at)) / 3600) }}
                                         horas.</p>
                                 @else
-                                    <p>Hace
+                                    <p class="text-right text-gray-700">Hace
                                         {{ round((strtotime(date('Y-m-d H:i:s')) - strtotime($notification->created_at)) / 86400) }}
                                         dias.</p>
                                 @endif

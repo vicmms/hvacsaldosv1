@@ -33,7 +33,8 @@ class StatusProduct extends Component
                 Mail::to($this->buyer->email)->send($mail);
                 $notification = 'Tu producto ha sido aprobado y ya está disponible en la página de saldo HVAC.';
                 $user_id = $this->product->user_id;
-                $this->createNotification($notification, $user_id, false);
+                $product_id = $this->product->id;
+                $this->createNotification($notification, $user_id, $product_id, false);
             }
 
             $this->product->save();
@@ -64,7 +65,8 @@ class StatusProduct extends Component
 
             $notification = 'Tu producto no ha podido ser aprobado para su publicación, por favor revisa las observaciones realizadas. <a href="https://plataforma.saldohvac.com/admin/products/'.$this->product->slug.'/edit">Ver observaciones</a>';
             $user_id = $this->product->user_id;
-            $this->createNotification($notification, $user_id, false);
+            $product_id = $this->product->id;
+            $this->createNotification($notification, $user_id, $product_id, false);
 
             event(new \App\Events\NavNotification());
 
@@ -72,12 +74,13 @@ class StatusProduct extends Component
         }
     }
 
-    public function createNotification($notification, $user_id, $isAdmin)
+    public function createNotification($notification, $user_id, $product_id, $isAdmin)
     {
         Notification::create([
             'notification' => $notification,
             'user_id' => $user_id,
-            'admin' => $isAdmin
+            'admin' => $isAdmin,
+            'product_id' => $product_id
         ]);
     }
 
