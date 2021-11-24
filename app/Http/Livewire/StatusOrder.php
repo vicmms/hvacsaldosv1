@@ -20,7 +20,7 @@ class StatusOrder extends Component
         $this->order->status = $this->status;
         if ($this->order->status == 3) {
             $notification = 'Se ha registrado el pago de tu compra';
-            $this->createNotification($notification, $this->order->user_id, false);
+            $this->createNotification($notification, $this->order->user_id, 0, false, 1);
 
             event(new \App\Events\NavNotification());
         }
@@ -28,12 +28,14 @@ class StatusOrder extends Component
         $this->order->save();
     }
 
-    public function createNotification($notification, $user_id, $isAdmin)
+    public function createNotification($notification, $user_id, $product_id, $isAdmin, $icon)
     {
         Notification::create([
             'notification' => $notification,
             'user_id' => $user_id,
-            'admin' => $isAdmin
+            'admin' => $isAdmin,
+            'product_id' => $product_id,
+            'icon' => $icon
         ]);
     }
 

@@ -117,12 +117,12 @@ class EditProduct extends Component
         $this->validate($rules);
 
         if ($revision){
-            $notification = 'Tu producto se ha mandado a revisión, te avisaremos por este medio y correo electrónico cuando sea validado.';
+            $notification = 'El producto "'.$this->product->name.'" se ha mandado a revisión, te avisaremos por este medio y correo electrónico cuando sea validado.';
             $user_id = Auth::user()->id;
             $product_id = $this->product->id;
             $this->createNotification($notification, $user_id, $product_id, false);
 
-            $notification = 'Se ha solicitado la revisión de un nuevo producto.';
+            $notification = 'Se ha solicitado la revisión de un nuevo producto. <a class="block underline text-blue-900" href="/admin?status=1">Ver solicitudes</a>';
             $users = User::whereHas(
                 'roles', function($q){
                     $q->where('name', 'admin')->orWhere('name', 'user');

@@ -1,20 +1,14 @@
 <div>
-    <x-jet-dropdown width="96">
-        <x-slot name="trigger">
-            <span class="relative inline-block cursor-pointer" wire:click="clearNotifications()">
-                @if ($notifications->number)
-                    <span class="absolute left-2 bottom-3 bg-red-500 text-white rounded-full text-xs px-1">
-                        {{ $notifications->number == 10 ? 9 . '+' : $notifications->number }}
-                    </span>
-                    <i class="fas fa-bell text-xl mt-1"></i>
-                @else
-                    <i class="fas fa-bell text-xl mt-1"></i>
-                @endif
-            </span>
-        </x-slot>
+    <x-slot name="header">
+        <div class="flex items-center">
+            <h2 class="font-semibold text-xl text-gray-600 leading-tight">
+                Todas las notificaciones
+            </h2>
+        </div>
+    </x-slot>
 
-        <x-slot name="content">
-            <ul class="max-h-96 overflow-y-scroll">
+    <div class="container py-12 bg-white mt-6 rounded-b-3xl shadow-md">
+            <ul class="overflow-y-scroll w-full" style="max-height: 600px;">
                 @forelse ($notifications as $notification)
                     <li class="p-2 border-b border-gray-200">
                         <div class="flex mb-1">
@@ -68,16 +62,5 @@
                     </li>
                 @endforelse
             </ul>
-
-            @if ($notifications->count())
-                <div class="py-2 px-3">
-                    <x-button-enlace href="{{ route('admin.notifications') }}" color="orange" class="w-full">
-                        Ver todas las notificaciones
-                    </x-button-enlace>
-                </div>
-            @endif
-
-
-            </x-slot>
-        </x-jet-dropdown>
     </div>
+</div>

@@ -95,7 +95,7 @@ class CreateOrder extends Component
         $emails = array("administracion@saldohvac.com", "victor.morales@nanodela.com");
         Mail::to($emails)->send($mail);
 
-        $notification = 'Tienes nuevos pedidos en espera de ser procesados para su compra. <a class="text-blue-600 underline" href="https://plataforma.saldohvac.com/admin/orders?status=2">Ver pedidos</a>';
+        $notification = 'Tienes nuevos pedidos en espera de ser procesados para su compra. <a class="block underline text-blue-900" href="/admin/orders?status=2">Ver pedidos</a>';
 
         $users = User::whereHas(
             'roles',
@@ -107,11 +107,11 @@ class CreateOrder extends Component
             ->where('country_id', Auth::user()->country_id)
             ->get();
         foreach ($users as $user) {
-            $this->createNotification($notification, $user->id, true);
+            $this->createNotification($notification, $user->id, 0, true, 2);
         }
 
-        $notification = 'Tu compra ha sido solicitada correctamente, estaremos comunicandonos contigo lo antes posible para que puedas concluir con la compra. <a class="text-blue-600 underline" href="https://plataforma.saldohvac.com/orders">Ver mis pedidos</a>';
-        $this->createNotification($notification, Auth::user()->id, false);
+        $notification = 'Tu compra ha sido solicitada correctamente, estaremos comunicandonos contigo lo antes posible para que puedas concluir con la compra. <a class="block underline text-blue-900" href="/orders">Ver mis pedidos</a>';
+        $this->createNotification($notification, Auth::user()->id, 0, false, 1);
 
         Cart::destroy();
 
@@ -120,12 +120,14 @@ class CreateOrder extends Component
         return redirect()->route('order.success');
     }
 
-    public function createNotification($notification, $user_id, $isAdmin)
+    public function createNotification($notification, $user_id, $product_id, $isAdmin, $icon = null)
     {
         Notification::create([
             'notification' => $notification,
             'user_id' => $user_id,
-            'admin' => $isAdmin
+            'admin' => $isAdmin,
+            'product_id' => $product_id,
+            'icon' => $icon
         ]);
     }
 

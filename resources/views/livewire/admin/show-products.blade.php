@@ -17,10 +17,19 @@
 
         <x-table-responsive>
 
-            <div class="px-6 py-4">
-
-                <x-jet-input type="text" wire:model="search" class="w-full" placeholder="Buscar..." />
-
+            <div class="px-6 py-4 grid grid-cols-4">
+                <div class="flex">
+                    <h2 class="self-center font-semibold mr-2">Status: </h2>
+                    <select name="" id="" class="form-control" wire:model="status">
+                        <option value="0" selected>Todos</option>
+                        <option value="1">En revisión</option>
+                        <option value="2">Aceptados</option>
+                        <option value="3">Rechazados</option>
+                    </select>
+                </div>
+                <div class="col-span-3">
+                    <x-jet-input type="text" wire:model="search" class="w-full" placeholder="Buscar..." />
+                </div>
             </div>
 
             @if ($products->count())

@@ -279,7 +279,7 @@
                     <x-jet-label value="Selecciona un estado ({{ $user->country->name }})*" />
                     <select class="form-control w-full" wire:model="product.state_id">
                         <option value="0" selected disabled>Seleccione un estado</option>
-                        @foreach ($user->country->states as $state)
+                        @foreach ($user->country->states()->orderBy('name', 'asc')->get() as $state)
                             <option value="{{ $state->id }}">{{ $state->name }}</option>
                         @endforeach
                     </select>
