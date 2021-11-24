@@ -1,10 +1,10 @@
 <div>
     <x-jet-dropdown width="96">
         <x-slot name="trigger">
-            <span class="relative inline-block cursor-pointer">
-                @if ($notifications->count())
+            <span class="relative inline-block cursor-pointer" wire:click="clearNotifications()">
+                @if ($notifications->number)
                     <span class="absolute left-2 bottom-3 bg-red-500 text-white rounded-full text-xs px-1">
-                        {{ $notifications->count() == 10 ?  9 . "+" : $notifications->count() }}
+                        {{ $notifications->number == 10 ?  9 . "+" : $notifications->number }}
                     </span>
                     <i class="fas fa-bell text-xl mt-1"></i>
                 @else

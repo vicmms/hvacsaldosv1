@@ -14,10 +14,20 @@ class NotificationsBell extends Component
     public function newBellNotification(){
         $this->render();
     }
+
+    public function clearNotifications(){
+        Notification::where('user_id', Auth::user()->id)
+                                    ->where('read', false)
+                                    ->update(['read' => true]);
+    }
+
     public function render()
     {
-        $notifications = Notification::where('notifications.user_id', Auth::user()->id)
+        $notifications_count = Notification::where('user_id', Auth::user()->id)
                                     ->where('read', false)
+                                    ->count();
+        
+        $notifications = Notification::where('notifications.user_id', Auth::user()->id)
                                     ->orderBy('notifications.created_at', 'desc')
                                     ->limit(10)
                                     ->get();
@@ -33,6 +43,7 @@ class NotificationsBell extends Component
                 $notification->product_slug = null;
             }
         }
+        $notifications->number = $notifications_count;
         return view('livewire.notifications-bell', compact('notifications'));
     }
 }
