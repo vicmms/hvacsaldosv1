@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Admin;
 
 use App\Models\Product;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Spatie\Permission\Traits\HasRoles;
@@ -15,9 +16,13 @@ class ShowProducts extends Component
 {
     use WithPagination;
     use HasRoles;
-    public $search;
+    public $search, $status;
 
     protected $listeners = ['delete'];
+
+    public function mount(Request $request){
+        $this->status = $request->input('status') ? $request->input('status') : "";
+    }
 
     public function updatingSearch()
     {
@@ -26,13 +31,20 @@ class ShowProducts extends Component
 
     public function render()
     {
+        if($this->status){
+            $condicion = '=';
+            $valor = $this->status;
+        }else{
+            $condicion = '<>';
+            $valor = 4;
+        }
 
         $user = Auth::user();
         $role = $user->getRoleNames()->first();
         if ($role == 'admin') {
             $products = Product::join('users', 'users.id', '=', 'user_id')
                 ->select('products.*', 'users.name as username')
-                ->where('products.status', '<>', 4)
+                ->where('products.status', $condicion, $valor)
                 ->where(function($query){
                     $query->where('products.name', 'LIKE', '%'.$this->search.'%')
                           ->orWhere('users.name', 'LIKE', '%'.$this->search.'%');
