@@ -119,7 +119,8 @@ class EditProduct extends Component
         if ($revision){
             $notification = 'Tu producto se ha mandado a revisión, te avisaremos por este medio y correo electrónico cuando sea validado.';
             $user_id = Auth::user()->id;
-            $this->createNotification($notification, $user_id, false);
+            $product_id = $this->product->id;
+            $this->createNotification($notification, $user_id, $product_id, false);
 
             $notification = 'Se ha solicitado la revisión de un nuevo producto.';
             $users = User::whereHas(
@@ -129,7 +130,7 @@ class EditProduct extends Component
                 ->where('country_id', Auth::user()->country_id)
                 ->get();
             foreach ($users as $user) {
-                $this->createNotification($notification, $user->id, true);
+                $this->createNotification($notification, $user->id, $product_id, true);
             }
             $this->product->status = 1;
         }
@@ -146,11 +147,12 @@ class EditProduct extends Component
         return redirect()->route('admin.index');
     }
 
-    public function createNotification($notification, $user_id, $isAdmin){
+    public function createNotification($notification, $user_id, $product_id, $isAdmin){
         Notification::create([
             'notification' => $notification,
             'user_id' => $user_id,
-            'admin' => $isAdmin
+            'admin' => $isAdmin,
+            'product_id' => $product_id
         ]);
     }
 
