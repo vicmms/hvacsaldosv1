@@ -36,14 +36,16 @@
 
     @else
 
-        <span class="px-10 ml-6 text-2xl font-semibold">No hay articulos en esta sección</span>
+        <span class="px-16 ml-6 text-xl">No hay articulos en esta sección</span>
 
     @endif
     @push('script')
         <script>
-            $(window).on('load',function() {
-                $('.animate-bounce').hide();
-                $('#main-content').removeClass('blur');
+            $(window).on('load', function() {
+                setTimeout(() => {
+                    $('.animate-bounce').hide();
+                    $('#main-content').removeClass('blur');
+                }, 500);
             });
         </script>
     @endpush

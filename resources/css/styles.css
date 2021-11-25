@@ -52,6 +52,5 @@ body::-webkit-scrollbar, .overflow-y-scroll::-webkit-scrollbar {
   }
 
   .blur{
-      filter: blur(20px);
-      mix-blend-mode: color;
+      filter: opacity(0.01);
   }
