@@ -193,7 +193,7 @@
                 {{-- Numero de serie --}}
                 <div>
                     <x-jet-label value="No. Serie" />
-                    <x-jet-input type="text" class="w-full" wire:model="product.serie_number"
+                    <x-jet-input type="text" class="w-full" wire:model="serie_number"
                         placeholder="Ingrese el no. de serie del producto" />
                 </div>
             </div>

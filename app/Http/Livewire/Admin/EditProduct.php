@@ -22,7 +22,7 @@ use Illuminate\Support\Str;
 class EditProduct extends Component
 {
 
-    public $product, $categories, $subcategories, $brands, $slug, $currencies, $city, $isRejected, $isNew, $modalImages;
+    public $product, $categories, $subcategories, $brands, $slug, $currencies, $city, $isRejected, $isNew, $modalImages, $serie_number;
 
     public $category_id, $state_id, $firstTime, $currency_id;
 
@@ -31,7 +31,6 @@ class EditProduct extends Component
         'product.subcategory_id' => 'required',
         'product.name' => 'required',
         'product.model' => 'required',
-        
         'product.description' => 'required',
         'product.brand_id' => 'required',
         'product.price' => 'required',
@@ -72,6 +71,8 @@ class EditProduct extends Component
         $this->modalImages = false;
 
         $this->firstTime = true;
+
+        $this->serie_number = $product->serie_number;
 
     }
 
@@ -138,6 +139,7 @@ class EditProduct extends Component
         $this->product->slug = Str::slug($this->product->name) . " " . rand(10, 99) . Auth::user()->id;
         $this->product->price = str_replace(',', '', $this->product->price);
         $this->product->commercial_price = str_replace(',', '', $this->product->commercial_price);
+        $this->product->serie_number = $this->serie_number;
 
         $this->product->save();
 
