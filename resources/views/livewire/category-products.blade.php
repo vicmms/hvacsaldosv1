@@ -1,4 +1,4 @@
-<div wire:init="loadPosts">
+<div wire:init="loadPosts" class="categories-posts">
     @if (count($products))
         <div class="glider-contain">
             <ul class="glider-{{ $category->id }}">
@@ -20,14 +20,13 @@
                                     </h1>
                                     <p class="font-bold text-trueGray-700">
                                         {{ $product->currency ? $product->currency->currency : '' }}
-                                        {{ $product->currency ? $product->currency->symbol : '$'}}{{ number_format($product->price, 0, '.', ',') }}
+                                        {{ $product->currency ? $product->currency->symbol : '$' }}{{ number_format($product->price, 0, '.', ',') }}
                                     </p>
                                 </div>
                             </article>
                         </a>
                     </li>
                 @endforeach
-
             </ul>
 
             <button aria-label="Previous" class="glider-prev">«</button>
@@ -37,11 +36,15 @@
 
     @else
 
-        <div class="flex items-center justify-center space-x-2 animate-bounce mt-8" style="height: 200px">
-            <div class="w-4 h-4 bg-blue-700 rounded-full"></div>
-            <div class="w-4 h-4 bg-purple-700 rounded-full"></div>
-            <div class="w-4 h-4 bg-orange-500 rounded-full"></div>
-        </div>
+        <span class="px-10 ml-6 text-2xl font-semibold">No hay articulos en esta sección</span>
 
     @endif
+    @push('script')
+        <script>
+            $(window).on('load',function() {
+                $('.animate-bounce').hide();
+                $('#main-content').removeClass('blur');
+            });
+        </script>
+    @endpush
 </div>

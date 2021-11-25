@@ -50,3 +50,8 @@ body::-webkit-scrollbar, .overflow-y-scroll::-webkit-scrollbar {
     border-radius: 20px;       /* roundness of the scroll thumb */
     border: 3px solid white;  /* creates padding around scroll thumb */
   }
+
+  .blur{
+      filter: blur(20px);
+      mix-blend-mode: color;
+  }
