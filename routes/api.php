@@ -9,7 +9,7 @@ use App\Http\Controllers\api\SubcategoryController;
 use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\CompanyController;
 use App\Http\Controllers\api\AppInfoController;
-
+use App\Http\Controllers\api\NotificationController;
 use Illuminate\Routing\Router;
 
 /*
@@ -55,3 +55,9 @@ Route::post('/app/getBrands', [BrandController::class, 'getBrands']);
 
 //App info
 Route::post('/app/getReleaseCurrent', [AppInfoController::class, 'getReleaseCurrent']);
+
+//Notifications
+Route::post('app/emitNotification', [NotificationController::class, 'triggerNotification']);
+Route::post('app/getAllNotificationsById', [NotificationController::class, 'getAllNotificationsById']);
+Route::post('app/getNotificationsById', [NotificationController::class, 'getNotificationsById']);
+Route::post('app/readNotifications', [NotificationController::class, 'readNotifications']);
