@@ -1,18 +1,4 @@
 <header class="bg-blue-1 sticky top-0" style="z-index: 900" x-data="dropdown()">
-    {{-- <script>
-
-        // Enable pusher logging - don't include this in production
-        Pusher.logToConsole = true;
-    
-        var pusher = new Pusher('3d9b40bd878ed43b82cf', {
-          cluster: 'us2'
-        });
-    
-        var channel = pusher.subscribe('nav-channel');
-        channel.bind('nav-event', function(data) {
-          alert(JSON.stringify(data));
-        });
-      </script> --}}
     <div class="container flex items-center h-16 justify-between md:justify-start">
         <a :class="{'bg-opacity-100 text-orange-500' : open}" x-on:click="show()"
             class="flex flex-col items-center justify-center order-last md:order-first px-6 md:px-4 bg-white bg-opacity-25 text-white cursor-pointer font-semibold h-full">
@@ -41,7 +27,6 @@
                             <x-jet-dropdown-link href="/home/{{ $tld['tld'] }}">
                                 <img class="w-8 h-8 rounded-full object-cover object-center cursor-pointer"
                                     src="{{ asset('images/admin/flags/' . $tld['tld'] . '.jpg') }}" alt="">
-                                {{-- <span>{{ $tld['name'] }}</span> --}}
                             </x-jet-dropdown-link>
                         @endif
                     @endforeach
@@ -70,40 +55,42 @@
     </div>
 
     <nav id="navigation-menu" :class="{'block': open, 'hidden': !open}"
-        class="bg-trueGray-700 bg-opacity-25 w-full absolute hidden">
+        class="bg-trueGray-700 bg-opacity-20 w-full absolute hidden">
 
         {{-- Menu computadora --}}
-        <div class="container h-full hidden md:block">
+        <div class="container  hidden md:block">
             <div x-on:click.away="close()" class="grid grid-cols-4 h-full relative">
-                <ul class="bg-white">
+                <ul class="bg-white rounded-b-xl rounded-tr-xl">
+                    {{-- <li class="navigation-link text-trueGray-500 hover:bg-orange-500 hover:text-white">
+                        <a href="{{ route('categories.show', null) }}"
+                            class="py-2 px-4 text-sm flex items-center">
+                            Todos los productos
+                        </a>
+                        <div class="navigation-submenu bg-gray-100 absolute w-3/4 h-full top-0 right-0 hidden">
+                            <x-navigation-subcategories :category="$category" :subcategories="$subcategories" />
+                        </div>
+                    </li> --}}
                     @foreach ($categories as $category)
                         <li class="navigation-link text-trueGray-500 hover:bg-orange-500 hover:text-white">
                             <a href="{{ route('categories.show', $category) }}"
                                 class="py-2 px-4 text-sm flex items-center">
-
-                                <span class="flex justify-center w-9">
-                                    {!! $category->icon !!}
-                                </span>
-
                                 {{ $category->name }}
                             </a>
-
-                            <div class="navigation-submenu bg-gray-100 absolute w-3/4 h-full top-0 right-0 hidden">
+                            {{-- <div class="navigation-submenu bg-gray-100 absolute w-3/4 h-full top-0 right-0 hidden">
                                 <x-navigation-subcategories :category="$category" :subcategories="$subcategories" />
-                            </div>
-
+                            </div> --}}
                         </li>
                     @endforeach
                 </ul>
 
-                <div class="col-span-3 bg-gray-100">
+                {{-- <div class="col-span-3 bg-gray-100">
                     <x-navigation-subcategories :category="$categories->first()" :subcategories="$subcategories" />
-                </div>
+                </div> --}}
             </div>
         </div>
 
         {{-- menu mobil --}}
-        <div class="bg-white h-full overflow-y-auto">
+        <div class="bg-white h-full overflow-y-auto md:hidden">
 
             <div class="container bg-gray-200 py-3 mb-2">
                 @livewire('search')
@@ -114,11 +101,6 @@
                     <li class="text-trueGray-500 hover:bg-orange-500 hover:text-white">
                         <a href="{{ route('categories.show', $category) }}"
                             class="py-2 px-4 text-sm flex items-center">
-
-                            <span class="flex justify-center w-9">
-                                {!! $category->icon !!}
-                            </span>
-
                             {{ $category->name }}
                         </a>
                     </li>
