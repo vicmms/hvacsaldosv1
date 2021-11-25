@@ -32,9 +32,7 @@ class ProductController extends Controller
                     'file' => 'max:5120'
                 ]);
                 imagejpeg($imagenOriginal, $rutaImagenComprimida, $calidad);
-    
-                //$nombrearchivo  = str_slug($request->slug).".".$file->getClientOriginalExtension();
-                // $file->move(public_path("images/admin/products/"), $nombrearchivo);
+
                 $product->images()->create([
                     'url' => "images/admin/products/" . $nombrearchivo
                 ]);

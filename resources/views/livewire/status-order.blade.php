@@ -110,14 +110,27 @@
     </div> --}}
 
     <div class="bg-white rounded-lg shadow-lg p-6 text-gray-700 mb-6">
-        <p class="text-xl font-semibold mb-4">Resumen</p>
-
+        <div class="flex">
+            <p class="flex-1 text-xl font-semibold mb-4">Resumen</p>
+            <a class="self-stretch text-lg" href="{{ route('admin.orders.index') }}">
+                <i class="fas fa-arrow-left text-lg"></i> Regresar
+            </a>
+        </div>
+        <hr>
+        <p class="my-4 text-lg font-semibold">Información del Comprador </p>
+        <div class="mb-4 font-semibold">
+            <p>Nombre: {{ $buyer->name }}</p>
+            <p>Correo: {{ $buyer->email }}</p>
+            <p>Empresa: {{ $buyer->company_name }}</p>
+            <p>Datos fiscales: </p>
+            <p class="whitespace-pre-line ml-2">{{ $buyer->tax_data }}</p>
+        </div>
         <table class="table-auto w-full">
             <thead>
                 <tr>
-                    <th></th>
-                    <th>Precio</th>
-                    <th>Cant</th>
+                    <th>Producto</th>
+                    <th>Precio unitario</th>
+                    <th>Cantidad</th>
                     <th>Total</th>
                 </tr>
             </thead>
@@ -125,7 +138,7 @@
             <tbody class="divide-y divide-gray-200">
                 <td>
                     <div class="flex">
-                        <img class="h-15 w-20 object-cover mr-4" src="{{ $items->options->image }}" alt="">
+                        <img class="h-15 w-20 object-cover mr-4" src="{{ asset($items->options->image ? $items->options->image : 'images/image-not-found.png') }}" alt="">
                         <article>
                             <h1 class="font-bold">{{ $items->name }}</h1>
                             <div class="flex text-xs">

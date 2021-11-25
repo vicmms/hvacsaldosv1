@@ -3,16 +3,21 @@
 namespace App\Http\Livewire;
 
 use App\Models\Notification;
+use App\Models\User;
 use Livewire\Component;
 
 class StatusOrder extends Component
 {
 
-    public $order, $status;
+    public $order, $status, $buyer;
 
     public function mount()
     {
         $this->status = $this->order->status;
+        $this->buyer = User::where('users.id', $this->order->user_id)
+                            ->join('companies', 'companies.user_id', 'users.id')
+                            ->select('users.*', 'companies.name as company_name', 'companies.tax_data')
+                            ->first();
     }
 
     public function update()

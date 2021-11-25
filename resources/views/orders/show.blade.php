@@ -108,7 +108,7 @@
                     <tr>
                         <td>
                             <div class="flex">
-                                <img class="h-15 w-20 object-cover mr-4" src="{{ $items->options->image }}" alt="">
+                                <img class="h-15 w-20 object-cover mr-4" src="{{ asset($items->options->image ? $items->options->image : 'images/image-not-found.png') }}" alt="">
                                 <article>
                                     <h1 class="font-bold">{{ $items->name }}</h1>
                                     <div class="flex text-xs">
