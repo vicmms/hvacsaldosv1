@@ -15,6 +15,7 @@ use App\Models\User;
 use App\Models\Video;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Support\Str;
@@ -49,7 +50,7 @@ class EditProduct extends Component
     public function mount(Product $product)
     {
         $product->currency_id == 0 ? $product->currency_id = "" : false;
-        
+
         $this->product = $product;
 
         $this->isRejected = $this->product->status == 3 ? true : false;
@@ -73,7 +74,6 @@ class EditProduct extends Component
         $this->firstTime = true;
 
         $this->serie_number = $product->serie_number;
-
     }
 
 
@@ -117,23 +117,31 @@ class EditProduct extends Component
         $rules = $this->rules;
         $this->validate($rules);
 
-        if ($revision){
-            $notification = 'El producto "'.$this->product->name.'" se ha mandado a revisión, te avisaremos por este medio y correo electrónico cuando sea validado.';
-            $user_id = Auth::user()->id;
-            $product_id = $this->product->id;
-            $this->createNotification($notification, $user_id, $product_id, false);
+        if ($revision) {
+            $company_info = DB::table('companies')->where('user_id', Auth::user()->id)->first();
+            if (strlen($company_info->name) > 2 && strlen($company_info->tax_data) > 10) {
+                $notification = 'El producto "' . $this->product->name . '" se ha mandado a revisión, te avisaremos por este medio y correo electrónico cuando sea validado.';
+                $user_id = Auth::user()->id;
+                $product_id = $this->product->id;
+                $this->createNotification($notification, $user_id, $product_id, false);
 
-            $notification = 'Se ha solicitado la revisión de un nuevo producto. <a class="block underline text-blue-900" href="/admin?status=1">Ver solicitudes</a>';
-            $users = User::whereHas(
-                'roles', function($q){
-                    $q->where('name', 'admin')->orWhere('name', 'user');
-                })
-                ->where('country_id', Auth::user()->country_id)
-                ->get();
-            foreach ($users as $user) {
-                $this->createNotification($notification, $user->id, $product_id, true);
+                $notification = 'Se ha solicitado la revisión de un nuevo producto. <a class="block underline text-blue-900" href="/admin?status=1">Ver solicitudes</a>';
+                $users = User::whereHas(
+                    'roles',
+                    function ($q) {
+                        $q->where('name', 'admin')->orWhere('name', 'user');
+                    }
+                )
+                    ->where('country_id', Auth::user()->country_id)
+                    ->get();
+                foreach ($users as $user) {
+                    $this->createNotification($notification, $user->id, $product_id, true);
+                }
+                $this->product->status = 1;
+            } else {
+                $this->emit('company_info');
+                return false;
             }
-            $this->product->status = 1;
         }
 
         $this->product->slug = Str::slug($this->product->name) . " " . rand(10, 99) . Auth::user()->id;
@@ -149,7 +157,8 @@ class EditProduct extends Component
         return redirect()->route('admin.index');
     }
 
-    public function createNotification($notification, $user_id, $product_id, $isAdmin){
+    public function createNotification($notification, $user_id, $product_id, $isAdmin)
+    {
         Notification::create([
             'notification' => $notification,
             'user_id' => $user_id,

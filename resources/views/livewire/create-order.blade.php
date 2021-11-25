@@ -39,12 +39,15 @@
                 Solicitar la compra
             </x-jet-button>
 
+            <x-button-enlace href="/user/profile" color="red">
+                Editar información
+            </x-button-enlace>
+
             <hr>
 
-            <p class="text-sm text-gray-700 mt-2">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam atque
-                quo, labore facere placeat illo consequatur hic ut sapiente exercitationem, architecto iure,
-                consequuntur impedit ex iusto ipsa voluptas laudantium iste <a href=""
-                    class="font-semibold text-orange-500">Políticas y privacidad</a></p>
+            <p class="text-sm text-gray-700 mt-2">Recuerda revisar nuestros <a href="https://www.saldohvac.com/t%C3%A9rminos-y-condiciones" class="font-semibold text-orange-500">Terminos y condiciones</a>
+                y nuestras <a href="https://www.saldohvac.com/privacidad" class="font-semibold text-orange-500"> Politicas de privacidad y seguridad</a>
+            </p>
         </div>
 
     </div>

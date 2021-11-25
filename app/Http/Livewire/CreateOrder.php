@@ -35,6 +35,7 @@ class CreateOrder extends Component
     public function mount()
     {
         $this->user = User::join('companies', 'companies.user_id', 'users.id')
+            ->where('companies.user_id', Auth::user()->id)
             ->select('users.*', 'companies.name as company_name', 'companies.tax_data')
             ->first();
         $this->departments = Department::all();

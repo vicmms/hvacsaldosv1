@@ -520,6 +520,17 @@
                 $('.flex-next').text('');
                 $('.flex-prev').text('');
             });
+
+            Livewire.on('company_info', () => {
+                Swal.fire({
+                    icon: 'warning',
+                    text: 'Para publicar articulos en venta debes llenar correctamente la información de tu empresa (nombre y datos fiscales)',
+                    title: 'Información requerida',
+                    confirmButtonText:'<a href="/user/profile">Actualizar información</a>',
+                    showCancelButton: true,
+                    cancelButtonText: 'Cancelar'
+                })
+            })
         </script>
     @endpush
 
