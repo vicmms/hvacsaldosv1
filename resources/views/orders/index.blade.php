@@ -92,7 +92,7 @@
                                 </span>
 
                                 <span>
-                                    Orden: {{ $order->id }}
+                                    Producto: {{ json_decode($order->content)->name }}
                                     <br>
                                     {{ $order->created_at->format('d/m/Y') }}
                                 </span>

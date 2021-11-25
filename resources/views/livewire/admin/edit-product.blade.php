@@ -360,16 +360,18 @@
 
     @push('script')
         <script>
+            var errorMessage;
             Dropzone.options.myAwesomeDropzone = {
                 headers: {
                     'X-CSRF-TOKEN': "{{ csrf_token() }}"
                 },
-                dictDefaultMessage: "Arrastre una imagen al recuadro",
-                acceptedFiles: 'image/*, video/mp4',
+                dictDefaultMessage: "Da clic o arrastra imagenes al recuadro, máximo 4.",
+                acceptedFiles: 'image/jpg, image/png, image/jpeg',//, video/mp4
                 paramName: "file", // The name that will be used to transfer the file
-                maxFilesize: 10, // MB
+                maxFilesize: 5, // MB
                 init: function() {
                     this.on("addedfiles", function(listFiles) {
+                        errorMessage = false;
                         currentImages = document.getElementById("images_list") ? document.getElementById(
                             "images_list").getElementsByTagName("li").length : 0;
                         contImages = Object.keys(listFiles).length;
@@ -377,12 +379,15 @@
                         Livewire.emit('refreshProduct', isMaxImages);
                     });
                     this.on("error", function(file, message) {
+                       if(!errorMessage){
                         message = message['message'] ? message['errors']['file'][0] : message;
                         Swal.fire({
                             icon: 'warning',
                             title: message,
                             showConfirmButton: true,
                         })
+                       }
+                       errorMessage = true;
                     });
                 },
                 complete: function(file) {
