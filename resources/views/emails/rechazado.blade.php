@@ -12,7 +12,7 @@
             <tbody>
                 <tr>
                     <td>
-                        <img class="thumbnail" src="https://plataforma.saldohvac.com/{{ $product->images->first()->url }}"
+                        <img class="thumbnail" src="https://plataforma.saldohvac.com/{{ $product->images->count() ? $product->images->first()->url : 'images/image-not-found.png' }}"
                             alt="">
                     </td>
                     <td>{{ $product->name }}</td>

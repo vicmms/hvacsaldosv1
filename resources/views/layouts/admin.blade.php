@@ -8,6 +8,9 @@
 
     <title>{{ config('app.name', 'Admin') }}</title>
 
+    {{-- favicon --}}
+    <link rel="icon" href="{{ URL::asset('images/favicon.png') }}" type="image/png"/>
+
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
