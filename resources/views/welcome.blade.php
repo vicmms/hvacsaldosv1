@@ -1,4 +1,13 @@
 <x-app-layout>
+    <style>
+        .animate-bounce {
+            height: 200px;
+            position: absolute;
+            left: 50%;
+            top: 40%;
+            filter: drop-shadow(0px 2px 1px black);
+        }
+    </style>
     @if (Auth::check())
         @if (!Auth::user()->email_verified_at)
             <div class="w-full bg-yellow-400 text-center text-white font-semibold">
@@ -7,7 +16,12 @@
             </div>
         @endif
     @endif
-    <div class="container py-8">
+    <div class="flex items-center justify-center space-x-2 animate-bounce mt-8" style="height: 200px">
+        <div class="w-4 h-4 bg-blue-700 rounded-full"></div>
+        <div class="w-4 h-4 bg-purple-700 rounded-full"></div>
+        <div class="w-4 h-4 bg-orange-500 rounded-full"></div>
+    </div>
+    <div class="container py-8 blur" id="main-content">
         @foreach ($categories as $category)
 
             <section class="mb-6">
