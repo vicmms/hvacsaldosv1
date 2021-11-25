@@ -16,7 +16,7 @@ class OrderController extends Controller
             $orders->where('status', request('status'));
         }
 
-        $orders = $orders->get();
+        $orders = $orders->orderBy('created_at', 'desc')->get();
 
 
         $solicitudes = Order::where('status', 2)->count();
