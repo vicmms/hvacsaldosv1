@@ -15,9 +15,12 @@ class UserMenu extends Component
     }
     public function render()
     {
-        $notifications = Notification::where('notifications.user_id', Auth::user()->id)
+        $notifications = null;
+        if(Auth::check()){
+            $notifications = Notification::where('notifications.user_id', Auth::user()->id)
                                     ->where('read', false)
                                     ->count();
+        }
         
         return view('livewire.user-menu', compact('notifications'));
     }

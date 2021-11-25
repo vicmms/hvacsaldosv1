@@ -164,9 +164,9 @@
             </div>
 
             {{-- Nombre --}}
-            <div class="mb-4">
+            <div class="mb-4" >
                 <x-jet-label value="Nombre*" />
-                <x-jet-input type="text" class="w-full" wire:model="product.name"
+                <x-jet-input wire:ignore type="text" class="w-full" wire:model="product.name"
                     placeholder="Ingrese el nombre del producto" />
                 <x-jet-input-error for="product.name" />
             </div>
@@ -534,6 +534,14 @@
                     confirmButtonText:'<a href="/user/profile">Actualizar información</a>',
                     showCancelButton: true,
                     cancelButtonText: 'Cancelar'
+                })
+            })
+            Livewire.on('images', () => {
+                Swal.fire({
+                    icon: 'warning',
+                    text: 'Agrega imágenes del producto, puedes agregar hasta 4 imágenes.',
+                    title: 'Faltan imágenes',
+                    confirmButtonText:'Ok',
                 })
             })
         </script>
