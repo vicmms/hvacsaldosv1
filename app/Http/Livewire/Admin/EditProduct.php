@@ -213,6 +213,8 @@ class EditProduct extends Component
             $image->delete();
         }
 
+        Notification::where('product_id', $this->product->id)->delete();
+
         $this->product->delete();
 
         return redirect()->route('admin.index');
