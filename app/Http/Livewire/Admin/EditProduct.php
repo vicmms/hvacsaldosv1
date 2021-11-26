@@ -23,7 +23,7 @@ use Illuminate\Support\Str;
 class EditProduct extends Component
 {
 
-    public $product, $categories, $subcategories, $brands, $slug, $currencies, $city, $isRejected, $isNew, $modalImages, $serie_number;
+    public $product, $categories, $brand_id = "", $subcategories, $brands, $slug, $currencies, $city, $isRejected, $isNew, $modalImages, $serie_number;
 
     public $category_id, $state_id, $firstTime, $currency_id;
 
@@ -67,7 +67,9 @@ class EditProduct extends Component
 
         $this->subcategories = Subcategory::all();
 
-        $this->brands = Brand::all();
+        $this->brands = Brand::whereHas('categories', function(Builder $query){
+            $query->where('category_id', $this->category_id);
+        })->get();
 
         $this->modalImages = false;
 
@@ -99,13 +101,12 @@ class EditProduct extends Component
 
         $this->brands = Brand::join('brand_category', 'brands.id', 'brand_category.brand_id')
             ->select('brands.*')
-            ->where('brand_category.category_id', $this->category_id)
+            ->where('brand_category.category_id', $value)
             ->orderBy('name', 'asc')
             ->get();
-
-        /* $this->reset(['subcategory_id', 'brand_id']); */
-        $this->product->subcategory_id = "";
-        $this->product->brand_id = "";
+        $this->reset(['brand_id']);
+        // $this->product->subcategory_id = "";
+        // $this->product->brand_id = "";
     }
 
     public function getSubcategoryProperty()
@@ -230,11 +231,11 @@ class EditProduct extends Component
     public function render()
     {
         $user = Auth::user();
-        $this->brands = Brand::join('brand_category', 'brands.id', 'brand_category.brand_id')
-            ->select('brands.*')
-            ->where('brand_category.category_id', $this->category_id)
-            ->orderBy('name', 'asc')
-            ->get();
+        // $this->brands = Brand::join('brand_category', 'brands.id', 'brand_category.brand_id')
+        //     ->select('brands.*')
+        //     ->where('brand_category.category_id', $this->category_id)
+        //     ->orderBy('name', 'asc')
+        //     ->get();
         return view('livewire.admin.edit-product', compact('user'))->layout('layouts.admin');
     }
 }
