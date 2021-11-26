@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Models\Notification;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -77,7 +78,7 @@ class ShowProducts extends Component
             }
             $image->delete();
         }
-
+        Notification::where('product_id', $product->id)->delete();
         $product->delete();
 
         // return redirect()->route('admin.index');
