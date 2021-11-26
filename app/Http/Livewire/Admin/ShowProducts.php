@@ -55,6 +55,7 @@ class ShowProducts extends Component
                 ->orderBy('created_at', 'desc')
                 ->paginate(10);
         } else {
+            $valor = $this->status ? $this->status : 0;
             $products = Product::where('user_id', $user->id)
                 ->where('name', 'like', '%' . $this->search . '%')
                 ->where('products.status', $condicion, $valor)
