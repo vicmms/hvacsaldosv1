@@ -121,30 +121,35 @@ class EditProduct extends Component
         if ($revision) {
             $company_info = DB::table('companies')->where('user_id', Auth::user()->id)->first();
             if ($this->product->images()->count()) {
-                if (strlen($company_info->name) > 2 && strlen($company_info->tax_data) > 10) {
-                    $notification = 'El producto "' . $this->product->name . '" se ha mandado a revisión, te avisaremos por este medio y correo electrónico cuando sea validado.';
-                    $user_id = Auth::user()->id;
-                    $product_id = $this->product->id;
-                    $this->createNotification($notification, $user_id, $product_id, false);
+                if ($company_info) {
+                    if (strlen($company_info->name) > 2 && strlen($company_info->tax_data) > 10) {
+                        $notification = 'El producto "' . $this->product->name . '" se ha mandado a revisión, te avisaremos por este medio y correo electrónico cuando sea validado.';
+                        $user_id = Auth::user()->id;
+                        $product_id = $this->product->id;
+                        $this->createNotification($notification, $user_id, $product_id, false);
 
-                    $notification = 'Se ha solicitado la revisión de un nuevo producto. <a class="block underline text-blue-900" href="/admin?status=1">Ver solicitudes</a>';
-                    $users = User::whereHas(
-                        'roles',
-                        function ($q) {
-                            $q->where('name', 'admin')->orWhere('name', 'user');
+                        $notification = 'Se ha solicitado la revisión de un nuevo producto. <a class="block underline text-blue-900" href="/admin?status=1">Ver solicitudes</a>';
+                        $users = User::whereHas(
+                            'roles',
+                            function ($q) {
+                                $q->where('name', 'admin')->orWhere('name', 'user');
+                            }
+                        )
+                            ->where('country_id', Auth::user()->country_id)
+                            ->get();
+                        foreach ($users as $user) {
+                            $this->createNotification($notification, $user->id, $product_id, true);
                         }
-                    )
-                        ->where('country_id', Auth::user()->country_id)
-                        ->get();
-                    foreach ($users as $user) {
-                        $this->createNotification($notification, $user->id, $product_id, true);
+                        $this->product->status = 1;
+                    } else {
+                        $this->emit('company_info');
+                        return false;
                     }
-                    $this->product->status = 1;
                 } else {
                     $this->emit('company_info');
                     return false;
                 }
-            }else{
+            } else {
                 $this->emit('images');
                 return false;
             }
