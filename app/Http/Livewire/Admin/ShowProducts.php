@@ -56,7 +56,9 @@ class ShowProducts extends Component
                 ->paginate(10);
         } else {
             $products = Product::where('user_id', $user->id)
-                ->where('name', 'like', '%' . $this->search . '%')->paginate(10);
+                ->where('name', 'like', '%' . $this->search . '%')
+                ->where('products.status', $condicion, $valor)
+                ->paginate(10);
         }
 
         return view('livewire.admin.show-products', compact('products'))->layout('layouts.admin');
