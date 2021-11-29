@@ -60,9 +60,6 @@ class NotificationController extends Controller
         $response = $this->emitNotification($titulos, $contenido, $product, $users_ids);
         $return["allresponses"] = $response;
         $return = json_encode( $return);
-        print("\n\nJSON received:\n");
-        print($return);
-        print("\n");
     }
 
     public function getAllNotificationsById(Request $request){
