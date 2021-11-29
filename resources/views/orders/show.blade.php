@@ -126,7 +126,8 @@
                         </td>
 
                         <td class="text-center">
-                            {{ $items->price }} USD
+                            {{ json_decode($order->content)->options->currency ? json_decode($order->content)->options->currency : '$'}}
+                            {{number_format($items->price, 0, '.', ',')}}
                         </td>
 
                         <td class="text-center">
@@ -134,7 +135,8 @@
                         </td>
 
                         <td class="text-center">
-                            {{ $items->price * $items->qty }} USD
+                            {{ json_decode($order->content)->options->currency ? json_decode($order->content)->options->currency : '$'}}
+                            {{number_format(($items->price * $items->qty), 0, '.', ',')}}
                         </td>
                     </tr>
                 </tbody>

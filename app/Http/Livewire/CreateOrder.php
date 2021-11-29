@@ -78,7 +78,6 @@ class CreateOrder extends Component
             ->select('users.*', 'companies.name as company_name', 'companies.tax_data')
             ->first();
         foreach (Cart::content() as $item) {
-
             $order = new Order();
 
             $order->user_id = auth()->user()->id;
@@ -134,6 +133,15 @@ class CreateOrder extends Component
 
     public function render()
     {
-        return view('livewire.create-order');
+        $currencies = array();
+        $totales = [];
+        foreach (Cart::content() as $item) {
+            array_search($item->options->currency, $currencies) ? null : array_push($currencies, $item->options->currency);
+            $totales[$item->options->currency] = array('currency' => $item->options->currency, 'price' => []);
+        }
+        foreach (Cart::content() as $item) {
+            array_push($totales[$item->options->currency]['price'],  $item->price);
+        }
+        return view('livewire.create-order', compact('totales'));
     }
 }
