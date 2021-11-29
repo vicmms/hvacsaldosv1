@@ -41,10 +41,10 @@
                             <p>
                                 {{$item->name}}
                             </p>
-                            {{-- <p>
+                            <p>
                                 {{ $item->currency ? $item->currency->currency : '' }}
-                                {{ $item->currency ? $item->currency->symbol : '$'}}{{ $item->price }}
-                            </p> --}}
+                                {{ $item->options['currency'] . number_format($item->price, 0, '.', ',')}}
+                            </p>
                         </article>
                     </li>
                 @empty

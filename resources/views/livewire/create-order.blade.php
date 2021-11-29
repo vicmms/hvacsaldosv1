@@ -57,7 +57,7 @@
             <ul>
                 @forelse (Cart::content() as $item)
                     <li class="flex p-2 border-b border-gray-200">
-                        <img class="h-15 w-20 object-cover mr-4" src="{{ $item->options->image }}" alt="">
+                        <img class="h-15 w-20 object-cover mr-4" src="{{ asset($item->options->image) }}" alt="">
 
                         <article class="flex-1">
                             <h1 class="font-bold">{{ $item->name }}</h1>
@@ -74,7 +74,7 @@
 
                             </div>
 
-                            <p>USD {{ $item->price }}</p>
+                            <p>{{$item->options['currency'] . number_format($item->price * $item->qty, 0, '.', ',')}}</p>
                         </article>
                     </li>
                 @empty
@@ -89,11 +89,11 @@
             <hr class="mt-4 mb-3">
 
             <div class="text-gray-700">
-                <p class="flex justify-between items-center">
+                {{-- <p class="flex justify-between items-center">
                     Subtotal
                     <span class="font-semibold">{{ Cart::subtotal() }} USD</span>
-                </p>
-                <p class="flex justify-between items-center">
+                </p> --}}
+                {{-- <p class="flex justify-between items-center">
                     Envío
                     <span class="font-semibold">
                         @if ($envio_type == 1 || $shipping_cost == 0)
@@ -102,17 +102,22 @@
                             No disponible
                         @endif
                     </span>
-                </p>
+                </p> --}}
 
                 <hr class="mt-4 mb-3">
 
-                <p class="flex justify-between items-center font-semibold">
-                    <span class="text-lg">Total</span>
-                    @if ($envio_type == 1)
-                        {{ Cart::subtotal() }} USD
+                <p class="flex items-center font-semibold">
+                    <span class="text-lg font-semibold mr-4">Total:</span>
+                    @foreach ($totales as $key => $total)
+                    {{$total['currency'] . number_format(array_sum($total['price']), 0, '.', ',')}} 
+                    @if (array_key_last($totales) != $key)
+                        +
+                    @endif
+                    @endforeach
+                    {{-- @if ($envio_type == 1)
                     @else
                         {{ Cart::subtotal() + $shipping_cost }} USD
-                    @endif
+                    @endif --}}
                 </p>
             </div>
         </div>

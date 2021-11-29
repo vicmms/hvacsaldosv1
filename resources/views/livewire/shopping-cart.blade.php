@@ -123,8 +123,7 @@
                             <td class="px-6 py-4 whitespace-nowrap">
 
                                 <div class="text-sm text-gray-500">
-                                    <span>{{ session('currency') }}
-                                        {{ session('denotation') . $item->price }}</span>
+                                    <span>{{ $item->options['currency'] . number_format($item->price, 0, '.', ',')}}</span>
                                     <a class="ml-6 cursor-pointer hover:text-red-600"
                                         wire:click="delete('{{ $item->rowId }}')"
                                         wire:loading.class="text-red-600 opacity-25"
@@ -153,8 +152,7 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                 <div class="text-sm text-gray-500">
-                                    {{ session('currency') }}
-                                    {{ session('denotation') . $item->price * $item->qty }}
+                                    {{$item->options['currency'] . number_format($item->price * $item->qty, 0, '.', ',')}}
                                 </div>
                             </td>
                         </tr>
@@ -193,10 +191,11 @@
         <div class="bg-white rounded-lg shadow-lg px-6 py-4 mt-4">
             <div class="flex justify-between items-center">
                 <div>
-                    <p class="text-gray-700">
-                        <span class="font-bold text-lg">Total:</span>
-                        {{ session('currency') }} {{ session('denotation') . Cart::subTotal() }}
+                    @foreach ($totales as $total)
+                        <p class="text-gray-700">
+                        <span class="font-bold text-lg">Total {{$total['currency'] . array_sum($total['price'])}}</span>
                     </p>
+                    @endforeach
                 </div>
 
                 <div>

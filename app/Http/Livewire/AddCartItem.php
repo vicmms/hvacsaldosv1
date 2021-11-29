@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Currency;
 use Livewire\Component;
 
 use Gloudemans\Shoppingcart\Facades\Cart;
@@ -34,8 +35,9 @@ class AddCartItem extends Component
 
     public function addItem()
     {
-        session(['currency' => $this->product->state->country->currency]);
-        session(['denotation' => $this->product->state->country->denotation]);
+        $currency = Currency::where('id', $this->product->currency_id)->first();
+        $currency = $currency ? $currency->currency . " " . $currency->symbol : '$';
+        $this->options['currency'] = $currency;
         Cart::add([
             'id' => $this->product->id,
             'name' => $this->product->name,
