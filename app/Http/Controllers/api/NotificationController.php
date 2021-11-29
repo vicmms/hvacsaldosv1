@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
-    public function emitNotification($titulos, $contenido, Product $product, $users_ids, Rejection $comment = null)
+    public function emitNotification($titulos, $contenido, Product $product, $users_ids, $comment)
     {
         $headings = array(
             "en"=> $titulos['es'],

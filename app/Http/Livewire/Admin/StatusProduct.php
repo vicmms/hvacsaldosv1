@@ -77,11 +77,11 @@ class StatusProduct extends Component
             event(new \App\Events\NavNotification());
 
             // notificaciones moviles
-            $comment = Rejection::where('product_id', $product_id)->orderBy('created_at', 'desc')->first()->message;
+            $comment = Rejection::where('product_id', $product_id)->orderBy('created_at', 'desc')->first();
             $titulos['es'] = 'Producto rechazado';
             $contenido['es'] = 'Tu producto no ha podido ser aprobado para su publicación, por favor revisa las observaciones realizadas.';
             $users_ids = [strval($user_id)];
-            app(NotificationController::class)->triggerNotification($titulos,$contenido, $this->product, $users_ids, $comment);
+            app(NotificationController::class)->triggerNotification($titulos,$contenido, $this->product, $users_ids, $comment->message);
 
             return redirect()->route('admin.index');
         }
