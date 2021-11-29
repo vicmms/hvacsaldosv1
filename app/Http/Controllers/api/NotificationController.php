@@ -4,39 +4,40 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Notification;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
-    public function emitNotification()
+    public function emitNotification($titulos, $contenido, Product $product, $users_ids)
     {
         $headings = array(
-            "es"=> "Producto aprobado", 
-            "en"=>"Su producto fue aprobado",
+            "en"=> $titulos['es'],
+            "es"=> $titulos['es'], 
         );
 
         $content = array(
-            "en" => 'Aproved Product',
-            "es" => 'Su producto ha sido aprobado para ser publicado en la plataforma SaldoHVAC'
+            "en" => $contenido['es'],
+            "es" => $contenido['es']
             );
     
         $fields = array(
             'app_id' => "67b993d9-0c0b-4af5-ba28-41d92295f1d5",
             'included_segments' => array('All'),
             'data' => array(
-                "product_id"=> 374,
-                "status" => "rejected",
-                "comments" => "Su producto fue aprobado y ya se encuentra publicado"
+                "product_id"=> $product->id,
+                "status" => $product->status,
+                "comments" => $product->comments
             ),
-            'small_icon' =>"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/WhatsApp_icon.png/239px-WhatsApp_icon.png",
+            // 'small_icon' =>"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/WhatsApp_icon.png/239px-WhatsApp_icon.png",
             'contents' => $content,
             'headings' => $headings,
-            "include_external_user_ids" => ["6"]
+            "include_external_user_ids" => $users_ids
         );
     
         $fields = json_encode($fields);
-        print("\nJSON sent:\n");
-        print($fields);
+        // print("\nJSON sent:\n");
+        // print($fields);
     
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
@@ -54,8 +55,8 @@ class NotificationController extends Controller
         return $response;
     }
     
-    public function triggerNotification(){
-        $response = $this->emitNotification();
+    public function triggerNotification($titulos, $contenido, Product $product, $users_ids){
+        $response = $this->emitNotification($titulos, $contenido, $product, $users_ids);
         $return["allresponses"] = $response;
         $return = json_encode( $return);
         print("\n\nJSON received:\n");
