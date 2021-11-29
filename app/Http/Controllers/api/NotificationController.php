@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
-    public function emitNotification($titulos, $contenido, Product $product, $users_ids, Rejection $comments = null)
+    public function emitNotification($titulos, $contenido, Product $product, $users_ids, Rejection $comment = null)
     {
         $headings = array(
             "en"=> $titulos['es'],
@@ -28,7 +28,7 @@ class NotificationController extends Controller
             'data' => array(
                 "product_id"=> $product->id,
                 "status" => $product->status,
-                "comments" => $comments
+                "comments" => $comment
             ),
             // 'small_icon' =>"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/WhatsApp_icon.png/239px-WhatsApp_icon.png",
             'contents' => $content,
