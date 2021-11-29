@@ -39,7 +39,7 @@ class StatusProduct extends Component
                 // notificaciones moviles
                 $titulos['es'] = 'Producto aprobado!';
                 $contenido['es'] = 'Tu producto ha sido aprobado y ya está disponible en la página de saldo HVAC.';
-                app(NotificationController::class)->triggerNotification($titulos,$contenido, $this->product, $user_id);
+                app(NotificationController::class)->triggerNotification($titulos,$contenido, $this->product, $user_id, null);
             }
 
             $this->product->save();
@@ -76,9 +76,10 @@ class StatusProduct extends Component
             event(new \App\Events\NavNotification());
 
             // notificaciones moviles
+            $comments = Rejection::where('product_id', $product_id)->orderBy('created_at', 'desc')->get();
             $titulos['es'] = 'Producto rechazado';
             $contenido['es'] = 'Tu producto no ha podido ser aprobado para su publicación, por favor revisa las observaciones realizadas.';
-            app(NotificationController::class)->triggerNotification($titulos,$contenido, $this->product, $user_id);
+            app(NotificationController::class)->triggerNotification($titulos,$contenido, $this->product, $user_id, $comments);
 
             return redirect()->route('admin.index');
         }
