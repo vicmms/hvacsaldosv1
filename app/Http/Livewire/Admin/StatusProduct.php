@@ -39,7 +39,7 @@ class StatusProduct extends Component
                 // notificaciones moviles
                 $titulos['es'] = 'Producto aprobado!';
                 $contenido['es'] = 'Tu producto ha sido aprobado y ya está disponible en la página de saldo HVAC.';
-                $users_ids = [$user_id];
+                $users_ids = [strval($user_id)];
                 app(NotificationController::class)->triggerNotification($titulos,$contenido, $this->product, $users_ids, null);
             }
 

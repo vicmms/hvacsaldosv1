@@ -12,7 +12,6 @@ class NotificationController extends Controller
 {
     public function emitNotification($titulos, $contenido, Product $product, $users_ids, Rejection $comments = null)
     {
-        dd($users_ids);
         $headings = array(
             "en"=> $titulos['es'],
             "es"=> $titulos['es'], 
