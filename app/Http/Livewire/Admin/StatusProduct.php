@@ -80,7 +80,7 @@ class StatusProduct extends Component
             $comments = Rejection::where('product_id', $product_id)->orderBy('created_at', 'desc')->get();
             $titulos['es'] = 'Producto rechazado';
             $contenido['es'] = 'Tu producto no ha podido ser aprobado para su publicación, por favor revisa las observaciones realizadas.';
-            $users_ids = [$user_id];
+            $users_ids = [strval($user_id)];
             app(NotificationController::class)->triggerNotification($titulos,$contenido, $this->product, $users_ids, $comments);
 
             return redirect()->route('admin.index');
