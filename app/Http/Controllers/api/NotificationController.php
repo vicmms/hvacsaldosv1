@@ -5,11 +5,12 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Models\Notification;
 use App\Models\Product;
+use App\Models\Rejection;
 use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
-    public function emitNotification($titulos, $contenido, Product $product, $users_ids)
+    public function emitNotification($titulos, $contenido, Product $product, $users_ids, Rejection $comments = null)
     {
         $headings = array(
             "en"=> $titulos['es'],
@@ -27,7 +28,7 @@ class NotificationController extends Controller
             'data' => array(
                 "product_id"=> $product->id,
                 "status" => $product->status,
-                "comments" => $product->comments
+                "comments" => $comments
             ),
             // 'small_icon' =>"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/WhatsApp_icon.png/239px-WhatsApp_icon.png",
             'contents' => $content,
