@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Http\Controllers\api\NotificationController;
 use App\Mail\AcceptedProduct;
 use App\Mail\RejectedProduct;
 use App\Models\Notification;
@@ -35,6 +36,10 @@ class StatusProduct extends Component
                 $user_id = $this->product->user_id;
                 $product_id = $this->product->id;
                 $this->createNotification($notification, $user_id, $product_id, false);
+                // notificaciones moviles
+                $titulos['es'] = 'Producto aprobado!';
+                $contenido['es'] = 'Tu producto ha sido aprobado y ya está disponible en la página de saldo HVAC.';
+                app(NotificationController::class)->triggerNotification($titulos,$contenido, $this->product, $user_id);
             }
 
             $this->product->save();
@@ -69,6 +74,11 @@ class StatusProduct extends Component
             $this->createNotification($notification, $user_id, $product_id, false);
 
             event(new \App\Events\NavNotification());
+
+            // notificaciones moviles
+            $titulos['es'] = 'Producto rechazado';
+            $contenido['es'] = 'Tu producto no ha podido ser aprobado para su publicación, por favor revisa las observaciones realizadas.';
+            app(NotificationController::class)->triggerNotification($titulos,$contenido, $this->product, $user_id);
 
             return redirect()->route('admin.index');
         }
