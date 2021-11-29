@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
-    public function emitNotification($titulos, $contenido, Product $product, $users_ids, Rejection $comment = null)
+    public function emitNotification($titulos, $contenido, Product $product, $users_ids, $comment)
     {
         $headings = array(
             "en"=> $titulos['es'],
@@ -56,8 +56,8 @@ class NotificationController extends Controller
         return $response;
     }
     
-    public function triggerNotification($titulos, $contenido, Product $product, $users_ids){
-        $response = $this->emitNotification($titulos, $contenido, $product, $users_ids);
+    public function triggerNotification($titulos, $contenido, Product $product, $users_ids, $comment){
+        $response = $this->emitNotification($titulos, $contenido, $product, $users_ids, $comment);
         $return["allresponses"] = $response;
         $return = json_encode( $return);
     }
