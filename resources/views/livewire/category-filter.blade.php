@@ -1,7 +1,7 @@
 <div>
     <div class="bg-white rounded-lg shadow-lg mb-6">
         <div class="px-6 py-2 flex justify-between items-center">
-            <h1 class="font-semibold text-gray-700 uppercase">{{ $category->name }}</h1>
+            <h1 class="font-semibold text-gray-700 uppercase">{{ $category == 'all' ? 'Todos los productos' : $category->name }}</h1>
 
             <div class="hidden md:block grid grid-cols-2 border border-gray-200 divide-x divide-gray-200 text-gray-500">
                 <i class="fas fa-border-all p-3 cursor-pointer {{ $view == 'grid' ? 'text-orange-500' : '' }}"
@@ -18,6 +18,11 @@
 
             <h2 class="font-semibold text-center mb-2">Subcategorías</h2>
             <ul class="divide-y divide-gray-200">
+                <li class="py-2 text-sm">
+                    <a class="cursor-pointer hover:text-orange-500 capitalize {{ !$subcategoria ? 'text-orange-500 font-semibold' : '' }}"
+                        wire:click="limpiarSubcategories">Todas
+                    </a>
+                </li>
                 @foreach ($subcategories as $subcategory)
                     <li class="py-2 text-sm">
                         <a class="cursor-pointer hover:text-orange-500 capitalize {{ $subcategoria == $subcategory->slug ? 'text-orange-500 font-semibold' : '' }}"
@@ -29,6 +34,12 @@
 
             <h2 class="font-semibold text-center mt-4 mb-2">Marcas</h2>
             <ul class="divide-y divide-gray-200 max-h-96 overflow-y-scroll">
+                <li class="py-2 text-sm">
+                    <a class="cursor-pointer hover:text-orange-500 capitalize {{ !$marca ? 'text-orange-500 font-semibold' : '' }}"
+                        wire:click="limpiarBrands">
+                        Todas
+                    </a>
+                </li>
                 @foreach ($brands as $brand)
                     <li class="py-2 text-sm">
                         <a class="cursor-pointer hover:text-orange-500 capitalize {{ $marca == $brand->name ? 'text-orange-500 font-semibold' : '' }}"

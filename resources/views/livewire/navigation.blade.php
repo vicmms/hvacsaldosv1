@@ -70,6 +70,12 @@
                             <x-navigation-subcategories :category="$category" :subcategories="$subcategories" />
                         </div>
                     </li> --}}
+                    <li class="navigation-link text-trueGray-500 hover:bg-orange-500 hover:text-white">
+                        <a href="{{ route('categories.show', 'all') }}"
+                            class="py-2 px-4 text-sm flex items-center">
+                            Todos los productos
+                        </a>
+                    </li>
                     @foreach ($categories as $category)
                         <li class="navigation-link text-trueGray-500 hover:bg-orange-500 hover:text-white">
                             <a href="{{ route('categories.show', $category) }}"

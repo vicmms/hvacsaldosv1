@@ -30,6 +30,8 @@ Route::get('/mail', function(){
 
 Route::get('search', SearchController::class)->name('search');
 
+Route::get('categories/all/{country?}', [CategoryController::class, 'showAll'])->name('categories.showAll');
+
 Route::get('categories/{category}/{country?}', [CategoryController::class, 'show'])->name('categories.show');
 
 Route::get('products/{product}', ShowProduct::class)->name('products.show');

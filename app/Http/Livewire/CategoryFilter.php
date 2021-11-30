@@ -28,6 +28,16 @@ class CategoryFilter extends Component
         $this->reset(['subcategoria', 'marca', 'page']);
     }
 
+    public function limpiarSubcategories()
+    {
+        $this->reset(['subcategoria', 'page']);
+    }
+
+    public function limpiarBrands()
+    {
+        $this->reset(['marca', 'page']);
+    }
+
 
     public function updatedSubcategoria()
     {
@@ -51,11 +61,26 @@ class CategoryFilter extends Component
         $country_id = array_key_exists($this->country, $countries)  ? $countries[$this->country] : 'MX';
 
 
-        $productsQuery = Product::join('states', 'states.id', '=', 'state_id')
+        if($this->category == 'all'){
+            $productsQuery = Product::join('states', 'states.id', '=', 'state_id')
+            ->select('products.*', 'states.country_id')
+            ->where('status', 2)
+            ->where('country_id', $country_id);
+
+            $brands = Brand::orderBy('name', 'asc')->get();
+        }else{
+            $productsQuery = Product::join('states', 'states.id', '=', 'state_id')
             ->select('products.*', 'states.country_id')
             ->where('category_id', $this->category->id)
             ->where('status', 2)
             ->where('country_id', $country_id);
+
+            $brands = Brand::join('brand_category', 'brands.id', 'brand_category.brand_id')
+                    ->select('brands.*')
+                    ->where('brand_category.category_id', $this->category->id)
+                    ->orderBy('name', 'asc')
+                    ->get();
+        }
 
         if ($this->subcategoria) {
             $productsQuery = $productsQuery->whereHas('subcategory', function (Builder $query) {
@@ -71,7 +96,7 @@ class CategoryFilter extends Component
 
         $products = $productsQuery->paginate(20);
         $subcategories = Subcategory::all();
-        $brands = Brand::all();
+        
 
         return view('livewire.category-filter', compact('products', 'subcategories', 'brands'));
     }
