@@ -28,7 +28,7 @@
             </ul>
 
             <h2 class="font-semibold text-center mt-4 mb-2">Marcas</h2>
-            <ul class="divide-y divide-gray-200">
+            <ul class="divide-y divide-gray-200 max-h-96 overflow-y-scroll">
                 @foreach ($brands as $brand)
                     <li class="py-2 text-sm">
                         <a class="cursor-pointer hover:text-orange-500 capitalize {{ $marca == $brand->name ? 'text-orange-500 font-semibold' : '' }}"
@@ -60,12 +60,14 @@
                                 <div class="py-4 px-6">
                                     <h1 class="text-lg font-semibold">
                                         <a href="{{ route('products.show', $product) }}">
-                                            {{ Str::limit($product->name, 20) }}
+                                            {{ Str::limit($product->name, 15) }}
                                         </a>
                                     </h1>
 
-                                    <p class="font-bold text-trueGray-700">{{ $product->state->country->currency }}
-                                        {{ $product->state->country->denotation . $product->price }}</p>
+                                    <p class="font-bold text-trueGray-700">
+                                        {{ $product->currency ? $product->currency->currency : '' }}
+                                        {{ $product->currency ? $product->currency->symbol : '$' }}{{ number_format($product->price, 0, '.', ',') }}
+                                    </p>
                                 </div>
                             </article>
                         </li>
