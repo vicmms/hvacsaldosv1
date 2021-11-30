@@ -156,7 +156,7 @@ class EditProduct extends Component
             }
         }
 
-        $this->product->slug = Str::slug($this->product->name) . " " . rand(10, 99) . Auth::user()->id;
+        $this->product->slug = Str::slug($this->product->name) . " " . $this->product->id . Auth::user()->id;
         $this->product->price = str_replace(',', '', $this->product->price);
         $this->product->commercial_price = str_replace(',', '', $this->product->commercial_price);
         $this->product->serie_number = $this->serie_number;

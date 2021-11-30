@@ -24,13 +24,14 @@ class StatusOrder extends Component
     {
         $this->order->status = $this->status;
         if ($this->order->status == 3) {
-            $notification = 'Se ha registrado el pago de tu compra';
-            $this->createNotification($notification, $this->order->user_id, 0, false, 1);
+            $notification = 'Se ha registrado el pago de tu compra. <a class="block underline text-blue-900" href="/products'.json_decode($this->order->content)->options->slug.'">Ver producto</a>';
+            $this->createNotification($notification, $this->order->user_id, json_decode($this->order->content)->id, false, 1);
 
             event(new \App\Events\NavNotification());
         }
 
         $this->order->save();
+        $this->emit('updated');
     }
 
     public function createNotification($notification, $user_id, $product_id, $isAdmin, $icon)

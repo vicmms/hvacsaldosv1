@@ -46,41 +46,46 @@
 
 
 
+    @role('admin')
+        <div class="bg-white rounded-lg shadow-lg px-6 py-4 mb-6">
+            <p class="text-gray-700 uppercase"><span class="font-semibold">Número de orden:</span>
+                Orden-{{ $order->id }}</p>
 
-    <div class="bg-white rounded-lg shadow-lg px-6 py-4 mb-6">
-        <p class="text-gray-700 uppercase"><span class="font-semibold">Número de orden:</span>
-            Orden-{{ $order->id }}</p>
+            <form wire:submit.prevent="update">
+                <div class="flex space-x-3 mt-2">
+                    <x-jet-label>
+                        <input wire:model="status" type="radio" name="status" value="2" class="mr-2">
+                        Solicitado
+                    </x-jet-label>
 
-        <form wire:submit.prevent="update">
-            <div class="flex space-x-3 mt-2">
-                <x-jet-label>
-                    <input wire:model="status" type="radio" name="status" value="2" class="mr-2">
-                    Solicitado
-                </x-jet-label>
+                    <x-jet-label>
+                        <input wire:model="status" type="radio" name="status" value="3" class="mr-2">
+                        Pagado
+                    </x-jet-label>
 
-                <x-jet-label>
-                    <input wire:model="status" type="radio" name="status" value="3" class="mr-2">
-                    Pagado
-                </x-jet-label>
+                    <x-jet-label>
+                        <input wire:model="status" type="radio" name="status" value="4" class="mr-2">
+                        Entregado
+                    </x-jet-label>
 
-                <x-jet-label>
-                    <input wire:model="status" type="radio" name="status" value="4" class="mr-2">
-                    Entregado
-                </x-jet-label>
+                    <x-jet-label>
+                        <input wire:model="status" type="radio" name="status" value="5" class="mr-2">
+                        Cancelado
+                    </x-jet-label>
+                </div>
 
-                <x-jet-label>
-                    <input wire:model="status" type="radio" name="status" value="5" class="mr-2">
-                    Cancelado
-                </x-jet-label>
-            </div>
+                <div class="flex mt-2 justify-end items-center">
+                    <x-jet-action-message class="mr-3" on="updated">
+                        Actualizado
+                    </x-jet-action-message>
+                    <x-jet-button class="mr-4">
+                        Actualizar
+                    </x-jet-button>
+                </div>
+            </form>
+        </div>
+    @endrole
 
-            <div class="flex mt-2">
-                <x-jet-button class="ml-auto">
-                    Actualizar
-                </x-jet-button>
-            </div>
-        </form>
-    </div>
 
     {{-- <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
         <div class="grid grid-cols-2 gap-6 text-gray-700">
@@ -109,7 +114,7 @@
         </div>
     </div> --}}
 
-    <div class="bg-white rounded-lg shadow-lg p-6 text-gray-700 mb-6">
+    <div class="bg-white rounded-lg shadow-lg p-6 text-gray-700 mb-6" wire:ignore>
         <div class="flex">
             <p class="flex-1 text-xl font-semibold mb-4">Resumen</p>
             <a class="self-stretch text-lg" href="{{ route('admin.orders.index') }}">
@@ -138,7 +143,9 @@
             <tbody class="divide-y divide-gray-200">
                 <td>
                     <div class="flex">
-                        <img class="h-15 w-20 object-cover mr-4" src="{{ asset($items->options->image ? $items->options->image : 'images/image-not-found.png') }}" alt="">
+                        <img class="h-15 w-20 object-cover mr-4"
+                            src="{{ asset($items->options->image ? $items->options->image : 'images/image-not-found.png') }}"
+                            alt="">
                         <article>
                             <h1 class="font-bold">{{ $items->name }}</h1>
                             <div class="flex text-xs">

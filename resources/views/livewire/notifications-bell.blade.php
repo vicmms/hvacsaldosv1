@@ -19,11 +19,17 @@
                     <li class="p-2 border-b border-gray-200">
                         <div class="flex mb-1">
                             @if ($notification->image_url)
-                                <a href="{{ asset('admin/products/' . $notification->product_slug . '/edit') }}">
+                                @if (app\Models\Product::where('id', $notification->product_id)->where('user_id', Auth::user()->id)->count())
+                                    <a href="{{ asset('admin/products/' . $notification->product_slug . '/edit') }}">
+                                        <img src="{{ asset($notification->image_url) }}"
+                                            class="shadow-sm rounded-full w-11 h-11 object-cover mx-2"
+                                            alt="{{ $notification->product_name }}">
+                                    </a>
+                                @else
                                     <img src="{{ asset($notification->image_url) }}"
-                                        class="shadow-sm rounded-full w-11 max-h-12 object-cover mx-2"
+                                        class="shadow-sm rounded-full w-11 h-11 object-cover mx-2"
                                         alt="{{ $notification->product_name }}">
-                                </a>
+                                @endif
                             @else
                                 @switch($notification->icon)
                                     @case(1)
@@ -60,22 +66,22 @@
                             @endif
                         @endif
                     </li>
-                @empty
-                    <li class="py-6 px-4">
-                        <p class="text-center text-gray-700">
-                            No hay notificaciones
-                        </p>
-                    </li>
-                @endforelse
-            </ul>
+                    @empty
+                        <li class="py-6 px-4">
+                            <p class="text-center text-gray-700">
+                                No hay notificaciones
+                            </p>
+                        </li>
+                    @endforelse
+                </ul>
 
-            @if ($notifications->count())
-                <div class="py-2 px-3">
-                    <x-button-enlace href="{{ route('admin.notifications') }}" color="orange" class="w-full">
-                        Ver todas las notificaciones
-                    </x-button-enlace>
-                </div>
-            @endif
+                @if ($notifications->count())
+                    <div class="py-2 px-3">
+                        <x-button-enlace href="{{ route('admin.notifications') }}" color="orange" class="w-full">
+                            Ver todas las notificaciones
+                        </x-button-enlace>
+                    </div>
+                @endif
 
 
             </x-slot>
