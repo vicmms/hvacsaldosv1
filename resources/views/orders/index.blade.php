@@ -132,9 +132,8 @@
                                     </span>
 
                                     <br>
-
                                     <span class="text-sm">
-                                        {{ json_decode($order->content)->options->currency ? json_decode($order->content)->options->currency : '$'}}
+                                        {{json_decode($order->content)->options->currency ? json_decode($order->content)->options->currency : '$'}}
                                         {{number_format($order->total, 0, '.', ',')}}
                                     </span>
                                 </div>
