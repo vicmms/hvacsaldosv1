@@ -34,7 +34,7 @@ class ShoppingCart extends Component
             $totales[$item->options->currency] = array('currency' => $item->options->currency, 'price' => []);
         }
         foreach (Cart::content() as $item) {
-            array_push($totales[$item->options->currency]['price'],  $item->price);
+            array_push($totales[$item->options->currency]['price'],  $item->price * $item->qty);
         }
         return view('livewire.shopping-cart', compact('totales'));
     }
