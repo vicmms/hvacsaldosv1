@@ -24,7 +24,7 @@ class NotificationController extends Controller
     
         $fields = array(
             'app_id' => "67b993d9-0c0b-4af5-ba28-41d92295f1d5",
-            'included_segments' => array('All'),
+            // 'included_segments' => array('All'),
             'data' => array(
                 "product_id"=> $product->id,
                 "status" => $product->status,
