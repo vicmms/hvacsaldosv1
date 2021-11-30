@@ -38,6 +38,8 @@ class AddCartItem extends Component
         $currency = Currency::where('id', $this->product->currency_id)->first();
         $currency = $currency ? $currency->currency . " " . $currency->symbol : '$';
         $this->options['currency'] = $currency;
+        $this->options['slug'] = $this->product->slug;
+        $this->options['user_id'] = $this->product->user_id;
         Cart::add([
             'id' => $this->product->id,
             'name' => $this->product->name,
