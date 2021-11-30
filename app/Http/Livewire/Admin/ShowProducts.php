@@ -4,13 +4,10 @@ namespace App\Http\Livewire\Admin;
 
 use App\Models\Notification;
 use App\Models\Product;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Support\Facades\Storage;
-
 use Livewire\WithPagination;
 
 class ShowProducts extends Component
@@ -62,7 +59,7 @@ class ShowProducts extends Component
                 ->where('products.status', $condicion, $valor)
                 ->paginate(10);
         }
-
+        session(['page' => $products->currentPage()]);
         return view('livewire.admin.show-products', compact('products'))->layout('layouts.admin');
     }
     public function delete($product_id)

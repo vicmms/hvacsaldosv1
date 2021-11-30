@@ -10,6 +10,7 @@ use App\Models\Product;
 use App\Models\State;
 use App\Models\User;
 use App\Models\Currency;
+use App\Models\Notification;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
@@ -54,10 +55,9 @@ class ProductController extends Controller
     public function setProduct(Request $request)
     {
         $product = new Product;
-        // $images = new AdminProductController;
-        $user = User::all();
+
         $product->name = $request->input('name');
-        $product->slug = Str::slug($request->input('name'));
+        $product->slug = Str::slug($request->input('name') . " " . rand(10,99) . $request->input('user_id'));
         $product->description = $request->input('description');
         $product->model = $request->input('model');
         $product->serie_number = $request->input('serie_number');
@@ -74,7 +74,7 @@ class ProductController extends Controller
         $product->state_id = $request->input('state_id');
         $product->currency_id = $request->input('currency_id');
         $product->city = $request->input('city');
-
+        $product->status = $request->input('status');
         $product->save();
 
         if ($request->input('photos')) {
@@ -106,6 +106,18 @@ class ProductController extends Controller
                 ]);
             }
         }
+
+        if($product->status == 1){
+            Notification::create([
+                'notification' => '(App) Se ha solicitado la revisión de un nuevo producto. <a class="block underline text-blue-900" href="/admin?status=1">Ver solicitudes</a>',
+                'user_id' => $request->input('user_id'),
+                'admin' => true,
+                'product_id' => $product->id
+            ]);
+    
+            event(new \App\Events\NavNotification());
+        }
+        
         return json_encode("Producto registrado");
     }
 

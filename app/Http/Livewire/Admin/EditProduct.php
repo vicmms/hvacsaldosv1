@@ -166,7 +166,8 @@ class EditProduct extends Component
         $this->emit('saved');
 
         event(new \App\Events\NavNotification());
-        return redirect()->route('admin.index');
+        $current_page = session('page') ? session('page') : 1;
+        return redirect()->route('admin.index', ['page' => $current_page]);
     }
 
     public function createNotification($notification, $user_id, $product_id, $isAdmin)
