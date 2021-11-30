@@ -74,8 +74,11 @@
                 </x-jet-label>
             </div>
 
-            <div class="flex mt-2">
-                <x-jet-button class="ml-auto">
+            <div class="flex mt-2 justify-end items-center">
+                <x-jet-action-message class="mr-3" on="updated">
+                    Actualizado
+                </x-jet-action-message>
+                <x-jet-button class="mr-4">
                     Actualizar
                 </x-jet-button>
             </div>
@@ -109,7 +112,7 @@
         </div>
     </div> --}}
 
-    <div class="bg-white rounded-lg shadow-lg p-6 text-gray-700 mb-6">
+    <div class="bg-white rounded-lg shadow-lg p-6 text-gray-700 mb-6" wire:ignore>
         <div class="flex">
             <p class="flex-1 text-xl font-semibold mb-4">Resumen</p>
             <a class="self-stretch text-lg" href="{{ route('admin.orders.index') }}">
