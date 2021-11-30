@@ -48,8 +48,8 @@ class StatusProduct extends Component
             $this->emit('saved');
 
             event(new \App\Events\NavNotification($this->product));
-
-            return redirect()->route('admin.index');
+            $current_page = session('page') ? session('page') : 1;
+            return redirect()->route('admin.index', ['page' => $current_page]);
         }
     }
 
@@ -82,8 +82,8 @@ class StatusProduct extends Component
             $contenido['es'] = 'Tu producto no ha podido ser aprobado para su publicación, por favor revisa las observaciones realizadas.';
             $users_ids = [strval($user_id)];
             app(NotificationController::class)->triggerNotification($titulos,$contenido, $this->product, $users_ids, $comment->message);
-
-            return redirect()->route('admin.index');
+            $current_page = session('page') ? session('page') : 1;
+            return redirect()->route('admin.index', ['page' => $current_page]);
         }
     }
 
