@@ -109,13 +109,14 @@ class ProductController extends Controller
         }
 
         if($product->status == 1){
+            $country_id = User::where('id', $request->input('user_id'))->first()->country_id;
             $users = User::whereHas(
                 'roles',
                 function ($q) {
                     $q->where('name', 'admin')->orWhere('name', 'user');
                 }
             )
-                ->where('country_id', Auth::user()->country_id)
+                ->where('country_id', $country_id)
                 ->get();
             foreach ($users as $user) {
                 Notification::create([
