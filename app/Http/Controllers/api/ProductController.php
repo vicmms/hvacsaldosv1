@@ -126,6 +126,12 @@ class ProductController extends Controller
                     'product_id' => $product->id
                 ]);
             }
+            Notification::create([
+                'notification' => 'Se ha solicitado correctamente de tu producto "'.$product->name.'".',
+                'user_id' => $request->input('user_id'),
+                'admin' => false,
+                'product_id' => $product->id
+            ]);
     
             event(new \App\Events\NavNotification());
         }
