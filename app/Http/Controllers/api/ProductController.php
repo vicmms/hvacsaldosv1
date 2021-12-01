@@ -14,6 +14,7 @@ use App\Models\Notification;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
@@ -108,12 +109,22 @@ class ProductController extends Controller
         }
 
         if($product->status == 1){
-            Notification::create([
-                'notification' => '(App) Se ha solicitado la revisión de un nuevo producto. <a class="block underline text-blue-900" href="/admin?status=1">Ver solicitudes</a>',
-                'user_id' => $request->input('user_id'),
-                'admin' => true,
-                'product_id' => $product->id
-            ]);
+            $users = User::whereHas(
+                'roles',
+                function ($q) {
+                    $q->where('name', 'admin')->orWhere('name', 'user');
+                }
+            )
+                ->where('country_id', Auth::user()->country_id)
+                ->get();
+            foreach ($users as $user) {
+                Notification::create([
+                    'notification' => '(App) Se ha solicitado la revisión de un nuevo producto. <a class="block underline text-blue-900" href="/admin?status=1">Ver solicitudes</a>',
+                    'user_id' => $user->id,
+                    'admin' => true,
+                    'product_id' => $product->id
+                ]);
+            }
     
             event(new \App\Events\NavNotification());
         }
