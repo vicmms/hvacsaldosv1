@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -15,14 +16,31 @@ class OrderController extends Controller
         if (request('status')) {
             $orders->where('status', request('status'));
         }
+        $role_name = Auth::user()->roles->first() ? Auth::user()->roles->first()->name : null;
+        if($role_name){
+            switch ($role_name) {
+                case 'admin':
+                    
+                    break;
+                case 'user':
+                    $orders->where('country_id', Auth::user()->country->id);
+                    break;
+                
+                default:
+                    # code...
+                    break;
+            }
+        }else{
+            $orders->where('user_id', Auth::user()->id);
+        }
 
         $orders = $orders->orderBy('created_at', 'desc')->get();
 
 
-        $solicitudes = Order::where('status', 2)->count();
-        $pagados = Order::where('status', 3)->count();
-        $entregados = Order::where('status', 4)->count();
-        $cancelados = Order::where('status', 5)->count();
+        $solicitudes = $orders->where('status', 2)->count();
+        $pagados = $orders->where('status', 3)->count();
+        $entregados = $orders->where('status', 4)->count();
+        $cancelados = $orders->where('status', 5)->count();
         $todos = $solicitudes + $pagados + $entregados + $cancelados;
 
         // $pendiente = Order::where('status', 1)->count();
