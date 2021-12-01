@@ -130,7 +130,7 @@ class ProductController extends Controller
                 ]);
                 app(NotificationController::class)->triggerNotification($titulos, $contenido, $product, $id, null);
             }
-            $contenido['es'] = 'Se ha solicitado correctamente de tu producto "' . $product->name . '".';
+            $contenido['es'] = 'Se ha solicitado la revisión de tu producto "' . $product->name . '" correctamente.';
             $id = [strval($request->input('user_id'))];
             Notification::create([
                 'notification' => $contenido['es'],
