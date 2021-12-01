@@ -46,7 +46,7 @@
                     </a>
                 @empty
                     <p class="text-lg leading-5">
-                        No existe ningún registro con los parametros especificados
+                        No se encontraron productos
                     </p>
                 @endforelse
             </div>

@@ -28,9 +28,6 @@ class Search extends Component
 
     public function render()
     {
-
-        //Tv de 32" Full HD
-
         if ($this->search) {
             $products = Product::join('states', 'states.id', '=', 'state_id')
                 ->select('products.*', 'states.country_id')

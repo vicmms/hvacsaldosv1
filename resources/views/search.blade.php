@@ -9,7 +9,7 @@
                 <li class="bg-white rounded-lg shadow-2xl">
                     <div class="p-4">
                         <p class="text-lg font-semibold text-gray-700">
-                            Ningún producto coinide con esos parametros
+                            No se encontraron productos
                         </p>
                     </div>
                 </li>
