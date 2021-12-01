@@ -58,7 +58,7 @@ class ProductController extends Controller
         $product = new Product;
 
         $product->name = $request->input('name');
-        $product->slug = Str::slug($request->input('name') . " " . rand(10,99) . $request->input('user_id'));
+        $product->slug = Str::slug($request->input('name') . " " . rand(10, 99) . $request->input('user_id'));
         $product->description = $request->input('description');
         $product->model = $request->input('model');
         $product->serie_number = $request->input('serie_number');
@@ -108,7 +108,7 @@ class ProductController extends Controller
             }
         }
 
-        if($product->status == 1){
+        if ($product->status == 1) {
             $country_id = User::where('id', $request->input('user_id'))->first()->country_id;
             $users = User::whereHas(
                 'roles',
@@ -118,24 +118,31 @@ class ProductController extends Controller
             )
                 ->where('country_id', $country_id)
                 ->get();
+            $titulos['es'] = 'Solicitud de producto';
+            $contenido = '(App) Se ha solicitado la revisión de un nuevo producto. <a class="block underline text-blue-900" href="/admin?status=1">Ver solicitudes</a>';
             foreach ($users as $user) {
+                $id = [strval($user->id)];
                 Notification::create([
-                    'notification' => '(App) Se ha solicitado la revisión de un nuevo producto. <a class="block underline text-blue-900" href="/admin?status=1">Ver solicitudes</a>',
+                    'notification' => $contenido,
                     'user_id' => $user->id,
                     'admin' => true,
                     'product_id' => $product->id
                 ]);
+                app(NotificationController::class)->triggerNotification($titulos, $contenido, $product, $id, null);
             }
+            $contenido = 'Se ha solicitado correctamente de tu producto "' . $product->name . '".';
+            $id = [strval($request->input('user_id'))];
             Notification::create([
-                'notification' => 'Se ha solicitado correctamente de tu producto "'.$product->name.'".',
+                'notification' => $contenido,
                 'user_id' => $request->input('user_id'),
                 'admin' => false,
                 'product_id' => $product->id
             ]);
-    
+            app(NotificationController::class)->triggerNotification($titulos, $contenido, $product, $id, null);
+
             event(new \App\Events\NavNotification());
         }
-        
+
         return json_encode("Producto registrado");
     }
 
@@ -159,7 +166,7 @@ class ProductController extends Controller
                 'state_id' => $request->input('state_id'),
                 'status' => $request->input('status'),
                 'city' => $request->input('city'),
-                'currency_id'=> $request->input('currency_id')
+                'currency_id' => $request->input('currency_id')
             ]);
         $product = Product::find($request->input('id'));
         if ($request->input('photos')) {
