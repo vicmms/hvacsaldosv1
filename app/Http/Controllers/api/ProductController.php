@@ -58,7 +58,7 @@ class ProductController extends Controller
         $product = new Product;
 
         $product->name = $request->input('name');
-        $product->slug = Str::slug($request->input('name') . " " . rand(10, 99) . $request->input('user_id'));
+        $product->slug = Str::slug($request->input('name') . " "  . $request->input('user_id'));
         $product->description = $request->input('description');
         $product->model = $request->input('model');
         $product->serie_number = $request->input('serie_number');
@@ -151,7 +151,7 @@ class ProductController extends Controller
         Product::with('images')->where('id',  $request->input('id'))
             ->update([
                 'name' => $request->input('name'),
-                'slug' => Str::slug($request->input('name')),
+                'slug' => Str::slug($request->input('name'). $request->input('user_id')),
                 'description' => $request->input('description'),
                 'model' => $request->input('model'),
                 'serie_number' => $request->input('serie_number'),
