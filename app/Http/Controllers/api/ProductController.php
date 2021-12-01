@@ -119,7 +119,7 @@ class ProductController extends Controller
                 ->where('country_id', $country_id)
                 ->get();
             $titulos['es'] = 'Solicitud de producto';
-            $contenido = '(App) Se ha solicitado la revisión de un nuevo producto. <a class="block underline text-blue-900" href="/admin?status=1">Ver solicitudes</a>';
+            $contenido['es'] = '(App) Se ha solicitado la revisión de un nuevo producto. <a class="block underline text-blue-900" href="/admin?status=1">Ver solicitudes</a>';
             foreach ($users as $user) {
                 $id = [strval($user->id)];
                 Notification::create([
@@ -130,7 +130,7 @@ class ProductController extends Controller
                 ]);
                 app(NotificationController::class)->triggerNotification($titulos, $contenido, $product, $id, null);
             }
-            $contenido = 'Se ha solicitado correctamente de tu producto "' . $product->name . '".';
+            $contenido['es'] = 'Se ha solicitado correctamente de tu producto "' . $product->name . '".';
             $id = [strval($request->input('user_id'))];
             Notification::create([
                 'notification' => $contenido,
