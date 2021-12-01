@@ -9,12 +9,12 @@
 
             <div class="mb-4">
                 <x-jet-label value="Empresa" />
-                <x-jet-input type="text" disabled class="w-full" value="{{ $user->company_name }}" />
+                <x-jet-input type="text" disabled class="w-full" value="{{ $user->company_name ? $user->company_name : 'Sin nombre registrado' }}" />
             </div>
 
             <div class="mb-4">
                 <x-jet-label value="Datos de facturación" />
-                <textarea rows="5" disabled class="form-control w-full">{{ $user->tax_data }}</textarea>
+                <textarea rows="5" disabled class="form-control w-full">{{ $user->tax_data ? $user->tax_data : 'Datos no registrados'}}</textarea>
             </div>
         </div>
 

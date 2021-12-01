@@ -38,6 +38,7 @@ class CreateOrder extends Component
             ->where('companies.user_id', Auth::user()->id)
             ->select('users.*', 'companies.name as company_name', 'companies.tax_data')
             ->first();
+        $this->user ? false : $this->user = Auth::user();
         $this->departments = Department::all();
     }
 
@@ -85,6 +86,7 @@ class CreateOrder extends Component
             $order->status = 2;
             $order->total = $item->price * $item->qty;
             $order->content = json_encode($item);
+            $order->country_id = Auth::user()->country->id;
             $order->save();
 
 

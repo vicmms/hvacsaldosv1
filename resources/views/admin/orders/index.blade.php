@@ -62,12 +62,11 @@
 
             <section class="bg-white shadow-lg rounded-lg px-12 py-8 mt-12 text-gray-700">
                 <h1 class="text-2xl mb-4">Pedidos recientes</h1>
-
                 <ul>
                     @foreach ($orders as $order)
                         <li>
                             <a href="{{ route('admin.orders.show', $order) }}"
-                                class="flex items-center py-2 px-4 hover:bg-gray-100">
+                                class="flex items-center py-2 px-4 hover:bg-gray-100 {{count(Auth::user()->roles->pluck('name')) ? '' : 'pointer-events-none'}}">
                                 <span class="w-12 text-center">
                                     @switch($order->status)
                                         @case(1)

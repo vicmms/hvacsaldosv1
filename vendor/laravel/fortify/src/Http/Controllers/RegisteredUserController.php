@@ -62,7 +62,7 @@ class RegisteredUserController extends Controller
         CreatesNewUsers $creator
     ): RegisterResponse {
         Role::firstOrCreate(['name' => 'user']);
-        event(new Registered($user = $creator->create($request->all())->assignRole('user')));
+        event(new Registered($user = $creator->create($request->all())));
 
         $this->guard->login($user);
 
