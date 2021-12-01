@@ -123,7 +123,7 @@ class ProductController extends Controller
             foreach ($users as $user) {
                 $id = [strval($user->id)];
                 Notification::create([
-                    'notification' => $contenido,
+                    'notification' => $contenido['es'],
                     'user_id' => $user->id,
                     'admin' => true,
                     'product_id' => $product->id
@@ -133,7 +133,7 @@ class ProductController extends Controller
             $contenido['es'] = 'Se ha solicitado correctamente de tu producto "' . $product->name . '".';
             $id = [strval($request->input('user_id'))];
             Notification::create([
-                'notification' => $contenido,
+                'notification' => $contenido['es'],
                 'user_id' => $request->input('user_id'),
                 'admin' => false,
                 'product_id' => $product->id
