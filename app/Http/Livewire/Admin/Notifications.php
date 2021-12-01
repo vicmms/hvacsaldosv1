@@ -11,7 +11,7 @@ class Notifications extends Component
 {
     public function render()
     {
-        $notifications = Notification::where('user_id', Auth::user()->id)
+        $notifications = Notification::where('notifications.user_id', Auth::user()->id)
             ->join('products', 'products.id', 'notifications.product_id')
             ->select('notifications.*')
             ->orderBy('created_at', 'desc')
