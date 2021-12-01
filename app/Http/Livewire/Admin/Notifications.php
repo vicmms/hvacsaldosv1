@@ -12,6 +12,8 @@ class Notifications extends Component
     public function render()
     {
         $notifications = Notification::where('user_id', Auth::user()->id)
+            ->join('products', 'products.id', 'notifications.product_id')
+            ->select('notifications.*')
             ->orderBy('created_at', 'desc')
             ->limit(120)
             ->get();
