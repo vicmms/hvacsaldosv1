@@ -34,7 +34,10 @@ class NotificationsBell extends Component
         foreach ($notifications as $notification) {
             if($notification->product_id){
                 $product = Product::where('id', $notification->product_id)->first();
-                $notification->image_url = $product->images() ? ($product->images()->count() ? $product->images()->first()->url : 'images/image-not-found.png') : null;
+                $notification->image_url = null;
+                if ($product->images()) {
+                    $notification->image_url = $product->images()->count() ? $product->images()->first()->url : 'images/image-not-found.png';
+                }
                 $notification->product_name = $product->name;
                 $notification->product_slug = $product->slug;
             }else{
