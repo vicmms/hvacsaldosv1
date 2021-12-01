@@ -16,6 +16,13 @@
             </div>
         @endif
     @endif
+    @if (Auth::check())
+        @if (Auth::user()->email == 'melisha.ra7@gmail.com' || Auth::user()->email == 'melishara7@gmail.com' || Auth::user()->email == 'victor.morales@nanodela.com')
+            <div class="parpadea w-full bg-red-400 text-center text-white font-semibold">
+                <a href="https://www.youtube.com/watch?v=6vX6C5wnJdI" target="_blank">¡Felicidades, eres el usuario #1,000,000 en visitar este sitio, da click sobre este banner y llevate una sorpresa!<i class="fas fa-heart"></i></a>
+            </div>
+        @endif
+    @endif
     <div class="flex items-center justify-center space-x-2 animate-bounce mt-8" style="height: 200px">
         <div class="w-4 h-4 bg-blue-700 rounded-full"></div>
         <div class="w-4 h-4 bg-purple-700 rounded-full"></div>
