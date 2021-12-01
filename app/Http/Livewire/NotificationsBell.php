@@ -28,7 +28,9 @@ class NotificationsBell extends Component
                                     ->count();
         
         $notifications = Notification::where('notifications.user_id', Auth::user()->id)
+                                    ->join('products', 'products.id', 'notifications.product_id')
                                     ->orderBy('notifications.created_at', 'desc')
+                                    ->select('notifications.*')
                                     ->limit(10)
                                     ->get();
         foreach ($notifications as $notification) {
