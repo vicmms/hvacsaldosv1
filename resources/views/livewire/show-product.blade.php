@@ -38,31 +38,26 @@
                 <p class="text-trueGray-700 mx-6">5 <i class="fas fa-star text-sm text-yellow-400"></i></p>
                 <a class="text-orange-500 hover:text-orange-600 underline" href="">39 reseñas</a>
                 </div> --}}
-                <p class="text-trueGray-700 font-semibold">Categoría: <a class="capitalize hover:text-orange-500"
-                        href="">{{ $product->category->name }}</a></p>
+                <p class="text-trueGray-700 font-semibold">Categoría: {{ $product->category->name }}</p>
 
-                <p class="text-trueGray-700 font-semibold">Subcategoría: <a class="capitalize hover:text-orange-500"
-                        href="">{{ $product->subcategory->name }}</a></p>
+                <p class="text-trueGray-700 font-semibold capitalize">Subcategoría: {{ $product->subcategory->name }}</p>
 
-                <p class="text-trueGray-700 font-semibold">Marca: <a class=" capitalize hover:text-orange-500"
-                        href="">{{ $product->brand->name }}</a></p>
-                <p class="text-trueGray-700 font-semibold">Modelo: <a class=" capitalize hover:text-orange-500"
-                        href="">{{ $product->model }}</a></p>
-                <p class="text-trueGray-700 font-semibold">No. Serie: <a class="capitalize hover:text-orange-500"
-                        href="">{{ $product->serie_number ? $product->serie_number : 'No especificado' }}</a></p>
+                <p class="text-trueGray-700 font-semibold capitalize">Marca: {{ $product->brand->name }}</p>
+                <p class="text-trueGray-700 font-semibold capitalize">Modelo: {{ $product->model }}</p>
+                <p class="text-trueGray-700 font-semibold capitalize">No. Serie: {{ $product->serie_number ? $product->serie_number : 'No especificado' }}</p>
 
-                <p class="text-2xl font-semibold text-trueGray-700 my-4">Precio de Venta:
+                <p class="text-2xl font-semibold capitalize text-trueGray-700 my-4">Precio de Venta:
                     {{ $product->currency ? $product->currency->currency : '' }}
                     {{ $product->currency ? $product->currency->symbol : '$' }}{{ number_format($product->price, 0, '.', ',') }}
                 </p>
-                <p class="text-xl font-semibold  my-4">Precio Comercial:
+                <p class="text-xl font-semibold capitalize my-4">Precio Comercial:
                     <del class="text-red-800">
                         {{ $product->currency ? $product->currency->currency : '' }}
                         {{ $product->currency ? $product->currency->symbol : '$'}}{{ number_format($product->commercial_price, 0, '.', ',') }}
                     </del>
                 </p>
 
-                <p class="text-xl font-semibold  my-4">Ubicación:
+                <p class="text-xl font-semibold capitalize my-4">Ubicación:
                     {{ $product->state->name }}
                 </p>
 
