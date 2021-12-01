@@ -119,11 +119,11 @@ class ProductController extends Controller
                 ->where('country_id', $country_id)
                 ->get();
             $titulos['es'] = 'Solicitud de producto';
-            $contenido['es'] = '(App) Se ha solicitado la revisión de un nuevo producto. <a class="block underline text-blue-900" href="/admin?status=1">Ver solicitudes</a>';
+            $contenido['es'] = '(App) Se ha solicitado la revisión de un nuevo producto.';
             foreach ($users as $user) {
                 $id = [strval($user->id)];
                 Notification::create([
-                    'notification' => $contenido['es'],
+                    'notification' => '(App) Se ha solicitado la revisión de un nuevo producto. <a class="block underline text-blue-900" href="/admin?status=1">Ver solicitudes</a>',
                     'user_id' => $user->id,
                     'admin' => true,
                     'product_id' => $product->id
