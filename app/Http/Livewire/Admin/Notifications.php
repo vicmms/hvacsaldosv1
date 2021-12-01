@@ -11,16 +11,17 @@ class Notifications extends Component
 {
     public function render()
     {
-        $notifications = Notification::where('notifications.user_id', Auth::user()->id)
-            ->join('products', 'products.id', 'notifications.product_id')
-            ->select('notifications.*')
+        $notifications = Notification::where('user_id', Auth::user()->id)
             ->orderBy('created_at', 'desc')
             ->limit(120)
             ->get();
         foreach ($notifications as $notification) {
             if ($notification->product_id) {
                 $product = Product::where('id', $notification->product_id)->first();
-                $notification->image_url = $product->images()->count() ? $product->images()->first()->url : '/images/image-not-found.png';
+                $notification->image_url = null;
+                if ($product) {
+                    $notification->image_url = $product->images()->count() ? $product->images()->first()->url : 'images/image-not-found.png';
+                }
                 $notification->product_name = $product->name;
                 $notification->product_slug = $product->slug;
             } else {

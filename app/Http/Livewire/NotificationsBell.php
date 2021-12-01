@@ -27,17 +27,15 @@ class NotificationsBell extends Component
                                     ->where('read', false)
                                     ->count();
         
-        $notifications = Notification::where('notifications.user_id', Auth::user()->id)
-                                    ->join('products', 'products.id', 'notifications.product_id')
+        $notifications = Notification::where('user_id', Auth::user()->id)
                                     ->orderBy('notifications.created_at', 'desc')
-                                    ->select('notifications.*')
                                     ->limit(10)
                                     ->get();
         foreach ($notifications as $notification) {
             if($notification->product_id){
                 $product = Product::where('id', $notification->product_id)->first();
                 $notification->image_url = null;
-                if ($product->images()) {
+                if ($product) {
                     $notification->image_url = $product->images()->count() ? $product->images()->first()->url : 'images/image-not-found.png';
                 }
                 $notification->product_name = $product->name;
