@@ -20,11 +20,11 @@
             <div class="px-6 py-4 grid grid-cols-4">
                 <div class="flex">
                     <h2 class="self-center font-semibold mr-2">Status: </h2>
-                    <select name="" id="" class="form-control" wire:model="status">
-                        <option value="0" selected>Todos</option>
-                        <option value="1">En revisión</option>
-                        <option value="2">Aceptados</option>
-                        <option value="3">Rechazados</option>
+                    <select name="" id="" class="form-control" wire:model.lazy="status">
+                        <option value="0" selected wire:key="0">Todos</option>
+                        <option value="1" wire:key="1">En revisión</option>
+                        <option value="2" wire:key="2">Aceptados</option>
+                        <option value="3" wire:key="3">Rechazados</option>
                     </select>
                 </div>
                 <div class="col-span-3">
