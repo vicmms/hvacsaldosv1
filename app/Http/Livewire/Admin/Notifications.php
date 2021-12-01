@@ -16,18 +16,16 @@ class Notifications extends Component
             ->limit(120)
             ->get();
         foreach ($notifications as $notification) {
+            $product = Product::where('id', $notification->product_id)->first();
+            $notification->image_url = null;
+            $notification->product_name = null;
+            $notification->product_slug = null;
             if ($notification->product_id) {
-                $product = Product::where('id', $notification->product_id)->first();
-                $notification->image_url = null;
                 if ($product) {
                     $notification->image_url = $product->images()->count() ? $product->images()->first()->url : 'images/image-not-found.png';
+                    $notification->product_name = $product->name;
+                    $notification->product_slug = $product->slug;
                 }
-                $notification->product_name = $product->name;
-                $notification->product_slug = $product->slug;
-            } else {
-                $notification->image_url = null;
-                $notification->product_name = null;
-                $notification->product_slug = null;
             }
         }
         return view('livewire.admin.notifications', compact('notifications'))->layout('layouts.admin');
