@@ -17,6 +17,10 @@ class StatusProduct extends Component
 
     public $product, $status, $isOpen, $message, $buyer;
 
+    protected $rules = [
+        'message' => 'required',
+    ];
+
     public function mount()
     {
         $this->status = $this->product->status;
@@ -55,6 +59,8 @@ class StatusProduct extends Component
 
     public function rechazar()
     {
+        $rules = $this->rules;
+        $this->validate($rules);
         if ($this->status == 3) {
             Rejection::create([
                 'message' => $this->message,
