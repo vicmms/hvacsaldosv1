@@ -11,6 +11,7 @@ use App\Models\State;
 use App\Models\User;
 use App\Models\Currency;
 use App\Models\Notification;
+use App\Models\Rejection;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
@@ -44,13 +45,17 @@ class ProductController extends Controller
 
     public function getProductById(Request $request)
     {
-        return Product::with('images')->where('products.id',  $request->input('id'))
-            ->join('categories', 'categories.id', '=', 'products.category_id')
-            ->join('subcategories', 'subcategories.id', '=', 'products.subcategory_id')
-            ->join('brands', 'brands.id', '=', 'products.brand_id')
-            ->join('states', 'states.id', '=', 'products.state_id')
-            ->select('products.*', 'categories.name as category_name', 'subcategories.name as subcategory_name', 'brands.name as brand_name', 'states.name as state_name')
-            ->get();
+        $product = Product::with('images')
+        ->with('rejections')
+        ->where('products.id',  $request->input('id'))
+        ->join('categories', 'categories.id', '=', 'products.category_id')
+        ->join('subcategories', 'subcategories.id', '=', 'products.subcategory_id')
+        ->join('brands', 'brands.id', '=', 'products.brand_id')
+        ->join('states', 'states.id', '=', 'products.state_id')
+        ->select('products.*', 'categories.name as category_name', 'subcategories.name as subcategory_name', 'brands.name as brand_name', 'states.name as state_name')
+        ->get();
+
+        return $product;
     }
 
     public function setProduct(Request $request)
