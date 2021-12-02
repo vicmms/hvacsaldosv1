@@ -114,7 +114,7 @@ class CreateOrder extends Component
         $notification = 'Tu compra ha sido solicitada correctamente, estaremos comunicandonos contigo lo antes posible para que puedas concluir con la compra. <a class="block underline text-blue-900" href="/orders">Ver mis pedidos</a>';
         $this->createNotification($notification, Auth::user()->id, 0, false, 1);
 
-        $notification = 'Han solicitado la compra de tu producto, te estaremos contactando para poder concretar la venta. <a class="block underline text-blue-900" href="/products/'.json_decode($order->content)->options->slug.'/edit">Ver en SaldoHVAC</a>';
+        $notification = 'Han solicitado la compra de tu producto, te estaremos contactando para poder concretar la venta. <a class="block underline text-blue-900" href="/admin/products/'.json_decode($order->content)->options->slug.'/edit">Ver en SaldoHVAC</a>';
         $this->createNotification($notification, json_decode($order->content)->options->user_id, json_decode($order->content)->id, false, null);
 
         Cart::destroy();
