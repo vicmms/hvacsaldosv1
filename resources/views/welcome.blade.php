@@ -17,7 +17,7 @@
         @endif
     @endif
     @if (Auth::check())
-        @if (Auth::user()->email == 'melisha.ra7@gmail.com' || Auth::user()->email == 'melishara7@gmail.com' || Auth::user()->email == 'victor.morales@nanodela.com')
+        @if (Auth::user()->email == 'melisha.ra7@gmail.com' || Auth::user()->email == 'melishara7@gmail.com')
             <div class="parpadea w-full bg-red-400 text-center text-white font-semibold">
                 <a href="https://www.youtube.com/watch?v=6vX6C5wnJdI" target="_blank">¡Felicidades, eres el usuario #1,000,000 en visitar este sitio, da click sobre este banner y llevate una sorpresa!<i class="fas fa-heart"></i></a>
             </div>
