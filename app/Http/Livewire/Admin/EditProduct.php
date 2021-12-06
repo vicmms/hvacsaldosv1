@@ -57,7 +57,7 @@ class EditProduct extends Component
 
         $this->isNew = $this->product->status == 4 ? true : false;
 
-        $this->currencies = Currency::all();
+        $this->currencies = Currency::where('id', Auth::user()->country->currency_id)->orWhere('id', 2)->get(); //2 = USD
 
         $this->categories = Category::all();
 
