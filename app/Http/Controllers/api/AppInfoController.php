@@ -13,7 +13,7 @@ class AppInfoController extends Controller
     public function getReleaseCurrent(){
         $releaseCurrent [] = array( 
                              "enabled" => true,
-                             "current"=> "7",
+                             "current"=> "9",
                              "title" => "Actualización requerida", 
                              "msg"=> "Existe una actualización que debe instalarse",
                              "btn"=> "Descargar");
