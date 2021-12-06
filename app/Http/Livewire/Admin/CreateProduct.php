@@ -72,9 +72,9 @@ class CreateProduct extends Component
     public function mount()
     {
         $this->categories = Category::all();
-        $this->currencies = Currency::all();
         $this->user_id = Auth::user()->id;
         $this->shipping = 0;
+        $this->currencies = Currency::where('id', Auth::user()->country->currency_id)->orWhere('id', 2)->get(); //2 = USD
     }
 
 
