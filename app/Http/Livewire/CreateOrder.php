@@ -13,6 +13,7 @@ use App\Models\Order;
 use App\Models\User;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class CreateOrder extends Component
@@ -75,9 +76,9 @@ class CreateOrder extends Component
 
     public function create_order()
     {
-        $this->user = User::join('companies', 'companies.user_id', 'users.id')
-            ->select('users.*', 'companies.name as company_name', 'companies.tax_data')
-            ->first();
+        $this->user = Auth::user();
+        $company_info = DB::table('companies')->where('user_id', $this->user->id)->first();
+        $this->user->company_info = $company_info;
         foreach (Cart::content() as $item) {
             $order = new Order();
 
@@ -114,7 +115,7 @@ class CreateOrder extends Component
         $notification = 'Tu compra ha sido solicitada correctamente, estaremos comunicandonos contigo lo antes posible para que puedas concluir con la compra. <a class="block underline text-blue-900" href="/orders">Ver mis pedidos</a>';
         $this->createNotification($notification, Auth::user()->id, 0, false, 1);
 
-        $notification = 'Han solicitado la compra de tu producto, te estaremos contactando para poder concretar la venta. <a class="block underline text-blue-900" href="/admin/products/'.json_decode($order->content)->options->slug.'/edit">Ver en SaldoHVAC</a>';
+        $notification = 'Han solicitado la compra de tu producto, te estaremos contactando para poder concretar la venta. <a class="block underline text-blue-900" href="/admin/products/' . json_decode($order->content)->options->slug . '/edit">Ver en SaldoHVAC</a>';
         $this->createNotification($notification, json_decode($order->content)->options->user_id, json_decode($order->content)->id, false, null);
 
         Cart::destroy();
