@@ -158,11 +158,11 @@
         <hr>
         <p class="my-4 text-lg font-semibold">Información del Comprador </p>
         <div class="mb-4 font-semibold">
-            <p>Nombre: {{ $buyer->name }}</p>
-            <p>Correo: {{ $buyer->email }}</p>
-            <p>Empresa: {{ $buyer->company_name }}</p>
+            <p>Nombre: {{ $buyer ? $buyer->name : 'Sin datos' }}</p>
+            <p>Correo: {{ $buyer ? $buyer->email : 'Sin datos' }}</p>
+            <p>Empresa: {{ $buyer->company_info ? $buyer->company_info->name : 'Sin datos' }}</p>
             <p>Datos fiscales: </p>
-            <p class="whitespace-pre-line ml-2">{{ $buyer->tax_data }}</p>
+            <p class="whitespace-pre-line ml-2">{{ $buyer->company_info ? $buyer->company_info->tax_data : 'Sin datos' }}</p>
         </div>
         <table class="table-auto w-full">
             <thead>
