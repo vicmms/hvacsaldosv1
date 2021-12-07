@@ -6,6 +6,10 @@
     background-color: #1539af;
 }
 
+.thumbnail {
+  @apply w-20 h-16 object-cover object-center h-1;
+}
+
 /* tooltip */
 /* Tooltip container */
 .tooltip {

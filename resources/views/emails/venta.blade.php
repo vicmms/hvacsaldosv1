@@ -17,7 +17,7 @@
                     @foreach ($orders as $order)
                         <tr>
                             <td>
-                                <img class="thumbnail" src="https://plataforma.saldohvac.com/{{ $order->options->image }}"
+                                <img class="thumbnail" src="https://plataforma.saldohvac.com/{{ json_decode($order->options)->image }}"
                                     alt="">
                             </td>
                             <td>{{ $order->name }}</td>
@@ -34,7 +34,7 @@
     <h2>Datos del comprador</h2>
     <p>Nombre: {{ $user->name }}</p>
     <p>Correo: {{ $user->email }}</p>
-    <p>Empresa: {{ $user->company_name }}</p>
+    <p>Empresa: {{ $user->company_info ? $user->company_info->name : 'Sin información'}}</p>
     @component('mail::button', ['url' => 'https://plataforma.saldohvac.com/admin/orders'])
         Ver Ordenes
     @endcomponent
