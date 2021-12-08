@@ -10,7 +10,7 @@
     <div class="container py-12 bg-white mt-6 rounded-b-3xl shadow-md">
             <ul class="overflow-y-scroll w-full" style="max-height: 600px;">
                 @forelse ($notifications as $notification)
-                    <li class="p-2 border-b border-gray-200">
+                    <li class="p-2 border-b border-gray-200 {{ $notification->read ? '' : 'bg-blue-50' }}">
                         <div class="flex mb-1">
                             @if ($notification->image_url)
                                 <a href="{{ asset('admin/products/' . $notification->product_slug . '/edit') }}">
@@ -31,6 +31,9 @@
                                 @endswitch
                             @endif
                             <p class="flex-1">{!! $notification->notification !!}</p>
+                            @if (!$notification->read)
+                                <i class="fas fa-circle text-blue-900" style="font-size: 8px"></i>
+                            @endif
                         </div>
                         @if (strtotime(date('Y-m-d H:i:s')) - strtotime($notification->created_at) < 60)
                             <p class="text-right text-gray-700">Hace

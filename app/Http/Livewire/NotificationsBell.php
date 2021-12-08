@@ -23,6 +23,12 @@ class NotificationsBell extends Component
             ->update(['read' => true]);
     }
 
+    public function readNotification($id)
+    {
+        Notification::where('id', $id)
+            ->update(['read' => true]);
+    }
+
     public function render()
     {
         $notifications_count = Notification::where('user_id', Auth::user()->id)
@@ -30,6 +36,7 @@ class NotificationsBell extends Component
             ->count();
 
         $notifications = Notification::where('user_id', Auth::user()->id)
+            ->orderBy('read', 'asc')
             ->orderBy('notifications.created_at', 'desc')
             ->limit(10)
             ->get();

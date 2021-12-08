@@ -1,7 +1,7 @@
 <div>
     <x-jet-dropdown width="96">
         <x-slot name="trigger">
-            <span class="relative inline-block cursor-pointer" wire:click="clearNotifications()">
+            <span class="relative inline-block cursor-pointer">
                 @if ($notifications->number)
                     <span class="absolute left-2 bottom-3 bg-red-500 text-white rounded-full text-xs px-1">
                         {{ $notifications->number == 10 ? 9 . '+' : $notifications->number }}
@@ -16,7 +16,8 @@
         <x-slot name="content">
             <ul class="max-h-96 overflow-y-scroll">
                 @forelse ($notifications as $notification)
-                    <li class="p-2 border-b border-gray-200">
+                    <li class="p-2 border-b border-gray-200 cursor-pointer {{ $notification->read ? '' : 'bg-blue-50' }}"
+                        wire:click="readNotification({{ $notification->id }})">
                         <div class="flex mb-1">
                             @if ($notification->image_url)
                                 @if (app\Models\Product::where('id', $notification->product_id)->where('user_id', Auth::user()->id)->count())
@@ -43,6 +44,9 @@
                                 @endswitch
                             @endif
                             <p class="flex-1">{!! $notification->notification !!}</p>
+                            @if (!$notification->read)
+                                <i class="fas fa-circle text-blue-900" style="font-size: 8px"></i>
+                            @endif
                         </div>
                         @if (strtotime(date('Y-m-d H:i:s')) - strtotime($notification->created_at) < 60)
                             <p class="text-right text-gray-700">Hace
@@ -76,10 +80,13 @@
                 </ul>
 
                 @if ($notifications->count())
-                    <div class="py-2 px-3">
-                        <x-button-enlace href="{{ route('admin.notifications') }}" color="orange" class="w-full">
-                            Ver todas las notificaciones
+                    <div class="py-2 px-3 flex">
+                        <x-button-enlace href="{{ route('admin.notifications') }}" color="orange" class="felx-1 mr-2">
+                            Todas las notificaciones
                         </x-button-enlace>
+                        <x-jet-button wire:click="clearNotifications">
+                            Limpiar
+                        </x-jet-button>
                     </div>
                 @endif
 
