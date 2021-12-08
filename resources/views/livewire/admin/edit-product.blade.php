@@ -214,7 +214,7 @@
             <div class="grid grid-cols-3 gap-6 mb-4 {{ $product->status == 2 ? 'disabled' : '' }}">
                 {{-- Precio --}}
                 <div>
-                    <x-jet-label value="Precio de venta en Saldo HVAC (iva incluido)*" />
+                    <x-jet-label value="Precio en Saldo HVAC (iva incluido)*" />
                     <x-jet-input wire:model.lazy="product.price" type="text" class="w-full formatter" step="1"
                         onkeyup="formatter(this)" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
                     <x-jet-input-error for="product.price" />
