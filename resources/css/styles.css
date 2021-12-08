@@ -59,6 +59,11 @@ body::-webkit-scrollbar, .overflow-y-scroll::-webkit-scrollbar {
       filter: opacity(0.01);
   }
 
+  .disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
   .parpadea {
   
     animation-name: parpadeo;

@@ -19,7 +19,7 @@ use Illuminate\Support\Str;
 class CreateProduct extends Component
 {
 
-    public $categories, $subcategories = [], $brands = [], $currencies = [];
+    public $categories, $subcategories = [], $brands = [], $currencies = [], $envios = [];
     public $category_id = "", $subcategory_id = "", $brand_id = "", $state_id = "", $user_id, $currency_id = "";
     public $name, $slug, $description, $price, $quantity, $commercial_price, $model, $serie_number, $shipping, $unit, $city;
 
@@ -38,7 +38,7 @@ class CreateProduct extends Component
         'city' => 'required',
         'quantity' => 'required',
         'model' => 'required',
-        'shipping' => 'required',
+        'envios' => 'required',
         'state_id' => 'required'
     ];
 
@@ -73,8 +73,8 @@ class CreateProduct extends Component
     {
         $this->categories = Category::all();
         $this->user_id = Auth::user()->id;
-        $this->shipping = 0;
         $this->currencies = Currency::where('id', Auth::user()->country->currency_id)->orWhere('id', 2)->get(); //2 = USD
+        $this->envios = ["1"];
     }
 
 
@@ -93,7 +93,7 @@ class CreateProduct extends Component
         $product->price = str_replace(',','', $this->price);
         $product->commercial_price = str_replace(',','', $this->commercial_price);
         $product->model = $this->model;
-        $product->shipping = $this->shipping;
+        $product->shipping = json_encode($this->envios);
         $product->serie_number = $this->serie_number;
         $product->subcategory_id = $this->subcategory_id;
         $product->category_id = $this->category_id;

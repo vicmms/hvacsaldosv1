@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cancellation;
 use App\Models\Order;
 use Illuminate\Http\Request;
 
@@ -34,13 +35,16 @@ class OrderController extends Controller
 
     public function show(Order $order)
     {
-
+        $comments = null;
         $this->authorize('author', $order);
 
         $items = json_decode($order->content);
         $envio = json_decode($order->envio);
+        if($order->status == 5){
+            $comments = Cancellation::where('order_id', $order->id)->first()->comments;
+        }
 
-        return view('orders.show', compact('order', 'items', 'envio'));
+        return view('orders.show', compact('order', 'items', 'envio', 'comments'));
     }
 
 

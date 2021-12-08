@@ -53,6 +53,9 @@ class EditProduct extends Component
 
         $this->product = $product;
 
+        $envios = str_replace(['[',']','"'], '', $this->product->shipping);
+        $this->product->shipping = explode(',', $envios);
+
         $this->isRejected = $this->product->status == 3 ? true : false;
 
         $this->isNew = $this->product->status == 4 ? true : false;
@@ -81,19 +84,10 @@ class EditProduct extends Component
 
     public function refreshProduct($isMaxImages = false)
     {
-        $contImages = $this->product->images()->count();
-        // if ($isMaxImages)
-        //     $this->emit('maxFiles');
-        // if (($files + $contImages) > 4))
-        //     $this->emit('maxFiles');
-        // $this->product = $this->product->fresh();
+        // $contImages = $this->product->images()->count();
+        
         $this->product->images = $this->product->images->fresh();
     }
-
-    // public function updatedProductName($value)
-    // {
-    //     $this->slug = Str::slug($value);
-    // }
 
     public function updatedProductCategoryId($value)
     {
@@ -105,8 +99,6 @@ class EditProduct extends Component
             ->orderBy('name', 'asc')
             ->get();
         $this->reset(['brand_id']);
-        // $this->product->subcategory_id = "";
-        // $this->product->brand_id = "";
     }
 
     public function getSubcategoryProperty()
@@ -167,7 +159,15 @@ class EditProduct extends Component
 
         event(new \App\Events\NavNotification());
         $current_page = session('page') ? session('page') : 1;
-        return redirect()->route('admin.index', ['page' => $current_page]);
+        if (!count(Auth::user()->getRoleNames())) {
+            return redirect()->route('admin.index', ['page' => $current_page]);
+        }
+    }
+
+    public function removeProduct(){
+        $this->product->status = 4;
+        $this->product->save();
+        $this->isNew = true;
     }
 
     public function createNotification($notification, $user_id, $product_id, $isAdmin)
