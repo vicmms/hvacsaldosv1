@@ -148,7 +148,7 @@ class EditProduct extends Component
             }
         }
 
-        $this->product->slug = Str::slug($this->product->name) . " " . $this->product->id . Auth::user()->id;
+        $this->product->slug = Str::slug($this->product->name) . " " . $this->product->id;
         $this->product->price = str_replace(',', '', $this->product->price);
         $this->product->commercial_price = str_replace(',', '', $this->product->commercial_price);
         $this->product->serie_number = $this->serie_number;
@@ -234,11 +234,8 @@ class EditProduct extends Component
     public function render()
     {
         $user = Auth::user();
-        // $this->brands = Brand::join('brand_category', 'brands.id', 'brand_category.brand_id')
-        //     ->select('brands.*')
-        //     ->where('brand_category.category_id', $this->category_id)
-        //     ->orderBy('name', 'asc')
-        //     ->get();
-        return view('livewire.admin.edit-product', compact('user'))->layout('layouts.admin');
+        $disabled = $this->product->status == 2 && Auth::user()->getRoleNames()->first() != "admin" ? 'disabled' : '';
+
+        return view('livewire.admin.edit-product', compact('user', 'disabled'))->layout('layouts.admin');
     }
 }
