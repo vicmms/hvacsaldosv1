@@ -61,3 +61,4 @@ Route::post('app/emitNotification', [NotificationController::class, 'triggerNoti
 Route::post('app/getAllNotificationsById', [NotificationController::class, 'getAllNotificationsById']);
 Route::post('app/getNotificationsById', [NotificationController::class, 'getNotificationsById']);
 Route::post('app/readNotifications', [NotificationController::class, 'readNotifications']);
+Route::post('app/readNotification', [NotificationController::class, 'readNotification']);

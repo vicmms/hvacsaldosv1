@@ -36,7 +36,7 @@ class NotificationsBell extends Component
             ->count();
 
         $notifications = Notification::where('user_id', Auth::user()->id)
-            ->orderBy('read', 'asc')
+            // ->orderBy('read', 'asc')
             ->orderBy('notifications.created_at', 'desc')
             ->limit(10)
             ->get();
