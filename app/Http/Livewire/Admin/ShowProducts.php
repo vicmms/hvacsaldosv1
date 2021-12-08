@@ -50,7 +50,7 @@ class ShowProducts extends Component
                 // ->where('products.name', 'like', '%' . $this->search . '%')
                 // ->orWhere('users.name', 'like', '%' . $this->search . '%')
                 ->orderBy('status', 'asc')
-                ->orderBy('created_at', 'desc')
+                ->orderBy('updated_at', 'desc')
                 ->paginate(10);
         } else {
             $valor = $this->status ? $this->status : 0;
