@@ -32,7 +32,6 @@
                 <x-jet-label>
                     Marcas
                 </x-jet-label>
-
                 <div class="grid grid-cols-4">
                     @foreach ($brands as $brand)
 

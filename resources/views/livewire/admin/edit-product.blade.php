@@ -28,9 +28,9 @@
 
         <h1 class="text-3xl text-center font-semibold mb-8">Complete esta información para crear un producto</h1>
 
-        <div class="mb-4" wire:ignore>
-            <form action="{{ route('admin.products.files', $product) }}" method="POST" class="dropzone"
-                id="my-awesome-dropzone"></form>
+        <div class="mb-4 {{ $product->status == 2 ? 'disabled' : '' }}">
+            <form wire:ignore action="{{ route('admin.products.files', $product) }}" method="POST"
+                class="dropzone" id="my-awesome-dropzone"></form>
         </div>
 
         @if ($product->images->count() || $product->videos->count())
@@ -38,7 +38,7 @@
             <section class="bg-white shadow-xl rounded-lg p-6 mb-4">
                 <h1 class="text-2xl text-center font-semibold mb-2">Imagenes del producto</h1>
 
-                <ul class="flex flex-wrap" id="images_list">
+                <ul class="flex flex-wrap {{ $product->status == 2 ? 'disabled' : '' }}" id="images_list">
                     @if ($product->images->count())
                         @foreach ($product->images as $image)
 
@@ -70,7 +70,7 @@
             </section>
 
 
-            <x-jet-dialog-modal wire:model="modalImages">
+            <x-jet-dialog-modal wire:model.lazy="modalImages">
 
                 <x-slot name="title">
                     <span class="font-bold text-2xl">{{ $product->name }}</span>
@@ -132,12 +132,12 @@
                 @default
 
             @endswitch
-            <div class="grid grid-cols-2 gap-6 mb-4">
+            <div class="grid grid-cols-2 gap-6 mb-4 {{ $product->status == 2 ? 'disabled' : '' }}">
 
                 {{-- Categoría --}}
                 <div>
                     <x-jet-label value="Categorías*" />
-                    <select class="w-full form-control" wire:model="product.category_id">
+                    <select class="w-full form-control" wire:model.lazy="product.category_id">
                         <option value="" selected disabled>Seleccione una categoría</option>
 
                         @foreach ($categories as $category)
@@ -151,7 +151,7 @@
                 {{-- Subcategoría --}}
                 <div>
                     <x-jet-label value="Subcategorías*" />
-                    <select class="w-full form-control" wire:model="product.subcategory_id">
+                    <select class="w-full form-control" wire:model.lazy="product.subcategory_id">
                         <option value="" selected disabled>Seleccione una subcategoría</option>
 
                         @foreach ($subcategories as $subcategory)
@@ -164,9 +164,9 @@
             </div>
 
             {{-- Nombre --}}
-            <div class="mb-4" >
+            <div class="mb-4 {{ $product->status == 2 ? 'disabled' : '' }}">
                 <x-jet-label value="Nombre*" />
-                <x-jet-input wire:ignore type="text" class="w-full" wire:model="product.name"
+                <x-jet-input wire:ignore type="text" class="w-full" wire:model.lazy="product.name"
                     placeholder="Ingrese el nombre del producto" />
                 <x-jet-input-error for="product.name" />
             </div>
@@ -174,18 +174,31 @@
             {{-- Slug --}}
             <div class="mb-4 hidden">
                 <x-jet-label value="Slug" />
-                <x-jet-input type="text" disabled wire:model="slug" class="w-full bg-gray-200"
+                <x-jet-input type="text" disabled wire:model.lazy="slug" class="w-full bg-gray-200"
                     placeholder="Ingrese el slug del producto" />
 
                 <x-jet-input-error for="slug" />
             </div>
 
-            <div class="grid grid-cols-2 gap-6 mb-4">
+            <div class="grid grid-cols-3 gap-6 mb-4 {{ $product->status == 2 ? 'disabled' : '' }}">
+
+                {{-- Marca --}}
+                <div>
+                    <x-jet-label value="Marca*" />
+                    <select class="form-control w-full" wire:model.lazy="product.brand_id">
+                        <option value="" selected disabled>Seleccione una marca</option>
+                        @foreach ($brands as $brand)
+                            <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                        @endforeach
+                    </select>
+
+                    <x-jet-input-error for="product.brand_id" />
+                </div>
 
                 {{-- Modelo --}}
                 <div>
                     <x-jet-label value="Modelo*" />
-                    <x-jet-input type="text" class="w-full" wire:model="product.model"
+                    <x-jet-input type="text" class="w-full" wire:model.lazy="product.model"
                         placeholder="Ingrese el modelo del producto" />
                     <x-jet-input-error for="product.model" />
                 </div>
@@ -193,16 +206,16 @@
                 {{-- Numero de serie --}}
                 <div>
                     <x-jet-label value="No. Serie" />
-                    <x-jet-input type="text" class="w-full" wire:model="serie_number"
+                    <x-jet-input type="text" class="w-full" wire:model.lazy="serie_number"
                         placeholder="Ingrese el no. de serie del producto" />
                 </div>
             </div>
 
-            <div class="grid grid-cols-3 gap-6 mb-4">
+            <div class="grid grid-cols-3 gap-6 mb-4 {{ $product->status == 2 ? 'disabled' : '' }}">
                 {{-- Precio --}}
                 <div>
                     <x-jet-label value="Precio de venta en Saldo HVAC*" />
-                    <x-jet-input wire:model="product.price" type="text" class="w-full formatter" step="1"
+                    <x-jet-input wire:model.lazy="product.price" type="text" class="w-full formatter" step="1"
                         onkeyup="formatter(this)" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
                     <x-jet-input-error for="product.price" />
                 </div>
@@ -210,7 +223,7 @@
                 {{-- Precio commercial --}}
                 <div>
                     <x-jet-label value="Precio comercial*" />
-                    <x-jet-input wire:model="product.commercial_price" type="text" class="w-full formatter"
+                    <x-jet-input wire:model.lazy="product.commercial_price" type="text" class="w-full formatter"
                         onkeyup="formatter(this)" step="1"
                         onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" />
                     <x-jet-input-error for="product.commercial_price" />
@@ -218,7 +231,7 @@
                 {{-- moneda --}}
                 <div>
                     <x-jet-label value="Moneda*" />
-                    <select class="w-full form-control" wire:model="product.currency_id">
+                    <select class="w-full form-control" wire:model.lazy="product.currency_id">
                         <option value="" selected disabled>Seleccione una moneda</option>
 
                         @foreach ($currencies as $currency)
@@ -233,51 +246,48 @@
 
             <div class="grid grid-cols-2 gap-6 mb-4">
                 {{-- cantidad --}}
-                <div class="mb-4">
+                <div class="">
                     <x-jet-label value="Cantidad*" />
-                    <x-jet-input wire:model="product.quantity" type="number" class="w-full" />
+                    <x-jet-input wire:model.lazy="product.quantity" type="number" class="w-full" />
                     <x-jet-input-error for="product.quantity" />
                 </div>
                 {{-- unidad --}}
-                <div>
+                <div class="{{ $product->status == 2 ? 'disabled' : '' }}">
                     <x-jet-label value="Unidad*" />
-                    <x-jet-input wire:model="product.unit" type="text" class="w-full"
+                    <x-jet-input wire:model.lazy="product.unit" type="text" class="w-full"
                         placeholder="pza, paquete, caja, etc." />
                     <x-jet-input-error for="product.unit" />
                 </div>
             </div>
 
-            <div class="grid grid-cols-2 gap-6 mb-4">
-                {{-- Marca --}}
-                <div>
-                    <x-jet-label value="Marca*" />
-                    <select class="form-control w-full" wire:model="product.brand_id">
-                        <option value="" selected disabled>Seleccione una marca</option>
-                        @foreach ($brands as $brand)
-                            <option value="{{ $brand->id }}">{{ $brand->name }}</option>
-                        @endforeach
-                    </select>
-
-                    <x-jet-input-error for="product.brand_id" />
-                </div>
+            <div class="mb-4 {{ $product->status == 2 ? 'disabled' : '' }}">
 
                 {{-- Envio disponible --}}
-                <div>
-                    <x-jet-label value="Envio disponible*" />
-                    <select class="form-control w-full" wire:model="product.shipping">
-                        <option value="0">No</option>
-                        <option value="1">Si</option>
-                    </select>
 
-                    <x-jet-input-error for="product.shipping" />
+                <x-jet-label value="Envio disponible*" />
+                <div class="flex my-2">
+                    <x-jet-label class="mr-4 text-base">
+                        <x-jet-checkbox wire:model.defer="product.shipping" name="types[]" value="1" />Envío a cargo del
+                        comprador
+                    </x-jet-label>
+                    <x-jet-label class="mr-4 text-base">
+                        <x-jet-checkbox wire:model.defer="product.shipping" name="types[]" value="2" />Recolección en
+                        oficinas del vendedor
+                    </x-jet-label>
+                    <x-jet-label class=" text-base">
+                        <x-jet-checkbox wire:model.defer="product.shipping" name="types[]" value="3" />Entrega sin costo
+                        dentro de la ciudad
+                    </x-jet-label>
                 </div>
+
+                <x-jet-input-error for="product.shipping" />
             </div>
 
-            <div class="grid grid-cols-2 gap-6 mb-4">
+            <div class="grid grid-cols-2 gap-6 mb-4 {{ $product->status == 2 ? 'disabled' : '' }}">
                 {{-- Pais / estado --}}
                 <div>
                     <x-jet-label value="Selecciona un estado ({{ $user->country->name }})*" />
-                    <select class="form-control w-full" wire:model="product.state_id">
+                    <select class="form-control w-full" wire:model.lazy="product.state_id">
                         <option value="0" selected disabled>Seleccione un estado</option>
                         @foreach ($user->country->states()->orderBy('name', 'asc')->get() as $state)
                             <option value="{{ $state->id }}">{{ $state->name }}</option>
@@ -289,18 +299,18 @@
                 {{-- ciudad --}}
                 <div>
                     <x-jet-label value="Ciudad/Localidad*" />
-                    <x-jet-input type="text" class="w-full" wire:model="product.city"
+                    <x-jet-input type="text" class="w-full" wire:model.lazy="product.city"
                         placeholder="Nombre completo" />
                     <x-jet-input-error for="product.city" />
                 </div>
             </div>
 
-            <div class="grid grid-cols-4 gap-6 mb-4">
+            <div class="grid grid-cols-4 gap-6 mb-4 ">
                 {{-- Descrición --}}
-                <div class="mb-4 col-span-3">
+                <div class="mb-4 col-span-3 {{ $product->status == 2 ? 'disabled' : '' }}">
                     <div wire:ignore>
                         <x-jet-label value="Descripción*" />
-                        <textarea class="w-full form-control" rows="4" wire:model="product.description" x-data>
+                        <textarea class="w-full form-control" rows="4" wire:model.lazy="product.description" x-data>
                     </textarea>
                     </div>
                     <x-jet-input-error for="product.description" />
@@ -314,6 +324,11 @@
                 </div>
 
             </div>
+            @if ($product->status == 2)
+                <p class="text-sm italic text-gray-600 my-6">Actualmente este producto se encuentra publicado en Saldo
+                    HVAC, puede cambiar el stock disponible del producto si lo desea, o bien para cambiar la información
+                    del producto es necesario retirarlo primero de la plataforma.</p>
+            @endif
             <div class="flex justify-end items-center mt-4">
 
                 <x-jet-action-message class="mr-3" on="saved">
@@ -331,6 +346,13 @@
                     <x-jet-danger-button class="mr-4" wire:loading.attr="disabled" wire:target="save(true)"
                         wire:click="save(true)">
                         Actualizar y Publicar
+                    </x-jet-danger-button>
+                @endif
+
+                @if ($product->status == 2)
+                    <x-jet-danger-button class="mr-4" wire:loading.attr="disabled" wire:target="removeProduct"
+                        wire:click="removeProduct">
+                        Quitar de saldos
                     </x-jet-danger-button>
                 @endif
 
@@ -366,7 +388,7 @@
                     'X-CSRF-TOKEN': "{{ csrf_token() }}"
                 },
                 dictDefaultMessage: "Da clic o arrastra imagenes al recuadro, máximo 4.",
-                acceptedFiles: 'image/jpg, image/png, image/jpeg',//, video/mp4
+                acceptedFiles: 'image/jpg, image/png, image/jpeg', //, video/mp4
                 paramName: "file", // The name that will be used to transfer the file
                 maxFilesize: 5, // MB
                 init: function() {
@@ -379,15 +401,15 @@
                         Livewire.emit('refreshProduct', isMaxImages);
                     });
                     this.on("error", function(file, message) {
-                       if(!errorMessage){
-                        message = message['message'] ? message['errors']['file'][0] : message;
-                        Swal.fire({
-                            icon: 'warning',
-                            title: message,
-                            showConfirmButton: true,
-                        })
-                       }
-                       errorMessage = true;
+                        if (!errorMessage) {
+                            message = message['message'] ? message['errors']['file'][0] : message;
+                            Swal.fire({
+                                icon: 'warning',
+                                title: message,
+                                showConfirmButton: true,
+                            })
+                        }
+                        errorMessage = true;
                     });
                 },
                 complete: function(file) {
@@ -531,7 +553,7 @@
                     icon: 'warning',
                     text: 'Para publicar articulos en venta debes llenar correctamente la información de tu empresa (nombre y datos fiscales)',
                     title: 'Información requerida',
-                    confirmButtonText:'<a href="/user/profile">Actualizar información</a>',
+                    confirmButtonText: '<a href="/user/profile">Actualizar información</a>',
                     showCancelButton: true,
                     cancelButtonText: 'Cancelar'
                 })
@@ -541,7 +563,7 @@
                     icon: 'warning',
                     text: 'Agrega imágenes del producto, puedes agregar hasta 4 imágenes.',
                     title: 'Faltan imágenes',
-                    confirmButtonText:'Ok',
+                    confirmButtonText: 'Ok',
                 })
             })
         </script>

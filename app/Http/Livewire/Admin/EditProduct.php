@@ -53,6 +53,9 @@ class EditProduct extends Component
 
         $this->product = $product;
 
+        $envios = str_replace(['[',']','"'], '', $this->product->shipping);
+        $this->product->shipping = explode(',', $envios);
+
         $this->isRejected = $this->product->status == 3 ? true : false;
 
         $this->isNew = $this->product->status == 4 ? true : false;
@@ -159,6 +162,12 @@ class EditProduct extends Component
         if (!count(Auth::user()->getRoleNames())) {
             return redirect()->route('admin.index', ['page' => $current_page]);
         }
+    }
+
+    public function removeProduct(){
+        $this->product->status = 4;
+        $this->product->save();
+        $this->isNew = true;
     }
 
     public function createNotification($notification, $user_id, $product_id, $isAdmin)
