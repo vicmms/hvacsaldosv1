@@ -11,7 +11,7 @@
         </a>
 
         <a href="/home/{{ session('country') }}" class="mx-6">
-            <x-jet-application-mark class="block h-9 w-auto" />
+            <x-jet-application-mark class="block h-9 w-auto" type="large" />
         </a>
         {{-- eliminar --}}
         <div class="mr-6 relative hidden ">
@@ -51,7 +51,9 @@
         <div class="hidden md:block md:ml-4 md:mt-2">
             @livewire('dropdown-cart')
         </div>
-
+        <div class="hidden md:block md:ml-4 md:mt-2 md:pr-11">
+            <span class="text-white text-xl">{{Auth::check() ? 'Hola, '. explode(' ', Auth::user()->name)[0] : 'Bienvenido'}}</span>
+        </div>
     </div>
 
     <nav id="navigation-menu" :class="{'block': open, 'hidden': !open}"

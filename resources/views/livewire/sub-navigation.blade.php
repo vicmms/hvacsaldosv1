@@ -13,7 +13,7 @@
                 Todos los productos
             </a>
         </div>
-        <div class="px-6 py-1 flex">
+        <div class="px-6 py-1 flex" style="position: relative; left: 25px;">
             <x-jet-dropdown align="right" width="16" class="hidden md:block">
                 <x-slot name="trigger">
                     <span class="cursor-pointer hover:text-orange-500">{{session('country')}} <i class="fas fa-chevron-down text-xs"></i></span>
