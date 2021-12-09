@@ -1,7 +1,7 @@
-<header class="bg-blue-1 sticky top-0" style="z-index: 900" x-data="dropdown()">
+<header class="bg-blue-1 top-0" style="z-index: 900" x-data="dropdown()">
     <div class="container flex items-center h-16 justify-between md:justify-start">
         <a :class="{'bg-opacity-100 text-orange-500' : open}" x-on:click="show()"
-            class="flex flex-col items-center justify-center order-last md:order-first px-6 md:px-4 bg-white bg-opacity-25 text-white cursor-pointer font-semibold h-full">
+            class="md:hidden flex flex-col items-center justify-center order-last md:order-first px-6 md:px-4 bg-white bg-opacity-25 text-white cursor-pointer font-semibold h-full">
             <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                 <path class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M4 6h16M4 12h16M4 18h16" />
@@ -13,8 +13,8 @@
         <a href="/home/{{ session('country') }}" class="mx-6">
             <x-jet-application-mark class="block h-9 w-auto" />
         </a>
-
-        <div class="mr-6 relative hidden md:block">
+        {{-- eliminar --}}
+        <div class="mr-6 relative hidden ">
             <x-jet-dropdown align="right" width="16">
 
                 <x-slot name="trigger">
@@ -35,20 +35,20 @@
             </x-jet-dropdown>
         </div>
 
-        <div class="flex-1 hidden md:block">
+        <div class="flex-1 hidden md:block sticky z-50">
             @livewire('search')
         </div>
-
-        <div class="hidden md:block">
+        {{-- eliminar --}}
+        <div class="hidden">
             <a href="https://www.saldohvac.com/faq-s" target="_blank" alt="Preguntas" class="ml-6 mt-1 tooltip ">
                 <i class="fas fa-question-circle h-9 text-3xl text-gray-100"></i>
                 <span class="tooltiptext">Preguntas frecuentes</span>
             </a>
         </div>
 
-        @livewire('user-menu')
+        {{-- @livewire('user-menu') --}}
 
-        <div class="hidden md:block">
+        <div class="hidden md:block md:ml-4 md:mt-2">
             @livewire('dropdown-cart')
         </div>
 
@@ -172,7 +172,6 @@
             var pusher = new Pusher('3d9b40bd878ed43b82cf', {
                 cluster: 'us2'
             });
-
             var channel = pusher.subscribe('nav-channel');
             channel.bind('nav-event', function() {
                 console.log('pusher')

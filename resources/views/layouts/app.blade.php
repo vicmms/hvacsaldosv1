@@ -57,6 +57,8 @@
 
         @livewire('navigation')
 
+        @livewire('sub-navigation')
+
         <!-- Page Content -->
         <main>
             {{ $slot }}
