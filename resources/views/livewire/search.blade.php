@@ -20,10 +20,10 @@
 
     <form action="{{ route('search') }}" autocomplete="off">
 
-        <x-jet-input name="name" wire:model="search" type="text" class="w-full rounded-xl"
+        <x-jet-input name="name" wire:model="search" type="text" class="w-full rounded-sm"
             placeholder="¿Estás buscando algún producto?" />
 
-        <button class="absolute top-0 right-0 w-12 h-full bg-orange-500 flex items-center justify-center rounded-r-xl">
+        <button class="absolute top-0 right-0 w-12 h-full bg-orange-500 flex items-center justify-center rounded-r-sm">
             <i class="fas fa-search text-xl text-white" style="-webkit-text-stroke: 1px rgba(249, 115, 22, var(--tw-bg-opacity));"></i>
         </button>
 

@@ -117,8 +117,8 @@
             @livewire('create-question',['product' => $product])
 
             <div class="mt-6 text-gray-700 bg-white p-4 rounded-lg mb-4 shadow-lg">
-                <h2 class="font-bold text-2xl mb-8">Preguntas Realizadas</h2>
-                @foreach ($questions as $question)
+                <h2 class="font-bold text-2xl mb-6">Preguntas Realizadas</h2>
+                @forelse ($questions as $question)
                     <div class="mb-4">
                         <div class="flex">
                             <p class="flex-1">{{ $question->question }}</p>
@@ -151,7 +151,9 @@
                             @endif
                         @endif
                     </div>
-                @endforeach
+                    @empty
+                    <p class="font-semibold text-lg ml-2">Aún no se han realizado preguntas</p>
+                @endforelse
                 @if ($questions->hasPages())
 
                     <div class="px-6 py-4">

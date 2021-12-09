@@ -28,7 +28,7 @@
 
         <h1 class="text-3xl text-center font-semibold mb-8">Complete esta información para crear un producto</h1>
 
-        <div class="mb-4 {{ $product->status == 2 ? 'disabled' : '' }}">
+        <div class="mb-4 {{$disabled}}">
             <form wire:ignore action="{{ route('admin.products.files', $product) }}" method="POST"
                 class="dropzone" id="my-awesome-dropzone"></form>
         </div>
@@ -38,7 +38,7 @@
             <section class="bg-white shadow-xl rounded-lg p-6 mb-4">
                 <h1 class="text-2xl text-center font-semibold mb-2">Imagenes del producto</h1>
 
-                <ul class="flex flex-wrap {{ $product->status == 2 ? 'disabled' : '' }}" id="images_list">
+                <ul class="flex flex-wrap {{$disabled}}" id="images_list">
                     @if ($product->images->count())
                         @foreach ($product->images as $image)
 
@@ -132,7 +132,7 @@
                 @default
 
             @endswitch
-            <div class="grid grid-cols-2 gap-6 mb-4 {{ $product->status == 2 ? 'disabled' : '' }}">
+            <div class="grid grid-cols-2 gap-6 mb-4 {{$disabled}}">
 
                 {{-- Categoría --}}
                 <div>
@@ -164,7 +164,7 @@
             </div>
 
             {{-- Nombre --}}
-            <div class="mb-4 {{ $product->status == 2 ? 'disabled' : '' }}">
+            <div class="mb-4 {{$disabled}}">
                 <x-jet-label value="Nombre*" />
                 <x-jet-input wire:ignore type="text" class="w-full" wire:model.lazy="product.name"
                     placeholder="Ingrese el nombre del producto" />
@@ -180,7 +180,7 @@
                 <x-jet-input-error for="slug" />
             </div>
 
-            <div class="grid grid-cols-3 gap-6 mb-4 {{ $product->status == 2 ? 'disabled' : '' }}">
+            <div class="grid grid-cols-3 gap-6 mb-4 {{$disabled}}">
 
                 {{-- Marca --}}
                 <div>
@@ -211,7 +211,7 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-3 gap-6 mb-4 {{ $product->status == 2 ? 'disabled' : '' }}">
+            <div class="grid grid-cols-3 gap-6 mb-4 {{$disabled}}">
                 {{-- Precio --}}
                 <div>
                     <x-jet-label value="Precio en Saldo HVAC (iva incluido)*" />
@@ -252,7 +252,7 @@
                     <x-jet-input-error for="product.quantity" />
                 </div>
                 {{-- unidad --}}
-                <div class="{{ $product->status == 2 ? 'disabled' : '' }}">
+                <div class="{{$disabled}}">
                     <x-jet-label value="Unidad*" />
                     <x-jet-input wire:model.lazy="product.unit" type="text" class="w-full"
                         placeholder="pza, paquete, caja, etc." />
@@ -260,7 +260,7 @@
                 </div>
             </div>
 
-            <div class="mb-4 {{ $product->status == 2 ? 'disabled' : '' }}">
+            <div class="mb-4 {{$disabled}}">
 
                 {{-- Envio disponible --}}
 
@@ -283,7 +283,7 @@
                 <x-jet-input-error for="product.shipping" />
             </div>
 
-            <div class="grid grid-cols-2 gap-6 mb-4 {{ $product->status == 2 ? 'disabled' : '' }}">
+            <div class="grid grid-cols-2 gap-6 mb-4 {{$disabled}}">
                 {{-- Pais / estado --}}
                 <div>
                     <x-jet-label value="Selecciona un estado ({{ $user->country->name }})*" />
@@ -307,7 +307,7 @@
 
             <div class="grid grid-cols-4 gap-6 mb-4 ">
                 {{-- Descrición --}}
-                <div class="mb-4 col-span-3 {{ $product->status == 2 ? 'disabled' : '' }}">
+                <div class="mb-4 col-span-3 {{$disabled}}">
                     <div wire:ignore>
                         <x-jet-label value="Descripción*" />
                         <textarea class="w-full form-control" rows="4" wire:model.lazy="product.description" x-data>
