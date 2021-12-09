@@ -107,25 +107,25 @@
             @switch($product->status)
                 @case(1)
                     <span
-                        class="mb-4 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                        class="mb-4 py-1 px-6 inline-flex text-sm leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 border-2 border-yellow-300">
                         En revisión
                     </span>
                 @break
                 @case(2)
                     <span
-                        class="mb-4 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                        class="mb-4 py-1 px-6 inline-flex text-sm leading-5 font-semibold rounded-full bg-green-100 text-green-800 border-2 border-green-300">
                         Publicado
                     </span>
                 @break
                 @case(3)
                     <span
-                        class="mb-4 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                        class="mb-4 py-1 px-6 inline-flex text-sm leading-5 font-semibold rounded-full bg-red-100 text-red-800 border-2 border-red-300">
                         Rechazado
                     </span>
                 @break
                 @case(4)
                     <span
-                        class="mb-4 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-200 text-gray-800">
+                        class="mb-4 py-1 px-6 inline-flex text-sm leading-5 font-semibold rounded-full bg-gray-200 text-gray-800 border-2 border-gray-300">
                         Sin publicar
                     </span>
                 @break
