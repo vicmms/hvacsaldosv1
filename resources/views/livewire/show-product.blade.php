@@ -76,7 +76,7 @@
                                 @endif
                             @endfor
                             <p class="text-sm">({{$seller->score}})</p>
-                            <a class="text-lg ml-auto underline" href="{{route('seller-review', encrypt($seller[0]->seller_id))}}">Ver calificaciones</a>
+                            <a class="text-lg ml-auto underline" href="{{route('seller-review', encrypt($product->user_id))}}">Ver calificaciones</a>
                         @else
                             <p class="text-trueGray-700">Aún no se ha calificado este vendedor</p>
                         @endif
