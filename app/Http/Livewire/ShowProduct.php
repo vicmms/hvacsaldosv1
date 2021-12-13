@@ -48,7 +48,7 @@ class ShowProduct extends Component
     {
         $product = $this->product;
         $seller = Rating::where('seller_id', $product->user_id)->get();
-        $seller->score = 2.5;//number_format(Rating::where('seller_id', $product->user_id)->avg('score'), 1, '.', ',');
+        $seller->score = number_format(Rating::where('seller_id', $product->user_id)->avg('score'), 1, '.', ',');
         $questions = Question::with('answer')->where('product_id', $product->id)
             ->orderBy('created_at', 'desc')
             ->paginate(10);
