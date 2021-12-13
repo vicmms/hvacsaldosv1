@@ -33,7 +33,7 @@
                 <h1 class="text-3xl font-bold text-trueGray-700">{{ $product->name }}</h1>
                 <p class="text-trueGray-700 font-semibold">Categoría: {{ $product->category->name }}</p>
 
-                <p class="text-trueGray-700 font-semibold capitalize">Subcategoría: {{ $product->subcategory->name }}
+                <p class="text-trueGray-700 font-semibold capitalize">Subcategoría: <span class="text-green-600">{{ $product->subcategory->name }}</span>
                 </p>
 
                 <p class="text-trueGray-700 font-semibold capitalize">Marca: {{ $product->brand->name }}</p>
