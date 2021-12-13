@@ -25,7 +25,7 @@ class StatusOrder extends Component
         $this->isOpen = 0;
         $this->status = $this->order->status;
         $this->buyer = User::where('users.id', $this->order->user_id)->first();
-        $company_info = DB::table('Companies')
+        $company_info = DB::table('companies')
             ->where('user_id', $this->order->user_id)
             ->first();
         $this->buyer->company_info = $company_info;
