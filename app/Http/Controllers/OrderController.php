@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Http;
 
 class OrderController extends Controller
 {
-
     public function index()
     {
 

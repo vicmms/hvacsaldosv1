@@ -93,6 +93,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo(Country::class);
     }
 
+    public function state()
+    {
+        return $this->belongsTo(State::class);
+    }
+
     public function getPermissionAttribute()
     {
         return $this->getAllPermissions();

@@ -94,3 +94,51 @@ body::-webkit-scrollbar, .overflow-y-scroll::-webkit-scrollbar {
      90% { opacity: 0.0; }
     100% { opacity: 1.0; }
   }
+
+
+  /* rating stars */
+  
+  a[href*="intent"] {
+    display:inline-block;
+    margin-top: 0.4em;
+  }
+
+  /*  
+   * Rating styles
+   */
+  .rating {
+    margin: 0 auto 1em;
+    font-size: 45px;
+    overflow:hidden;
+  }
+  .rating a,
+  .rating label {
+    /* float:right; */
+    color: #aaa;
+    text-decoration: none;
+    -webkit-transition: color .4s;
+    -moz-transition: color .4s;
+    -o-transition: color .4s;
+    transition: color .4s;
+    font-size: 2.5rem;
+  }
+.rating label:hover ~ label,
+.rating input:focus ~ label,
+.rating label:hover,
+  .rating .star:hover,
+  .rating .star:hover ~ a,
+  .rating .star:focus,
+  .rating .star:focus ~ a		{
+    @apply text-yellow-500;
+    cursor: pointer;
+  }
+  .active-star {
+    --tw-text-opacity: 1;
+    color: rgba(245, 158, 11, var(--tw-text-opacity)) !important;
+  }
+  .rating2 {
+    direction: rtl;
+  }
+  .rating2 a {
+    float:none
+  }

@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\Answer;
 use App\Models\Product;
 use App\Models\Question;
+use App\Models\Rating;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -29,11 +30,6 @@ class ShowProduct extends Component
         $this->question = $question;
     }
 
-    // public function updatedAnswer()
-    // {
-    //     $this->isDisabled = empty($this->answer) ? true : false;
-    // }
-
     public function saveAnswer($formData, $question_id)
     {
         $this->formData = $formData;
@@ -51,9 +47,11 @@ class ShowProduct extends Component
     public function render()
     {
         $product = $this->product;
+        $seller = Rating::where('seller_id', $product->user_id)->get();
+        $seller->score = 2.5;//number_format(Rating::where('seller_id', $product->user_id)->avg('score'), 1, '.', ',');
         $questions = Question::with('answer')->where('product_id', $product->id)
             ->orderBy('created_at', 'desc')
             ->paginate(10);
-        return view('livewire.show-product', compact('product', 'questions'));
+        return view('livewire.show-product', compact('product', 'questions', 'seller'));
     }
 }

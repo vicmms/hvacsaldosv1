@@ -66,9 +66,9 @@
 
                 <ul>
                     @foreach ($orders as $order)
-                        <li>
+                        <li class="flex items-center py-2 px-4">
                             <a href="{{ route('orders.show', $order) }}"
-                                class="flex items-center py-2 px-4 hover:bg-gray-100">
+                                class="flex flex-1 items-center py-2 px-4 hover:bg-gray-100">
                                 <span class="w-12 text-center">
                                     @switch($order->status)
                                         @case(1)
@@ -141,8 +141,10 @@
                                 <span>
                                     <i class="fas fa-angle-right ml-6"></i>
                                 </span>
-
                             </a>
+                            @if ($order->status == 4)
+                                    @livewire('rate-orders', ['order' => $order])
+                                @endif
                         </li>
                     @endforeach
                 </ul>
@@ -157,5 +159,7 @@
         @endif
 
     </div>
+
+    
 
 </x-app-layout>
