@@ -65,6 +65,7 @@ return array(
     'App\\Http\\Livewire\\NotificationsBell' => $baseDir . '/app/Http/Livewire/NotificationsBell.php',
     'App\\Http\\Livewire\\PaymentOrder' => $baseDir . '/app/Http/Livewire/PaymentOrder.php',
     'App\\Http\\Livewire\\Profile\\UpdateCompanyForm' => $baseDir . '/app/Http/Livewire/Profile/UpdateCompanyForm.php',
+    'App\\Http\\Livewire\\RateOrders' => $baseDir . '/app/Http/Livewire/RateOrders.php',
     'App\\Http\\Livewire\\Search' => $baseDir . '/app/Http/Livewire/Search.php',
     'App\\Http\\Livewire\\ShoppingCart' => $baseDir . '/app/Http/Livewire/ShoppingCart.php',
     'App\\Http\\Livewire\\ShowProduct' => $baseDir . '/app/Http/Livewire/ShowProduct.php',

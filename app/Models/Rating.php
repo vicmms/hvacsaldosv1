@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Rating extends Model
 {
     use HasFactory;
-    protected $fillable = ['score', 'comments', 'user_id', 'product_id'];
+    protected $fillable = ['score', 'comments', 'user_id', 'order_id', 'seller_id'];
 
     public function product(){
         return $this->belongsTo(Product::class);

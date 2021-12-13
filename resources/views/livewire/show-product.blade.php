@@ -52,6 +52,36 @@
                     </del>
                 </p>
 
+                {{-- vendedor --}}
+                <div class="flex items-center text-xl font-semibold capitalize my-4">
+                        <p class="mr-4">Vendedor:</p>
+                        @if ($seller->score)
+                            @for ($i = 0; $i < 5; $i++)
+                                @if (round($seller->score) >= $seller->score)
+                                    @if ($i < $seller->score)
+                                        <i class="fas fa-star text-xs text-yellow-500 mr-1"></i>
+                                    @else
+                                        <i class="far fa-star text-xs text-yellow-500 mr-1"></i>
+                                    @endif
+                                @else
+                                    @if ($i < ($seller->score - 1))
+                                        <i class="fas fa-star text-xs text-yellow-500 mr-1"></i>
+                                    @else
+                                        @if ($i < $seller->score)
+                                            <i class="fas fa-star-half-alt text-xs text-yellow-500 mr-1"></i>
+                                        @else
+                                            <i class="far fa-star text-xs text-yellow-500 mr-1"></i>
+                                        @endif
+                                    @endif
+                                @endif
+                            @endfor
+                            <p class="text-sm">({{$seller->score}})</p>
+                            <a class="text-lg ml-auto underline" href="{{route('seller-review', encrypt($seller[0]->seller_id))}}">Ver calificaciones</a>
+                        @else
+                            <p class="text-trueGray-700">Aún no se ha calificado este vendedor</p>
+                        @endif
+                </div>
+
                 <p class="text-xl font-semibold capitalize my-4">Ubicación:
                     {{ $product->state->name }}
                 </p>
@@ -60,47 +90,47 @@
                     <p class="text-xl font-semibold text-gray-900 p-2">Envios Disponibles</p>
                     @foreach (explode(',', str_replace(['[', ']', '"'], '', $product->shipping)) as $shipping)
                     @switch($shipping)
-                        @case(1)
-                        <div class="p-2 flex items-center">
-                            <span class="flex items-center justify-center h-7 w-7 rounded-full bg-greenLime-600">
-                                <i class="fas fa-check text-sm text-white"></i>
-                            </span>
+                            @case(1)
+                            <div class="p-2 flex items-center">
+                                <span class="flex items-center justify-center h-7 w-7 rounded-full bg-greenLime-600">
+                                    <i class="fas fa-check text-sm text-white"></i>
+                                </span>
 
-                            <div class="ml-4">
-                                <p class="text-lg font-semibold text-blue-900">
-                                    Con costo extra
-                                </p>
+                                <div class="ml-4">
+                                    <p class="text-lg font-semibold text-blue-900">
+                                        Con costo extra
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                            @break
-                        @case(2)
-                        <div class="p-2 flex items-center">
-                            <span class="flex items-center justify-center h-7 w-7 rounded-full bg-greenLime-600">
-                                <i class="fas fa-check text-sm text-white"></i>
-                            </span>
+                                @break
+                            @case(2)
+                            <div class="p-2 flex items-center">
+                                <span class="flex items-center justify-center h-7 w-7 rounded-full bg-greenLime-600">
+                                    <i class="fas fa-check text-sm text-white"></i>
+                                </span>
 
-                            <div class="ml-4">
-                                <p class="text-lg font-semibold text-blue-900">
-                                    Recolección en oficinas del vendedor
-                                </p>
+                                <div class="ml-4">
+                                    <p class="text-lg font-semibold text-blue-900">
+                                        Recolección en oficinas del vendedor
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                            @break
-                            @case(3)
-                        <div class="p-2 flex items-center">
-                            <span class="flex items-center justify-center h-7 w-7 rounded-full bg-greenLime-600">
-                                <i class="fas fa-check text-sm text-white"></i>
-                            </span>
+                                @break
+                                @case(3)
+                            <div class="p-2 flex items-center">
+                                <span class="flex items-center justify-center h-7 w-7 rounded-full bg-greenLime-600">
+                                    <i class="fas fa-check text-sm text-white"></i>
+                                </span>
 
-                            <div class="ml-4">
-                                <p class="text-lg font-semibold text-blue-900">
-                                    Gratis dentro de la ciudad
-                                </p>
+                                <div class="ml-4">
+                                    <p class="text-lg font-semibold text-blue-900">
+                                        Gratis dentro de la ciudad
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                            @break
-                        @default
-                                
+                                @break
+                            @default
+                                        
                 @endswitch
                     @endforeach
                 </div>
@@ -151,7 +181,7 @@
                             @endif
                         @endif
                     </div>
-                    @empty
+                @empty
                     <p class="font-semibold text-lg ml-2">Aún no se han realizado preguntas</p>
                 @endforelse
                 @if ($questions->hasPages())

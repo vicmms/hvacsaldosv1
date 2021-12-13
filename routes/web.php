@@ -8,6 +8,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SellerRateController;
 use App\Http\Livewire\ShoppingCart;
 use App\Http\Livewire\CreateOrder;
 
@@ -37,6 +38,8 @@ Route::get('categories/{category}/{country?}', [CategoryController::class, 'show
 Route::get('products/{product}', ShowProduct::class)->name('products.show');
 
 Route::get('shopping-cart', ShoppingCart::class)->name('shopping-cart');
+
+Route::get('seller-review/{id}', [SellerRateController::class, 'show'])->name('seller-review');
 
 Route::middleware(['auth', 'verified'])->group(function () {
 

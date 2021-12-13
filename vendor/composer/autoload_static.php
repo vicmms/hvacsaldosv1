@@ -717,6 +717,7 @@ class ComposerStaticInitdff87a5bee6bda82248332d2fcef439f
         'App\\Http\\Livewire\\NotificationsBell' => __DIR__ . '/../..' . '/app/Http/Livewire/NotificationsBell.php',
         'App\\Http\\Livewire\\PaymentOrder' => __DIR__ . '/../..' . '/app/Http/Livewire/PaymentOrder.php',
         'App\\Http\\Livewire\\Profile\\UpdateCompanyForm' => __DIR__ . '/../..' . '/app/Http/Livewire/Profile/UpdateCompanyForm.php',
+        'App\\Http\\Livewire\\RateOrders' => __DIR__ . '/../..' . '/app/Http/Livewire/RateOrders.php',
         'App\\Http\\Livewire\\Search' => __DIR__ . '/../..' . '/app/Http/Livewire/Search.php',
         'App\\Http\\Livewire\\ShoppingCart' => __DIR__ . '/../..' . '/app/Http/Livewire/ShoppingCart.php',
         'App\\Http\\Livewire\\ShowProduct' => __DIR__ . '/../..' . '/app/Http/Livewire/ShowProduct.php',
