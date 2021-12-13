@@ -55,7 +55,7 @@
                 {{-- vendedor --}}
                 <div class="flex items-center text-xl font-semibold capitalize my-4">
                         <p class="mr-4">Vendedor:</p>
-                        @if ($seller->score)
+                        @if ($seller->score > 0)
                             @for ($i = 0; $i < 5; $i++)
                                 @if (round($seller->score) >= $seller->score)
                                     @if ($i < $seller->score)
