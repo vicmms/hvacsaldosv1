@@ -37,4 +37,8 @@ class Order extends Model
     public function cancellation(){
         return $this->belongsTo(Cancellation::class);
     }
+
+    public function shipping(){
+        return $this->belongsTo(Shipping::class);
+    }
 }
