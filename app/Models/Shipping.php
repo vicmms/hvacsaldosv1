@@ -9,6 +9,8 @@ class Shipping extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['user_id', 'order_id'];
+
     public function user(){
         return $this->belongsTo(User::class);
     }

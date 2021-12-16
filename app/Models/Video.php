@@ -8,10 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Video extends Model
 {
     use HasFactory;
+    protected $fillable = ['url', 'type_id', 'type'];
 
-    protected $fillable = ['url'];
-
-    public function product(){
-        return $this->belongsTo(Product::class);
+    public function video(){
+        return $this->morphTo();
     }
 }
