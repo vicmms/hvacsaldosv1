@@ -111,7 +111,7 @@
                         <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
                             role="alert">
                             <strong class="font-bold">Upss!</strong>
-                            <span class="block sm:inline">No existe ningún producto con ese filtro.</span>
+                            <span class="block sm:inline">No se han encontrado productos.</span>
                         </div>
 
                     @endforelse
