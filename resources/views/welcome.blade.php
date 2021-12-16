@@ -64,7 +64,7 @@
                 <li>
                     <a href="{{ route('offers') }}">
                         <img style="width: 1200px; height: 410px;" class=""
-                            src="http://127.0.0.1:8000/images/banner.png" />
+                            src="{{asset('images/banner.png')}}" />
                     </a>
                 </li>
                 @foreach ($ofertas as $oferta)
