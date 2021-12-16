@@ -74,7 +74,10 @@
                                             {{ Str::limit($product->name, 15) }}
                                         </a>
                                     </h1>
-
+                                    <del class="text-red-800 font-bold text-sm">
+                                        {{ $product->currency ? $product->currency->currency : '' }}
+                                        {{ $product->currency ? $product->currency->symbol : '$' }}{{ number_format($product->commercial_price, 0, '.', ',') }}
+                                    </del>
                                     <p class="font-bold text-trueGray-700">
                                         {{ $product->currency ? $product->currency->currency : '' }}
                                         {{ $product->currency ? $product->currency->symbol : '$' }}{{ number_format($product->price, 0, '.', ',') }}

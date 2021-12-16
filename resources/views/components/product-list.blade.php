@@ -12,6 +12,10 @@
             <div class="lg:flex justify-between">
                 <div>
                     <h1 class="text-lg font-semibold text-gray-700">{{ $product->name }}</h1>
+                    <del class="text-red-800 font-bold text-sm">
+                        {{ $product->currency ? $product->currency->currency : '' }}
+                        {{ $product->currency ? $product->currency->symbol : '$' }}{{ number_format($product->commercial_price, 0, '.', ',') }}
+                    </del>
                     <p class="font-bold text-gray-700">
                         {{ $product->currency ? $product->currency->currency : '' }}
                                         {{ $product->currency ? $product->currency->symbol : '$' }}{{ number_format($product->price, 0, '.', ',') }}
@@ -19,13 +23,13 @@
                     <p class="font-bold text-gray-700">
                         Stock: {{$product->quantity}}
                     </p>
-                    <p class="font-bold text-gray-700">
+                    {{-- <p class="font-bold text-gray-700">
                         <i class="fas fa-map-marker-alt"></i> {{$product->state->name}}
-                    </p>
+                    </p> --}}
                 </div>
 
                 <div class="flex ">
-                    {{-- <span class="text-gray-700 text-sm"><i class="fas fa-map-marker-alt"></i> {{$product->state->name}}</span> --}}
+                    <span class="font-bold text-gray-700"><i class="fas fa-map-marker-alt"></i> {{$product->state->name}}</span>
                 </div>
             </div>
 
