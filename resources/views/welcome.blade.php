@@ -30,8 +30,8 @@
             background-size: 100px; */
         }
 
-        .esquina{
-            background: linear-gradient(45deg, rgb(15, 6, 65) 80%, transparent 20% ) !important;
+        .esquina {
+            background: linear-gradient(45deg, rgb(15, 6, 65) 80%, transparent 20%) !important;
         }
 
     </style>
@@ -62,29 +62,38 @@
         <div class="flexslider" style="height: 420px !important;">
             <ul class="slides" style="height: 350px !important;">
                 <li>
-                    <img style="width: 1200px; height: 410px;" class=""
-                        src="http://127.0.0.1:8000/images/banner.png" />
+                    <a href="{{ route('offers') }}">
+                        <img style="width: 1200px; height: 410px;" class=""
+                            src="http://127.0.0.1:8000/images/banner.png" />
+                    </a>
                 </li>
                 @foreach ($ofertas as $oferta)
                     <li class="flex">
-                        <img src="{{asset('images/pattern.png')}}" style="width: 1200px; height: 410px;" class="absolute z-40">
-                        <div class="text-white absolute font-bold pt-12">
-                            <div class="relative text-2xl pr-10 py-2 z-50" style="width: fit-content; padding-left: 2rem; background-color: rgb(15, 6, 65);">
-                                <span class="ml-4">{{ $oferta->name }}</span>
+                        <a href="{{ route('products.show', $oferta)}}">
+                            <img src="{{ asset('images/pattern.png') }}" style="width: 1200px; height: 410px;"
+                                class="absolute z-40">
+                            <div class="text-white absolute font-bold pt-12">
+                                <div class="relative text-2xl pr-10 py-2 z-50"
+                                    style="width: fit-content; padding-left: 2rem; background-color: rgb(15, 6, 65);">
+                                    <span class="ml-4">{{ $oferta->name }}</span>
+                                </div>
+                                <div class="mt-4 relative text-2xl pr-8 py-2 z-50"
+                                    style="width: fit-content; padding-left: 2rem; background-color: rgb(156, 9, 9);">
+                                    <span class="ml-4">Precio comercial
+                                        ${{ $oferta->commercial_price }}</span>
+                                </div>
+                                <div class=" relative text-4xl pr-44 py-2 esquina z-50"
+                                    style="padding-left: 2rem; background-color: rgb(15, 6, 65);">
+                                    <span class="ml-4">A tan solo ${{ $oferta->price }}</span>
+                                </div>
+                                {{-- <p>Precio comercial: <del>{{ $oferta->commercial_price }}</del> </p> --}}
                             </div>
-                            <div class="mt-4 relative text-2xl pr-8 py-2 z-50" style="width: fit-content; padding-left: 2rem; background-color: rgb(156, 9, 9);">
-                                <span class="ml-4">Precio comercial ${{ $oferta->commercial_price }}</span>
+                            <div class="z-10 relative">
+                                <img style="height: 410px !important; width: auto !important;"
+                                    class="rounded object-contain ml-auto"
+                                    src="{{ asset($oferta->images->first()->url) }}" />
                             </div>
-                            <div class=" relative text-4xl pr-44 py-2 esquina z-50" style="padding-left: 2rem; background-color: rgb(15, 6, 65);">
-                                <span class="ml-4">A tan solo ${{ $oferta->price }}</span>
-                            </div>
-                            {{-- <p>Precio comercial: <del>{{ $oferta->commercial_price }}</del> </p> --}}
-                        </div>
-                        <div class="z-10 relative">
-                            <img style="height: 410px !important; width: auto !important;"
-                                class="rounded object-contain ml-auto"
-                                src="{{ asset($oferta->images->first()->url) }}" />
-                        </div>
+                        </a>
                     </li>
                 @endforeach
             </ul>
