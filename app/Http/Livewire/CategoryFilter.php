@@ -68,7 +68,15 @@ class CategoryFilter extends Component
             ->where('country_id', $country_id);
 
             $brands = Brand::orderBy('name', 'asc')->get();
-        }else{
+        }else if($this->category == 'offers'){
+            $productsQuery = Product::join('states', 'states.id', '=', 'state_id')
+            ->select('products.*', 'states.country_id')
+            ->where('status', 2)
+            ->where('country_id', $country_id)
+            ->where('isOffer', 1);
+
+            $brands = Brand::orderBy('name', 'asc')->get();
+        }else {
             $productsQuery = Product::join('states', 'states.id', '=', 'state_id')
             ->select('products.*', 'states.country_id')
             ->where('category_id', $this->category->id)

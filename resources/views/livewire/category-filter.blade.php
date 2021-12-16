@@ -1,7 +1,7 @@
 <div>
     <div class="bg-white rounded-lg shadow-lg mb-6">
         <div class="px-6 py-2 flex justify-between items-center">
-            <h1 class="font-semibold text-gray-700 uppercase">{{ $category == 'all' ? 'Todos los productos' : $category->name }}</h1>
+            <h1 class="font-semibold text-gray-700 uppercase">{!! $category == 'all' ? 'Todos los productos' : ($category == 'offers' ? '<i class="fas fa-fire-alt"></i> Ofertas' : $category->name) !!}</h1>
 
             <div class="hidden md:block grid grid-cols-2 border border-gray-200 divide-x divide-gray-200 text-gray-500">
                 <i class="fas fa-border-all p-3 cursor-pointer {{ $view == 'grid' ? 'text-orange-500' : '' }}"
@@ -68,9 +68,12 @@
                                         alt="">
                                 </figure>
 
-                                <div class="py-4 px-6">
+                                <div class="py-4 px-4">
                                     <h1 class="text-lg font-semibold">
                                         <a href="{{ route('products.show', $product) }}">
+                                            @if ($product->isOffer)
+                                                <i class="fas fa-fire-alt text-red-500"> </i>
+                                            @endif
                                             {{ Str::limit($product->name, 15) }}
                                         </a>
                                     </h1>

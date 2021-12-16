@@ -14,8 +14,11 @@
                                         alt="">
                                 </figure>
 
-                                <div class="py-4 px-6">
+                                <div class="py-4 px-4">
                                     <h1 class="text-lg font-semibold">
+                                        @if ($product->isOffer)
+                                            <i class="fas fa-fire-alt text-red-500"></i>
+                                        @endif
                                         {{ Str::limit($product->name, 15) }}
                                     </h1>
                                     <del class="text-red-800 font-bold text-sm">
