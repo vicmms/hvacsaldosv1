@@ -16,6 +16,7 @@ class OrderController extends Controller
         if (request('status')) {
             $orders->where('status', request('status'));
         }
+
         $role_name = Auth::user()->roles->first() ? Auth::user()->roles->first()->name : null;
         if($role_name){
             switch ($role_name) {
@@ -36,20 +37,14 @@ class OrderController extends Controller
 
         $orders = $orders->orderBy('created_at', 'desc')->get();
 
+        $solicitudes = Order::where('status', 2)->count();
+        $pagados = Order::where('status', 3)->count();
+        $entregados = Order::where('status', 4)->count();
+        $cancelados = Order::where('status', 5)->count();
+        $camino = Order::where('status', 6)->count();
+        $todos = $solicitudes + $pagados + $entregados + $camino + $cancelados;
 
-        $solicitudes = $orders->where('status', 2)->count();
-        $pagados = $orders->where('status', 3)->count();
-        $entregados = $orders->where('status', 4)->count();
-        $cancelados = $orders->where('status', 5)->count();
-        $todos = $solicitudes + $pagados + $entregados + $cancelados;
-
-        // $pendiente = Order::where('status', 1)->count();
-        // $recibido = Order::where('status', 2)->count();
-        // $enviado = Order::where('status', 3)->count();
-        // $entregado = Order::where('status', 4)->count();
-        // $anulado = Order::where('status', 5)->count();
-
-        return view('admin.orders.index', compact('solicitudes', 'pagados', 'entregados', 'cancelados', 'todos', 'orders'));
+        return view('admin.orders.index', compact('solicitudes', 'pagados', 'entregados', 'cancelados', 'camino', 'todos', 'orders'));
     }  
 
     public function show(Order $order){

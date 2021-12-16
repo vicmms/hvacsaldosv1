@@ -38,6 +38,7 @@ class EditProduct extends Component
         'product.city' => 'required',
         'product.commercial_price' => 'required',
         'product.quantity' => 'numeric',
+        'product.isOffer' => 'boolean',
         'product.shipping' => 'required',
         'product.state_id' => 'required',
         'product.unit' => 'required',

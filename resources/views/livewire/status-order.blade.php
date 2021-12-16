@@ -36,7 +36,22 @@
 
             <div class="relative">
                 <div
-                    class="{{ $order->status >= 4 && $order->status != 5 ? 'bg-blue-400' : 'bg-gray-400' }} rounded-full h-12 w-12 flex items-center justify-center">
+                    class="{{ $order->status == 6 || $order->status == 4 ? 'bg-blue-400' : 'bg-gray-400' }} rounded-full h-12 w-12 flex items-center justify-center">
+                    <i class="fas fa-truck text-white"></i>
+                </div>
+
+                <div class="absolute -left-1 mt-0.5">
+                    <p>Enviado</p>
+                </div>
+            </div>
+
+            <div
+                class="{{ $order->status == 4  ? 'bg-blue-400' : 'bg-gray-400' }} h-1 flex-1 mx-2">
+            </div>
+
+            <div class="relative">
+                <div
+                    class="{{ $order->status ==4 ? 'bg-blue-400' : 'bg-gray-400' }} rounded-full h-12 w-12 flex items-center justify-center">
                     <i class="fas fa-check text-white"></i>
                 </div>
 
@@ -79,6 +94,11 @@
                     <x-jet-label>
                         <input wire:model="status" type="radio" name="status" value="3" class="mr-2">
                         Pagado
+                    </x-jet-label>
+
+                    <x-jet-label>
+                        <input wire:model="status" type="radio" name="status" value="6" class="mr-2">
+                        En camino
                     </x-jet-label>
 
                     <x-jet-label>

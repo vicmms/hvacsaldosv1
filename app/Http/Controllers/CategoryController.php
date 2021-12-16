@@ -18,4 +18,10 @@ class CategoryController extends Controller
         $category = 'all';
         return view('categories.show', compact('category', 'country'));
     }
+
+    public function offers($country = "MX")
+    {
+        $category = 'offers';
+        return view('categories.show', compact('category', 'country'));
+    }
 }

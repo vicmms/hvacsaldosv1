@@ -4,6 +4,7 @@
 
 $issues = array();
 
+
 if ($issues) {
     if (!headers_sent()) {
         header('HTTP/1.1 500 Internal Server Error');

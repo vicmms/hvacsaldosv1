@@ -33,7 +33,7 @@
                 class="dropzone" id="my-awesome-dropzone"></form>
         </div>
 
-        @if ($product->images->count() || $product->videos->count())
+        @if ($product->images->count() )
 
             <section class="bg-white shadow-xl rounded-lg p-6 mb-4">
                 <h1 class="text-2xl text-center font-semibold mb-2">Imagenes del producto</h1>
@@ -52,7 +52,7 @@
                             </li>
                         @endforeach
                     @endif
-                    @if ($product->videos->count())
+                    {{-- @if ($product->videos->count())
                         <li class="relative mr-1" wire:key="image-{{ $product->videos->first()->id }}">
                             <img class="w-32 h-20 object-cover" src="{{ asset('images/video.png') }}" alt="">
                             <button class="absolute right-2 top-2 bg-red-500 text-white rounded-full px-2"
@@ -62,7 +62,7 @@
                                 x
                             </button>
                         </li>
-                    @endif
+                    @endif --}}
                 </ul>
                 <x-jet-danger-button wire:click="modalImages()" class="mt-6">
                     <i class="fas fa-search-plus mr-1"></i>Ver imagenes
@@ -98,10 +98,6 @@
         @if ($isRejected)
             @livewire('admin.rejection-record', ['rejections' => $product->rejections])
         @endif
-
-        {{-- <div class="bg-white shadow-xl rounded-lg p-6">
-
-        </div> --}}
 
         <div class="bg-white shadow-xl rounded-lg p-6">
             @switch($product->status)
@@ -244,7 +240,14 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-2 gap-6 mb-4">
+            <div class="grid grid-cols-3 gap-6 mb-4">
+                {{-- is offer --}}
+                <div class="self-center relative top-2">
+                    <x-jet-label class="mr-4 text-base bg-orange-500 rounded-xl font-semibold px-4 py-2">
+                        <x-jet-checkbox wire:model.defer="product.isOffer" name="types[]" value="1" />
+                        <span class="text-white mt-1 relative" style="top: 1px;">Marcar como oferta <i class="fas fa-fire-alt"></i></span>
+                    </x-jet-label>
+                </div>
                 {{-- cantidad --}}
                 <div class="">
                     <x-jet-label value="Cantidad*" />
