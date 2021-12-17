@@ -10,7 +10,7 @@ class ShippingController extends Controller
 {
     public function setShippingEvidence(Request $request)
     {
-        if($request->input('photos')){
+        if($request->input('photos')[0]){
             for ($i = 0; $i < count($request->input('photos')[0]); $i++) {
                 $file = $request->input('photos')[0][$i];
                 $data = $file['base64Data'];
