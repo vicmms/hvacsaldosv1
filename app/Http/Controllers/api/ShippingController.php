@@ -41,6 +41,7 @@ class ShippingController extends Controller
                                 'url' => $url
                             ]);
             }
+            return json_encode("Fotos subidas correctamente");
         } 
         // else {
 
