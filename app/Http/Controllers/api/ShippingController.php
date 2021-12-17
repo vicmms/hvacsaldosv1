@@ -10,7 +10,6 @@ class ShippingController extends Controller
 {
     public function setShippingEvidence(Request $request)
     {
-        dd($request);
         if ($request->input('photos')) {
             for ($i = 0; $i < count($request->input('photos')[0]); $i++) {
                 $file = $request->input('photos')[0][$i];
@@ -34,20 +33,28 @@ class ShippingController extends Controller
                 }
                 $url = './images/admin/shippings/' . date("YmdHis") . $i . '.' . $type;
                 file_put_contents($url, $data);
+                $shipping = Shipping::create([
+                        'user_id' => $request->input('user_id'),
+                        'order_id' => $request->input('order_id')
+                    ]);
+                    $shipping->images()->create([
+                                'url' => $url
+                            ]);
             }
-        } else {
+        } 
+        // else {
 
-            if ($request->input('video')) {
-                $file = $request->input('video');
-                $extension = $file->getClientOriginalExtension();
-                $request->validate([
-                    'file' => 'max:10024'
-                ]);
+        //     if ($request->input('video')) {
+        //         $file = $request->input('video');
+        //         $extension = $file->getClientOriginalExtension();
+        //         $request->validate([
+        //             'file' => 'max:10024'
+        //         ]);
 
-                $nombrearchivo  = rand(0, 9) . $request->input('user_id') . "_" . date("YmdHis") . "." . $extension;
-                $file->move(public_path("videos/admin/envios/"), $nombrearchivo);
-            }
-        }
+        //         $nombrearchivo  = rand(0, 9) . $request->input('user_id') . "_" . date("YmdHis") . "." . $extension;
+        //         $file->move(public_path("videos/admin/envios/"), $nombrearchivo);
+        //     }
+        // }
         // $shipping = Shipping::create([
         //     'user_id' => $request->input('user_id'),
         //     'order_id' => $request->input('order_id')
