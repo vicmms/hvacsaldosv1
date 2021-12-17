@@ -56,11 +56,11 @@ Route::post('/app/getSubcategories', [SubcategoryController::class, 'getSubcateg
 Route::post('/app/getBrands', [BrandController::class, 'getBrands']);
 
 // shippings
-Route::post('setShippingEvidence', [ShippingController::class, 'setShippingEvidence']);
+Route::post('app/setShippingEvidence', [ShippingController::class, 'setShippingEvidence']);
 
 // orders
-Route::post('getOrdersById', [OrdersController::class, 'getOrdersById']);
-Route::post('getOrderById', [OrdersController::class, 'getOrderById']);
+Route::post('app/getOrdersById', [OrdersController::class, 'getOrdersById']);
+Route::post('app/getOrderById', [OrdersController::class, 'getOrderById']);
 
 //App info
 Route::post('/app/getReleaseCurrent', [AppInfoController::class, 'getReleaseCurrent']);
