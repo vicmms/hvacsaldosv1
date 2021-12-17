@@ -60,6 +60,7 @@ Route::post('setShippingEvidence', [ShippingController::class, 'setShippingEvide
 
 // orders
 Route::post('getOrdersById', [OrdersController::class, 'getOrdersById']);
+Route::post('getOrderById', [OrdersController::class, 'getOrderById']);
 
 //App info
 Route::post('/app/getReleaseCurrent', [AppInfoController::class, 'getReleaseCurrent']);
