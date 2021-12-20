@@ -71,4 +71,12 @@ class ShippingController extends Controller
         //     ]);
         // }
     }
+
+    public function getShippingEvidence(Request $request){
+        $evidence = Shipping::with('images')
+                    ->where('order_id', $request->input('order_id'))
+                    ->get();
+
+        return $evidence;
+    }
 }
