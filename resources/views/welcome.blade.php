@@ -100,7 +100,7 @@
                                 </div>
                                 {{-- <p>Precio comercial: <del>{{ $oferta->commercial_price }}</del> </p> --}}
                             </div>
-                            <div class="z-10 relative ml-auto bg-center bg-no-repeat bg-cover blur-lg" style="width: 510px; height: 405px; background-image: url({{asset($oferta->images->first()->url)}})">
+                            <div class="z-10 relative ml-auto bg-center bg-no-repeat bg-cover blur-md" style="width: 510px; height: 405px; background-image: url({{asset($oferta->images->first()->url)}}); filter: blur(12px);">
                             </div>
                             <div class="z-10 relative ml-auto" style="width: 515px; height: 412px; top: -405px">
                                 <img style="height: 410px !important; width: auto !important;"
