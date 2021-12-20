@@ -9,7 +9,7 @@
     <div class="container py-8">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             <div wire:ignore>
-                <div class="flexslider">
+                <div class="flexslider" style="margin-bottom: 20px !important;">
                     <ul class="slides">
                         @if (!count($product->images))
                             <li data-thumb=" {{ asset('images/image-not-found.png') }}">
@@ -87,7 +87,7 @@
                     {{ $product->state->name }}
                 </p>
 
-                <div class="bg-white rounded-lg shadow-lg mb-6">
+                <div class="bg-white shadow-lg mb-6">
                     <p class="text-xl font-semibold text-gray-900 p-2">Envios Disponibles</p>
                     @foreach (explode(',', str_replace(['[', ']', '"'], '', $product->shipping)) as $shipping)
                     @switch($shipping)
@@ -132,22 +132,23 @@
                                 @break
                             @default
                                         
-                @endswitch
-                    @endforeach
-                </div>
+                    @endswitch
+                        @endforeach
+                    </div>
 
-                @livewire('add-cart-item', ['product'=> $product])
-
-                        <div class="mt-6 text-gray-700">
-                            <h2 class="font-bold text-lg">Descripción</h2>
-                            <p class="bg-white p-4 rounded-lg shadow-lg">{!! $product->description !!}</p>
-                        </div>
+                    <div class="mt-6">
+                        @livewire('add-cart-item', ['product'=> $product])
+                    </div>
                 </div>
             </div>
-
+            <div class="text-gray-700 mb-14 mt-6 bg-white p-4 shadow-lg">
+                <h2 class="font-bold text-3xl">Descripción</h2>
+                <p class="">{!! $product->description !!}</p>
+            </div>
+            
             @livewire('create-question',['product' => $product])
 
-            <div class="mt-6 text-gray-700 bg-white p-4 rounded-lg mb-4 shadow-lg">
+            <div class="mt-6 text-gray-700 bg-white p-4 mb-4 shadow-lg">
                 <h2 class="font-bold text-2xl mb-6">Preguntas Realizadas</h2>
                 @forelse ($questions as $question)
                     <div class="mb-4">
