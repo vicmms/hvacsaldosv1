@@ -28,17 +28,17 @@
 
         <h1 class="text-3xl text-center font-semibold mb-8">Complete esta información para crear un producto</h1>
 
-        <div class="mb-4 {{$disabled}}">
+        <div class="mb-4 {{ $disabled }}">
             <form wire:ignore action="{{ route('admin.products.files', $product) }}" method="POST"
                 class="dropzone" id="my-awesome-dropzone"></form>
         </div>
 
-        @if ($product->images->count() )
+        @if ($product->images->count())
 
             <section class="bg-white shadow-xl rounded-lg p-6 mb-4">
                 <h1 class="text-2xl text-center font-semibold mb-2">Imagenes del producto</h1>
 
-                <ul class="flex flex-wrap {{$disabled}}" id="images_list">
+                <ul class="flex flex-wrap {{ $disabled }}" id="images_list">
                     @if ($product->images->count())
                         @foreach ($product->images as $image)
 
@@ -100,35 +100,46 @@
         @endif
 
         <div class="bg-white shadow-xl rounded-lg p-6">
-            @switch($product->status)
-                @case(1)
-                    <span
-                        class="mb-4 py-1 px-6 inline-flex text-sm leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 border-2 border-yellow-300">
-                        En revisión
-                    </span>
-                @break
-                @case(2)
-                    <span
-                        class="mb-4 py-1 px-6 inline-flex text-sm leading-5 font-semibold rounded-full bg-green-100 text-green-800 border-2 border-green-300">
-                        Publicado
-                    </span>
-                @break
-                @case(3)
-                    <span
-                        class="mb-4 py-1 px-6 inline-flex text-sm leading-5 font-semibold rounded-full bg-red-100 text-red-800 border-2 border-red-300">
-                        Rechazado
-                    </span>
-                @break
-                @case(4)
-                    <span
-                        class="mb-4 py-1 px-6 inline-flex text-sm leading-5 font-semibold rounded-full bg-gray-200 text-gray-800 border-2 border-gray-300">
-                        Sin publicar
-                    </span>
-                @break
-                @default
-
-            @endswitch
-            <div class="grid grid-cols-2 gap-6 mb-4 {{$disabled}}">
+            <div class="flex justify-between">
+                @switch($product->status)
+                    @case(1)
+                        <span
+                            class="mb-4 py-1 px-6 inline-flex text-sm leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 border-2 border-yellow-300">
+                            En revisión
+                        </span>
+                    @break
+                    @case(2)
+                        <span
+                            class="mb-4 py-1 px-6 inline-flex text-sm leading-5 font-semibold rounded-full bg-green-100 text-green-800 border-2 border-green-300">
+                            Publicado
+                        </span>
+                    @break
+                    @case(3)
+                        <span
+                            class="mb-4 py-1 px-6 inline-flex text-sm leading-5 font-semibold rounded-full bg-red-100 text-red-800 border-2 border-red-300">
+                            Rechazado
+                        </span>
+                    @break
+                    @case(4)
+                        <span
+                            class="mb-4 py-1 px-6 inline-flex text-sm leading-5 font-semibold rounded-full bg-gray-200 text-gray-800 border-2 border-gray-300">
+                            Sin publicar
+                        </span>
+                    @break
+                    @default
+                @endswitch
+                @role('admin')
+                    {{-- is offer --}}
+                    <div>
+                        <x-jet-label class="mr-4 text-sm bg-orange-500 rounded-xl font-semibold px-4 py-2 cursor-pointer">
+                            <x-jet-checkbox wire:model.defer="product.isOffer" name="types[]" value="1" />
+                            <span class="text-white mt-1 relative" style="top: 1px;">Marcar como oferta <i
+                                    class="fas fa-fire-alt"></i></span>
+                        </x-jet-label>
+                    </div>
+                @endrole
+            </div>
+            <div class="grid grid-cols-2 gap-6 mb-4 {{ $disabled }}">
 
                 {{-- Categoría --}}
                 <div>
@@ -160,7 +171,7 @@
             </div>
 
             {{-- Nombre --}}
-            <div class="mb-4 {{$disabled}}">
+            <div class="mb-4 {{ $disabled }}">
                 <x-jet-label value="Nombre*" />
                 <x-jet-input wire:ignore type="text" class="w-full" wire:model.lazy="product.name"
                     placeholder="Ingrese el nombre del producto" />
@@ -176,7 +187,7 @@
                 <x-jet-input-error for="slug" />
             </div>
 
-            <div class="grid grid-cols-3 gap-6 mb-4 {{$disabled}}">
+            <div class="grid grid-cols-3 gap-6 mb-4 {{ $disabled }}">
 
                 {{-- Marca --}}
                 <div>
@@ -207,7 +218,7 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-3 gap-6 mb-4 {{$disabled}}">
+            <div class="grid grid-cols-3 gap-6 mb-4 {{ $disabled }}">
                 {{-- Precio --}}
                 <div>
                     <x-jet-label value="Precio en Saldo HVAC (iva incluido)*" />
@@ -240,14 +251,7 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-3 gap-6 mb-4">
-                {{-- is offer --}}
-                <div class="self-center relative top-2">
-                    <x-jet-label class="mr-4 text-base bg-orange-500 rounded-xl font-semibold px-4 py-2">
-                        <x-jet-checkbox wire:model.defer="product.isOffer" name="types[]" value="1" />
-                        <span class="text-white mt-1 relative" style="top: 1px;">Marcar como oferta <i class="fas fa-fire-alt"></i></span>
-                    </x-jet-label>
-                </div>
+            <div class="grid grid-cols-2 gap-6 mb-4">
                 {{-- cantidad --}}
                 <div class="">
                     <x-jet-label value="Cantidad*" />
@@ -255,7 +259,7 @@
                     <x-jet-input-error for="product.quantity" />
                 </div>
                 {{-- unidad --}}
-                <div class="{{$disabled}}">
+                <div class="{{ $disabled }}">
                     <x-jet-label value="Unidad*" />
                     <x-jet-input wire:model.lazy="product.unit" type="text" class="w-full"
                         placeholder="pza, paquete, caja, etc." />
@@ -263,7 +267,7 @@
                 </div>
             </div>
 
-            <div class="mb-4 {{$disabled}}">
+            <div class="mb-4 {{ $disabled }}">
 
                 {{-- Envio disponible --}}
 
@@ -286,13 +290,14 @@
                 <x-jet-input-error for="product.shipping" />
             </div>
 
-            <div class="grid grid-cols-2 gap-6 mb-4 {{$disabled}}">
+            <div class="grid grid-cols-2 gap-6 mb-4 {{ $disabled }}">
                 {{-- Pais / estado --}}
                 <div>
                     <x-jet-label value="Selecciona un estado ({{ $user->country->name }})*" />
                     <select class="form-control w-full" wire:model.lazy="product.state_id">
                         <option value="0" selected disabled>Seleccione un estado</option>
-                        @foreach ($user->country->states()->orderBy('name', 'asc')->get() as $state)
+                        @foreach ($user->country->states()->orderBy('name', 'asc')->get()
+    as $state)
                             <option value="{{ $state->id }}">{{ $state->name }}</option>
                         @endforeach
                     </select>
@@ -310,7 +315,7 @@
 
             <div class="grid grid-cols-4 gap-6 mb-4 ">
                 {{-- Descrición --}}
-                <div class="mb-4 col-span-3 {{$disabled}}">
+                <div class="mb-4 col-span-3 {{ $disabled }}">
                     <div wire:ignore>
                         <x-jet-label value="Descripción*" />
                         <textarea class="w-full form-control" rows="4" wire:model.lazy="product.description" x-data>
