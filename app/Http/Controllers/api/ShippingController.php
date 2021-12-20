@@ -73,6 +73,15 @@ class ShippingController extends Controller
         // }
     }
 
+    public function setTrackingNumber(Request $request){
+        Shipping::where('id', $request->input('shipping_id'))
+                ->update([
+                    'tracking_number' => $request->input('tracking_number')
+                ]);
+        
+        return "Guia actualizada";
+    }
+
     public function getShippingEvidence(Request $request){
         $evidence = Shipping::with('images')
                     ->where('order_id', $request->input('order_id'))

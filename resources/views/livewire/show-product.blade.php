@@ -143,7 +143,7 @@
             </div>
             <div class="text-gray-700 mb-14 mt-6 bg-white p-4 shadow-lg">
                 <h2 class="font-bold text-3xl">Descripción</h2>
-                <p class="">{!! $product->description !!}</p>
+                <p class="mt-2">{!! $product->description !!}</p>
             </div>
             
             @livewire('create-question',['product' => $product])
