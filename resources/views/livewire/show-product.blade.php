@@ -41,15 +41,16 @@
                 <p class="text-trueGray-700 font-semibold capitalize">No. Serie:
                     {{ $product->serie_number ? $product->serie_number : 'No especificado' }}</p>
 
-                <p class="text-2xl font-semibold capitalize text-trueGray-700 my-4">Precio de Venta:
-                    {{ $product->currency ? $product->currency->currency : '' }}
-                    {{ $product->currency ? $product->currency->symbol : '$' }}{{ number_format($product->price, 0, '.', ',') }}
-                </p>
                 <p class="text-xl font-semibold capitalize my-4">Precio Comercial:
                     <del class="text-red-800">
                         {{ $product->currency ? $product->currency->currency : '' }}
                         {{ $product->currency ? $product->currency->symbol : '$' }}{{ number_format($product->commercial_price, 0, '.', ',') }}
                     </del>
+                </p>
+
+                <p class="text-2xl font-semibold capitalize text-trueGray-700 my-4">Precio de Venta:
+                    {{ $product->currency ? $product->currency->currency : '' }}
+                    {{ $product->currency ? $product->currency->symbol : '$' }}{{ number_format($product->price, 0, '.', ',') }}
                 </p>
 
                 {{-- vendedor --}}
