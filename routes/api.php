@@ -59,6 +59,7 @@ Route::post('/app/getBrands', [BrandController::class, 'getBrands']);
 Route::post('app/setShippingEvidence', [ShippingController::class, 'setShippingEvidence']);
 Route::post('app/getShippingEvidence', [ShippingController::class, 'getShippingEvidence']);
 Route::post('app/setImages', [ShippingController::class, 'setImages']);
+Route::post('app/setTrackingNumber', [ShippingController::class, 'setTrackingNumber']);
 
 // orders
 Route::post('app/getOrdersById', [OrdersController::class, 'getOrdersById']);
