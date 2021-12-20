@@ -72,7 +72,7 @@
                         <a href="{{ route('products.show', $oferta)}}">
                             <img src="{{ asset('images/pattern.png') }}" style="width: 1200px; height: 410px;"
                                 class="absolute z-40">
-                            <div class="text-white absolute font-bold pt-12">
+                            <div class="text-white absolute font-bold pt-20">
                                 <div class="relative text-2xl pr-10 py-2 z-50"
                                     style="width: fit-content; padding-left: 2rem; background-color: rgb(15, 6, 65);">
                                     <span class="">
