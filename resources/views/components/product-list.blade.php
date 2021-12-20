@@ -10,7 +10,7 @@
 
         <div class="flex-1 py-4 px-6 flex flex-col">
             <div class="lg:flex justify-between">
-                <div>
+                <div class="flex-1">
                     <h1 class="text-lg font-semibold text-gray-700">{!! $product->isOffer ? '<i class="fas fa-fire-alt text-red-500"></i>' : '' !!} {{ $product->name }}</h1>
                     <del class="text-red-800 font-bold text-sm">
                         {{ $product->currency ? $product->currency->currency : '' }}
