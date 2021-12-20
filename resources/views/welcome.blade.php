@@ -75,22 +75,36 @@
                             <div class="text-white absolute font-bold pt-12">
                                 <div class="relative text-2xl pr-10 py-2 z-50"
                                     style="width: fit-content; padding-left: 2rem; background-color: rgb(15, 6, 65);">
-                                    <span class="ml-4">{{ $oferta->name }}</span>
+                                    <span class="">
+                                        @foreach (explode(" ", $oferta->name) as $key => $word)
+                                            {{ $word . " " }}
+                                            @if ($key == 5)
+                                                <br>
+                                            @endif
+                                        @endforeach
+                                    </span>
                                 </div>
                                 <div class="mt-4 relative text-2xl pr-8 py-2 z-50"
                                     style="width: fit-content; padding-left: 2rem; background-color: rgb(156, 9, 9);">
-                                    <span class="ml-4">Precio comercial
-                                        ${{ $oferta->commercial_price }}</span>
+                                    <span class="">Precio comercial 
+                                        {{ $oferta->currency ? $oferta->currency->currency : '' }}
+                                        {{ $oferta->currency ? $oferta->currency->symbol : '$' }}{{ number_format($oferta->commercial_price, 0, '.', ',') }}
+                                    </span>
                                 </div>
                                 <div class=" relative text-4xl pr-44 py-2 esquina z-50"
-                                    style="padding-left: 2rem; background-color: rgb(15, 6, 65);">
-                                    <span class="ml-4">A tan solo ${{ $oferta->price }}</span>
+                                    style="padding-left: 2rem; background-color: rgb(15, 6, 65); width: fit-content">
+                                    <span class="">A tan solo 
+                                        {{ $oferta->currency ? $oferta->currency->currency : '' }}
+                                        {{ $oferta->currency ? $oferta->currency->symbol : '$' }}{{ number_format($oferta->commercial_price, 0, '.', ',') }}
+                                    </span>
                                 </div>
                                 {{-- <p>Precio comercial: <del>{{ $oferta->commercial_price }}</del> </p> --}}
                             </div>
-                            <div class="z-10 relative">
+                            <div class="z-10 relative ml-auto bg-center bg-no-repeat bg-cover blur-lg" style="width: 510px; height: 405px; background-image: url({{asset($oferta->images->first()->url)}})">
+                            </div>
+                            <div class="z-10 relative ml-auto" style="width: 515px; height: 412px; top: -405px">
                                 <img style="height: 410px !important; width: auto !important;"
-                                    class="rounded object-contain ml-auto"
+                                    class="rounded object-contain mx-auto"
                                     src="{{ asset($oferta->images->first()->url) }}" />
                             </div>
                         </a>
