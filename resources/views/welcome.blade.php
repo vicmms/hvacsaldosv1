@@ -95,7 +95,7 @@
                                     style="padding-left: 2rem; background-color: rgb(15, 6, 65); width: fit-content">
                                     <span class="">A tan solo 
                                         {{ $oferta->currency ? $oferta->currency->currency : '' }}
-                                        {{ $oferta->currency ? $oferta->currency->symbol : '$' }}{{ number_format($oferta->commercial_price, 0, '.', ',') }}
+                                        {{ $oferta->currency ? $oferta->currency->symbol : '$' }}{{ number_format($oferta->price, 0, '.', ',') }}
                                     </span>
                                 </div>
                                 {{-- <p>Precio comercial: <del>{{ $oferta->commercial_price }}</del> </p> --}}
