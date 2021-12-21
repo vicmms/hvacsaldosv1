@@ -64,7 +64,7 @@
                 <li>
                     <a href="{{ route('offers') }}">
                         <img style="width: 1200px; height: 410px;" class=""
-                            src="{{ asset('images/banner.png') }}" />
+                            src="{{ asset('images/banner.jpg') }}" />
                     </a>
                 </li>
                 @foreach ($ofertas as $oferta)

@@ -45,7 +45,7 @@ class ShippingController extends Controller
                     'url' => $url
                 ]);
             }
-            return json_encode("Fotos subidas correctamente");
+            
         }
 
 
@@ -68,6 +68,8 @@ class ShippingController extends Controller
                 'url' => "videos/admin/envios/" . $nombrearchivo
             ]);
         }
+
+        return json_encode("Evidencias subidas correctamente");
 
     }
 
