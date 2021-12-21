@@ -11,10 +11,11 @@ class ShippingController extends Controller
     public function setShippingEvidence(Request $request)
     {
         if ($request->input('photos')) {
-            $shipping = Shipping::create([
-                'user_id' => $request->input('user_id'),
-                'order_id' => $request->input('order_id')
-            ]);
+            $shipping = Shipping::updateOrCreate(
+                ['order_id' => $request->input('order_id')],
+                ['user_id' => $request->input('user_id')]
+            );
+
             for ($i = 0; $i < count($request->input('photos')[0]); $i++) {
                 $file = $request->input('photos')[0][$i];
                 $data = $file['base64Data'];
