@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Shipping;
+use App\Models\Video;
 use Illuminate\Http\Request;
 
 class ShippingController extends Controller
@@ -39,43 +40,39 @@ class ShippingController extends Controller
                 }
                 $url = './images/admin/shippings/' . date("YmdHis") . $i . '.' . $type;
                 file_put_contents($url, $data);
-                
-                    $shipping->images()->create([
-                                'url' => $url
-                            ]);
+
+                $shipping->images()->create([
+                    'url' => $url
+                ]);
             }
             return json_encode("Fotos subidas correctamente");
-        } 
-        // else {
+        }
 
-        //     if ($request->input('video')) {
-        //         $file = $request->input('video');
-        //         $extension = $file->getClientOriginalExtension();
-        //         $request->validate([
-        //             'file' => 'max:10024'
-        //         ]);
 
-        //         $nombrearchivo  = rand(0, 9) . $request->input('user_id') . "_" . date("YmdHis") . "." . $extension;
-        //         $file->move(public_path("videos/admin/envios/"), $nombrearchivo);
-        //     }
-        // }
-        // $shipping = Shipping::create([
-        //     'user_id' => $request->input('user_id'),
-        //     'order_id' => $request->input('order_id')
-        // ]);
-        // if ($request->input('photos')) {
-        //     $shipping->images()->create([
-        //         'url' => $url
-        //     ]);
-        // }
-        // if($request->input('video')){
-        //     $shipping->videos()->create([
-        //         'url' => "videos/admin/envios/" . $nombrearchivo
-        //     ]);
-        // }
+        if ($request->input('video')) {
+            $file = $request->input('video');
+            $extension = $file->getClientOriginalExtension();
+            $request->validate([
+                'file' => 'max:10024'
+            ]);
+
+            $nombrearchivo  = rand(0, 9) . $request->input('user_id') . "_" . date("YmdHis") . "." . $extension;
+            $file->move(public_path("videos/admin/envios/"), $nombrearchivo);
+
+            $shipping = Shipping::updateOrCreate(
+                ['order_id' => $request->input('order_id')],
+                ['user_id' => $request->input('user_id')]
+            );
+
+            $shipping->videos()->create([
+                'url' => "videos/admin/envios/" . $nombrearchivo
+            ]);
+        }
+
     }
 
-    public function setTrackingNumber(Request $request){
+    public function setTrackingNumber(Request $request)
+    {
         $shipping = Shipping::where('id', $request->input('shipping_id'));
         $shipping->update([
             'tracking_number' => $request->input('tracking_number')
@@ -84,17 +81,36 @@ class ShippingController extends Controller
         Order::where('id', $shipping->first()->order_id)
             ->update([
                 'status' => 6
-        ]);
-                
-        
+            ]);
+
+
         return json_encode("Guia actualizada");
     }
 
-    public function getShippingEvidence(Request $request){
+    public function getShippingEvidence(Request $request)
+    {
+        $shipping = Shipping::updateOrCreate(
+            ['order_id' => $request->input('order_id')],
+            ['user_id' => $request->input('user_id')]
+        );
+
+        $shipping->videos()->create([
+            'url' => "videos/admin/envios/" . '$nombrearchivo'
+        ]);
+
         $evidence = Shipping::with('images')
-                    ->where('order_id', $request->input('order_id'))
-                    ->get();
+            ->with('videos')
+            ->where('order_id', $request->input('order_id'))
+            ->get();
 
         return $evidence;
+    }
+
+    public function deleteVideo(Request $request)
+    {
+        $video = Video::find($request->input('id'));
+        unlink($video->url);
+        $video->delete();
+        return json_encode("Video eliminado");
     }
 }
