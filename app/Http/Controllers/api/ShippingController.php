@@ -89,15 +89,6 @@ class ShippingController extends Controller
 
     public function getShippingEvidence(Request $request)
     {
-        $shipping = Shipping::updateOrCreate(
-            ['order_id' => $request->input('order_id')],
-            ['user_id' => $request->input('user_id')]
-        );
-
-        $shipping->videos()->create([
-            'url' => "videos/admin/envios/" . '$nombrearchivo'
-        ]);
-
         $evidence = Shipping::with('images')
             ->with('videos')
             ->where('order_id', $request->input('order_id'))
