@@ -50,14 +50,11 @@ class ShippingController extends Controller
 
 
         if ($request->input('video')) {
-            $file = $request->input('video');
-            $extension = $file->getClientOriginalExtension();
             $request->validate([
                 'file' => 'max:10024'
             ]);
-
-            $nombrearchivo  = rand(0, 9) . $request->input('user_id') . "_" . date("YmdHis") . "." . $extension;
-            $file->move(public_path("videos/admin/envios/"), $nombrearchivo);
+            $url = './videos/admin/envios/' . date("YmdHis") . $i . '.mp4';
+            file_put_contents($url,base64_decode($request->input('video'),true));
 
             $shipping = Shipping::updateOrCreate(
                 ['order_id' => $request->input('order_id')],
@@ -65,7 +62,7 @@ class ShippingController extends Controller
             );
 
             $shipping->videos()->create([
-                'url' => "videos/admin/envios/" . $nombrearchivo
+                'url' => "videos/admin/envios/" . $url
             ]);
         }
 
