@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use App\Models\Shipping;
 use Illuminate\Http\Request;
 
@@ -75,10 +76,16 @@ class ShippingController extends Controller
     }
 
     public function setTrackingNumber(Request $request){
-        Shipping::where('id', $request->input('shipping_id'))
-                ->update([
-                    'tracking_number' => $request->input('tracking_number')
-                ]);
+        $shipping = Shipping::where('id', $request->input('shipping_id'));
+        $shipping->update([
+            'tracking_number' => $request->input('tracking_number')
+        ]);
+
+        Order::where('id', $shipping->first()->order_id)
+            ->update([
+                'status' => 6
+        ]);
+                
         
         return json_encode("Guia actualizada");
     }
