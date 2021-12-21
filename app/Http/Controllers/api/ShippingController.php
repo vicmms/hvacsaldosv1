@@ -80,7 +80,7 @@ class ShippingController extends Controller
                     'tracking_number' => $request->input('tracking_number')
                 ]);
         
-        return "Guia actualizada";
+        return json_encode("Guia actualizada");
     }
 
     public function getShippingEvidence(Request $request){
