@@ -57,7 +57,7 @@ class ShippingController extends Controller
 
                 $data = $request->input('video');
                 // return preg_replace('/[^a-zA-Z0-9`_.,;@#%~\’\'\"+*\?\^\[\]\$\(\)\{\}\=!\<\>\|\-:\s\/\\sàâçéèêëîïôûùüÿñæœ]/ui', '', $string);
-                if (preg_match('/^data:video\/(\w+);base64,/', $data, $type)) {
+                if (preg_match('/^data:video\/(\w+);charset=utf-8;base64,/', $data, $type)) {
                     $data = substr($data, strpos($data, ',') + 1);
                     $type = strtolower($type[1]); // mp4
 
