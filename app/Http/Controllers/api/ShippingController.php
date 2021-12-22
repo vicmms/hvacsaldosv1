@@ -56,15 +56,15 @@ class ShippingController extends Controller
 
 
                 $data = $request->input('video');
-                // return preg_replace('/[^a-zA-Z0-9`_.,;@#%~\’\'\"+*\?\^\[\]\$\(\)\{\}\=!\<\>\|\-:\s\/\\sàâçéèêëîïôûùüÿñæœ]/ui', '', $string);
+                $data = preg_replace('/[^a-zA-Z0-9`_.,;@#%~\’\'\"+*\?\^\[\]\$\(\)\{\}\=!\<\>\|\-:\s\/\\sàâçéèêëîïôûùüÿñæœ]/ui', '', $data);
                 // if (preg_match('/^data:video\/(\w+);base64,/', $data, $type) || preg_match('/^data:video\/(\w+);charset=utf-8;base64,/', $data, $type)) {
-                    $data = substr($data, strpos($data, ',') + 1);
+                    $data = trim(explode(',', $data)[1]);
                     $type = 'mp4';//strtolower($type[1]); // mp4
-
+                    // return json_encode($data);
                     // if (!in_array($type, ['mp4'])) {
                     //     throw new \Exception('invalid video type');
                     // }
-                    $data = str_replace(' ', '+', $data);
+                    // $data = str_replace(' ', '+', $data);
                     $data = base64_decode($data);
 
                     if ($data === false) {
@@ -77,7 +77,7 @@ class ShippingController extends Controller
 
 
             $url = './videos/admin/envios/' . date("YmdHis") . $i . '.mp4';
-            file_put_contents($url,base64_decode($request->input('video'),true));
+            file_put_contents($url,$data);
 
             $shipping = Shipping::updateOrCreate(
                 ['order_id' => $request->input('order_id')],
