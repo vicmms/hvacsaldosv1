@@ -53,6 +53,29 @@ class ShippingController extends Controller
             $request->validate([
                 'file' => 'max:10024'
             ]);
+
+
+                $data = $request->input('video');
+                // return preg_replace('/[^a-zA-Z0-9`_.,;@#%~\’\'\"+*\?\^\[\]\$\(\)\{\}\=!\<\>\|\-:\s\/\\sàâçéèêëîïôûùüÿñæœ]/ui', '', $string);
+                if (preg_match('/^data:image\/(\w+);base64,/', $data, $type)) {
+                    $data = substr($data, strpos($data, ',') + 1);
+                    $type = strtolower($type[1]); // mp4
+
+                    if (!in_array($type, ['mp4'])) {
+                        throw new \Exception('invalid video type');
+                    }
+                    $data = str_replace(' ', '+', $data);
+                    $data = base64_decode($data);
+
+                    if ($data === false) {
+                        throw new \Exception('base64_decode failed');
+                    }
+                } else {
+                    throw new \Exception('did not match data URI with video data');
+                }
+
+
+
             $url = './videos/admin/envios/' . date("YmdHis") . $i . '.mp4';
             file_put_contents($url,base64_decode($request->input('video'),true));
 
