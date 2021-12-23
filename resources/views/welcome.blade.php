@@ -59,7 +59,7 @@
     </div>
     <div class="container py-8 blur" id="main-content">
 
-        <div class="flexslider" style="height: 420px !important;">
+        <div class="flexslider hidden lg:block" style="height: 420px !important;">
             <ul class="slides" style="height: 350px !important;">
                 <li>
                     <a href="{{ route('offers') }}">
