@@ -23,7 +23,7 @@ class NotificationController extends Controller
         );
 
         $fields = array(
-            'app_id' => "67b993d9-0c0b-4af5-ba28-41d92295f1d5",
+            'app_id' => env('ONESIGNAL_APP_KEY'),
             // 'included_segments' => array('All'),
             'data' => array(
                 "product_id" => $product->id,
@@ -44,7 +44,7 @@ class NotificationController extends Controller
         curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             'Content-Type: application/json; charset=utf-8',
-            'Authorization: Basic YmU3OGQ3NjQtYzAwMS00MTNjLWIxNjUtNjg0MThkYmE3MThl'
+            'Authorization: Basic ' . env('ONESIGNAL_KEY')
         ));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_HEADER, FALSE);
