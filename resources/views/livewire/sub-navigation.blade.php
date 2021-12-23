@@ -1,11 +1,11 @@
 <header class="bg-blue-1 top-16" style="z-index: 900" x-data="dropdown()">
 
     <div class="container text-white font-semibold flex justify-between">
-        <div class="px-6 py-1 flex">
-            <a href="/home/{{ session('country') }}" class="hover:text-orange-500">Inicio</a>
+        <div class="md:px-6 py-1 flex">
+            <a href="/home/{{ session('country') }}" class="hover:text-orange-500 hidden md:block">Inicio</a>
 
             <a :class="{'bg-opacity-100 text-orange-500' : open}" x-on:click="show()"
-                class="px-6 md:px-4 hover:text-orange-500 text-white cursor-pointer">
+                class="px-1 md:px-4 hover:text-orange-500 text-white cursor-pointer">
                 <span class="hidden md:block">Categorías <i class="fas fa-chevron-down text-xs"></i></span>
             </a>
 
@@ -33,11 +33,13 @@
 
             </x-jet-dropdown>
             <a href="https://www.saldohvac.com/faq-s" target="_blank" alt="Preguntas"
-                class="ml-6 hover:text-orange-500 ">
+                class="ml-6 hover:text-orange-500 hidden md:block">
                 <i class="fas fa-question-circle text-md text-gray-100"></i> Preguntas frecuentes
                 {{-- <span class="tooltiptext">Preguntas frecuentes</span> --}}
             </a>
-            @livewire('user-menu')
+            <div class="hidden md:block">
+                @livewire('user-menu')
+            </div>
         </div>
     </div>
 

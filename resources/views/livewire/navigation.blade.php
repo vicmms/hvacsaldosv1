@@ -53,7 +53,8 @@
         </div>
         <div class="hidden md:block md:ml-4 md:mt-2 md:pr-11">
             {{-- <span class="text-white text-xl">{{Auth::check() ? 'Hola, '. explode(' ', Auth::user()->name)[0] : 'Bienvenido'}}</span> --}}
-            <a href="{{route('offers')}}" class="text-white text-xl ml-2 font-semibold"><i class="fas fa-tags" style="transform: rotate(127deg)"></i> Ofertas</a>
+            <a href="{{ route('offers') }}" class="text-white text-xl ml-2 font-semibold"><i class="fas fa-tags"
+                    style="transform: rotate(127deg)"></i> Ofertas</a>
         </div>
     </div>
 
@@ -74,8 +75,7 @@
                         </div>
                     </li> --}}
                     <li class="navigation-link text-trueGray-500 hover:bg-orange-500 hover:text-white">
-                        <a href="{{ route('categories.show', 'all') }}"
-                            class="py-2 px-4 text-sm flex items-center">
+                        <a href="{{ route('categories.show', 'all') }}" class="py-2 px-4 text-sm flex items-center">
                             Todos los productos
                         </a>
                     </li>
@@ -99,13 +99,22 @@
         </div>
 
         {{-- menu mobil --}}
-        <div class="bg-white h-full overflow-y-auto md:hidden">
+        <div class="bg-white h-full overflow-y-auto md:hidden relative" style="z-index: 1000;">
 
-            <div class="container bg-gray-200 py-3 mb-2">
+            <div class="container bg-gray-200 py-3 mb-2 relative">
                 @livewire('search')
             </div>
+            <a href="{{ route('offers') }}"
+                class="text-base py-2 px-4 flex items-center text-trueGray-500 hover:bg-orange-500 hover:text-white">
 
-            <ul>
+                <span class="flex justify-center w-9">
+                    <i class="fas fa-tags" style="transform: rotate(127deg)"></i>
+                </span>
+
+                Ofertas
+            </a>
+            <h5 class="text-gray-400 px-6 my-2">CATEGORÍAS</h5>
+            <ul class="max-h-96 overflow-y-scroll">
                 @foreach ($categories as $category)
                     <li class="text-trueGray-500 hover:bg-orange-500 hover:text-white">
                         <a href="{{ route('categories.show', $category) }}"
@@ -116,7 +125,7 @@
                 @endforeach
             </ul>
 
-            <p class="text-trueGray-500 px-6 my-2">USUARIOS</p>
+            <p class="text-trueGray-400 px-6 my-2">USUARIOS</p>
 
             @livewire('cart-mobil')
 
@@ -131,9 +140,29 @@
                     Perfil
                 </a>
 
+                <a href="{{ route('orders.index') }}"
+                    class="py-2 px-4 text-sm flex items-center text-trueGray-500 hover:bg-orange-500 hover:text-white">
+
+                    <span class="flex justify-center w-9">
+                        <i class="fas fa-dolly"></i>
+                    </span>
+
+                    Mis ordenes
+                </a>
+
+                <a href="{{ route('admin.index') }}"
+                    class="py-2 px-4 text-sm flex items-center text-trueGray-500 hover:bg-orange-500 hover:text-white">
+
+                    <span class="flex justify-center w-9">
+                        <i class="fas fa-hand-holding-usd"></i>
+                    </span>
+
+                    Vender/Administrar
+                </a>
+
                 <a href=""
                     onclick="event.preventDefault();
-                                                                                                                                                                                                                                                                                                        document.getElementById('logout-form').submit() "
+                                                                                                                                                                                                                                                                                                            document.getElementById('logout-form').submit() "
                     class="py-2 px-4 text-sm flex items-center text-trueGray-500 hover:bg-orange-500 hover:text-white">
 
                     <span class="flex justify-center w-9">
