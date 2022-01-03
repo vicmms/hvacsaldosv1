@@ -23,7 +23,7 @@ class NotificationController extends Controller
         );
 
         $fields = array(
-            'app_id' => env('ONESIGNAL_APP_KEY'),
+            'app_id' => env('ONESIGNAL_APP_ID'),
             // 'included_segments' => array('All'),
             'data' => array(
                 "product_id" => $product->id,
@@ -44,7 +44,7 @@ class NotificationController extends Controller
         curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             'Content-Type: application/json; charset=utf-8',
-            'Authorization: Basic ' . env('ONESIGNAL_KEY')
+            'Authorization: Basic ' . env('ONESIGNAL_APP_KEY')
         ));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_HEADER, FALSE);
@@ -62,7 +62,7 @@ class NotificationController extends Controller
     {
         $response = $this->emitNotification($titulos, $contenido, $product, $users_ids, $comment);
         $return["allresponses"] = $response;
-        $return = json_encode($return);
+        dd(json_encode($return));
     }
 
     public function getAllNotificationsById(Request $request)
