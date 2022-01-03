@@ -117,7 +117,7 @@
                         Actualizado
                     </x-jet-action-message>
                     @if ($status != 5)
-                        <x-jet-button class="mr-4" wire:click="update">
+                        <x-jet-button class="mr-4" wire:click="update" wire:loading.attr="disabled"	 wire:target="status">
                             Actualizar
                         </x-jet-button>
                     @else

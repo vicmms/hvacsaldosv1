@@ -26,10 +26,11 @@ class OrderController extends Controller
         $pagados = Order::where('status', 3)->where('user_id', auth()->user()->id)->count();
         $entregados = Order::where('status', 4)->where('user_id', auth()->user()->id)->count();
         $cancelados = Order::where('status', 5)->where('user_id', auth()->user()->id)->count();
-        $todos = $solicitudes + $pagados + $entregados + $cancelados;
+        $camino = Order::where('status', 6)->count();
+        $todos = $solicitudes + $pagados + $entregados + $cancelados + $camino;
 
         // return view('dashboard');
-        return view('orders.index', compact('solicitudes', 'pagados', 'entregados', 'cancelados', 'todos', 'orders'));
+        return view('orders.index', compact('solicitudes', 'pagados', 'camino', 'entregados', 'cancelados', 'todos', 'orders'));
     }
 
     public function show(Order $order)

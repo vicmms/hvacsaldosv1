@@ -108,15 +108,15 @@
                 class="text-base py-2 px-4 flex items-center text-trueGray-500 hover:bg-orange-500 hover:text-white">
 
                 <span class="flex justify-center w-9">
-                    <i class="fas fa-tags" style="transform: rotate(127deg)"></i>
+                    <i class="fas fa-fire-alt text-red-500"></i>
                 </span>
 
-                Ofertas
+                Ir a ofertas
             </a>
             <h5 class="text-gray-400 px-6 my-2">CATEGORÍAS</h5>
             <ul class="max-h-96 overflow-y-scroll">
                 @foreach ($categories as $category)
-                    <li class="text-trueGray-500 hover:bg-orange-500 hover:text-white">
+                    <li class="text-trueGray-500 hover:bg-orange-500 hover:text-white ml-2">
                         <a href="{{ route('categories.show', $category) }}"
                             class="py-2 px-4 text-sm flex items-center">
                             {{ $category->name }}
@@ -125,7 +125,7 @@
                 @endforeach
             </ul>
 
-            <p class="text-trueGray-400 px-6 my-2">USUARIOS</p>
+            <p class="text-trueGray-400 px-6 my-2">CUENTA</p>
 
             @livewire('cart-mobil')
 

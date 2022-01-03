@@ -1,8 +1,8 @@
 <header class="bg-blue-1 top-16" style="z-index: 900" x-data="dropdown()">
 
     <div class="container text-white font-semibold flex justify-between">
-        <div class="md:px-6 py-1 flex">
-            <a href="/home/{{ session('country') }}" class="hover:text-orange-500 hidden md:block">Inicio</a>
+        <div class="px-2 md:px-6 py-1 flex">
+            <a href="/home/{{ session('country') }}" class="hover:text-orange-500">Inicio</a>
 
             <a :class="{'bg-opacity-100 text-orange-500' : open}" x-on:click="show()"
                 class="px-1 md:px-4 hover:text-orange-500 text-white cursor-pointer">

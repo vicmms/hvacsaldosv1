@@ -59,7 +59,8 @@
     </div>
     <div class="container py-8 blur" id="main-content">
 
-        <div class="flexslider hidden lg:block" style="height: 420px !important;">
+        {{-- oferta web --}}
+        <div class="flexslider hidden xl:block" style="height: 420px !important;">
             <ul class="slides" style="height: 350px !important;">
                 <li>
                     <a href="{{ route('offers') }}">
@@ -116,6 +117,11 @@
             </ul>
         </div>
 
+        {{-- oferta movil --}}
+        <div class="xl:hidden">
+            <img class="h-full mb-6"
+                            src="{{ asset('images/banner.jpg') }}" />
+        </div>
 
         @foreach ($categories as $category)
 
