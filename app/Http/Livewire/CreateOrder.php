@@ -84,6 +84,7 @@ class CreateOrder extends Component
 
             $order->user_id = auth()->user()->id;
             $order->contact = $this->user->name;
+            $order->contact_id = $this->user->id;
             $order->status = 2;
             $order->total = $item->price * $item->qty;
             $order->content = json_encode($item);
