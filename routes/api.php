@@ -62,7 +62,8 @@ Route::post('app/setImages', [ShippingController::class, 'setImages']);
 Route::post('app/setTrackingNumber', [ShippingController::class, 'setTrackingNumber']);
 
 // orders
-Route::post('app/getOrdersById', [OrdersController::class, 'getOrdersById']);
+Route::post('app/getSalesById', [OrdersController::class, 'getSalesById']);
+Route::post('app/getPurchasesById', [OrdersController::class, 'getPurchasesById']);
 Route::post('app/getOrderById', [OrdersController::class, 'getOrderById']);
 
 //App info
