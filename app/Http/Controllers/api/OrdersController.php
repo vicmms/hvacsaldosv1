@@ -13,7 +13,7 @@ class OrdersController extends Controller
     // }
 
     public function getSalesById(Request $request){
-        return Order::where('contact_id', $request->input('seller_id'))->get();
+        return Order::where('seller_id', $request->input('seller_id'))->get();
     }
 
     public function getPurchasesById(Request $request){
