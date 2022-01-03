@@ -81,10 +81,9 @@ class CreateOrder extends Component
         $this->user->company_info = $company_info;
         foreach (Cart::content() as $item) {
             $order = new Order();
-
             $order->user_id = auth()->user()->id;
             $order->contact = $this->user->name;
-            $order->contact_id = $this->user->id;
+            $order->seller_id = $item->options->user_id;
             $order->status = 2;
             $order->total = $item->price * $item->qty;
             $order->content = json_encode($item);
