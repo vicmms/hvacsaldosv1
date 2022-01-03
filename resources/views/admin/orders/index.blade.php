@@ -20,7 +20,7 @@
                 </p>
                 <p class="uppercase text-center">Solicitudes</p>
                 <p class="text-center text-2xl mt-2">
-                    <i class="fas fa-credit-card"></i>
+                    <i class="fas fa-plus-circle"></i>
                 </p>
             </a>
 
@@ -31,7 +31,7 @@
                 </p>
                 <p class="uppercase text-center">Pagados</p>
                 <p class="text-center text-2xl mt-2">
-                    <i class="fas fa-truck"></i>
+                    <i class="fas fa-credit-card"></i>
                 </p>
             </a>
 
@@ -42,7 +42,7 @@
                 </p>
                 <p class="uppercase text-center">En camino</p>
                 <p class="text-center text-2xl mt-2">
-                    <i class="fas fa-check-circle"></i>
+                    <i class="fas fa-truck"></i>
                 </p>
             </a>
 

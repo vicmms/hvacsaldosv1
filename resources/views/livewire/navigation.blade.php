@@ -54,7 +54,7 @@
         <div class="hidden md:block md:ml-4 md:mt-2 md:pr-11">
             {{-- <span class="text-white text-xl">{{Auth::check() ? 'Hola, '. explode(' ', Auth::user()->name)[0] : 'Bienvenido'}}</span> --}}
             <a href="{{ route('offers') }}" class="text-white text-xl ml-2 font-semibold"><i class="fas fa-tags"
-                    style="transform: rotate(127deg)"></i> Ver ofertas</a>
+                    style="transform: rotate(127deg)"></i> Ofertas</a>
         </div>
     </div>
 

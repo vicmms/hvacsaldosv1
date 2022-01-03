@@ -2,8 +2,8 @@
 
     <div class="container py-12">
 
-        <section class="grid grid-cols-5 gap-6 text-white">
-            <a href="{{ route('orders.index') }}" class="bg-blue-500 bg-opacity-75 rounded-lg px-12 pt-8 pb-4">
+        <section class="grid grid-cols-6 gap-6 text-white">
+            <a href="{{ route('orders.index') }}" class="bg-blue-500 bg-opacity-75 rounded-lg pt-8 pb-4">
                 <p class="text-center text-2xl">
                     {{ $todos }}
                 </p>
@@ -14,29 +14,40 @@
             </a>
 
             <a href="{{ route('orders.index') . '?status=2' }}"
-                class="bg-gray-500 bg-opacity-75 rounded-lg px-12 pt-8 pb-4">
+                class="bg-gray-500 bg-opacity-75 rounded-lg pt-8 pb-4">
                 <p class="text-center text-2xl">
                     {{ $solicitudes }}
                 </p>
                 <p class="uppercase text-center">Solicitudes</p>
                 <p class="text-center text-2xl mt-2">
-                    <i class="fas fa-credit-card"></i>
+                    <i class="fas fa-plus-circle"></i>
                 </p>
             </a>
 
             <a href="{{ route('orders.index') . '?status=3' }}"
-                class="bg-yellow-500 bg-opacity-75 rounded-lg px-12 pt-8 pb-4">
+                class="bg-yellow-500 bg-opacity-75 rounded-lg pt-8 pb-4">
                 <p class="text-center text-2xl">
                     {{ $pagados }}
                 </p>
                 <p class="uppercase text-center">Pagados</p>
+                <p class="text-center text-2xl mt-2">
+                    <i class="fas fa-credit-card"></i>
+                </p>
+            </a>
+
+            <a href="{{ route('orders.index') . '?status=6' }}"
+                class="bg-orange-500 bg-opacity-75 rounded-lg pt-8 pb-4">
+                <p class="text-center text-2xl">
+                    {{ $camino }}
+                </p>
+                <p class="uppercase text-center">En camino</p>
                 <p class="text-center text-2xl mt-2">
                     <i class="fas fa-truck"></i>
                 </p>
             </a>
 
             <a href="{{ route('orders.index') . '?status=4' }}"
-                class="bg-green-500 bg-opacity-75 rounded-lg px-12 pt-8 pb-4">
+                class="bg-green-500 bg-opacity-75 rounded-lg pt-8 pb-4">
                 <p class="text-center text-2xl">
                     {{ $entregados }}
                 </p>
@@ -47,7 +58,7 @@
             </a>
 
             <a href="{{ route('orders.index') . '?status=5' }}"
-                class=" bg-red-500 bg-opacity-75 rounded-lg px-12 pt-8 pb-4">
+                class=" bg-red-500 bg-opacity-75 rounded-lg pt-8 pb-4">
                 <p class="text-center text-2xl">
                     {{ $cancelados }}
                 </p>
