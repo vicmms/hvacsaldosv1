@@ -40,7 +40,8 @@ class ProductController extends Controller
     }
     public function getCurrencies(Request $request)
     {
-        return Currency::all();
+        $user = User::where('id', $request->input('user_id'));
+        return Currency::where('id', $user->country->currency_id)->orWhere('id', 2)->get();
     }
 
     public function getProductById(Request $request)

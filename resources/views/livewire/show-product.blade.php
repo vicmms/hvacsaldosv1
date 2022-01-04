@@ -84,7 +84,7 @@
                 </div>
 
                 <p class="text-xl font-semibold capitalize my-4">Ubicación:
-                    {{ $product->state->name }}
+                    {{ $product->city . ', ' . $product->state->name }}
                 </p>
 
                 <div class="bg-white shadow-lg mb-6">

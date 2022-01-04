@@ -19,6 +19,10 @@
             font-size: 14px;
             line-height: 18px;
         }
+        
+        .flex-viewport {
+            max-height: 440px !important;
+        }
 
         .flex-direction-nav {
             display: none !important;
