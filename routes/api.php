@@ -65,6 +65,7 @@ Route::post('app/setTrackingNumber', [ShippingController::class, 'setTrackingNum
 Route::post('app/getSalesById', [OrdersController::class, 'getSalesById']);
 Route::post('app/getPurchasesById', [OrdersController::class, 'getPurchasesById']);
 Route::post('app/getOrderById', [OrdersController::class, 'getOrderById']);
+Route::post('app/deleteVideo', [OrdersController::class, 'deleteVideo']);
 
 //App info
 Route::post('/app/getReleaseCurrent', [AppInfoController::class, 'getReleaseCurrent']);
