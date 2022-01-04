@@ -76,7 +76,7 @@ class ShippingController extends Controller
 
 
 
-            $url = date("YmdHis") . $i . '.mp4';
+            $url = "videos/admin/envios/" . date("YmdHis") . $i . '.mp4';
             file_put_contents($url,$data);
 
             $shipping = Shipping::updateOrCreate(
@@ -85,7 +85,7 @@ class ShippingController extends Controller
             );
 
             $shipping->videos()->create([
-                'url' => "videos/admin/envios/" . $url
+                'url' =>  $url
             ]);
         }
 
