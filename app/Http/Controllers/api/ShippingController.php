@@ -51,7 +51,7 @@ class ShippingController extends Controller
 
         if ($request->input('video')) {
             $request->validate([
-                'file' => 'max:10024'
+                'file' => 'max:15000'
             ]);
 
 
@@ -76,7 +76,7 @@ class ShippingController extends Controller
 
 
 
-            $url = './videos/admin/envios/' . date("YmdHis") . $i . '.mp4';
+            $url = date("YmdHis") . $i . '.mp4';
             file_put_contents($url,$data);
 
             $shipping = Shipping::updateOrCreate(

@@ -60,12 +60,12 @@ Route::post('app/setShippingEvidence', [ShippingController::class, 'setShippingE
 Route::post('app/getShippingEvidence', [ShippingController::class, 'getShippingEvidence']);
 Route::post('app/setImages', [ShippingController::class, 'setImages']);
 Route::post('app/setTrackingNumber', [ShippingController::class, 'setTrackingNumber']);
+Route::post('app/deleteVideo', [ShippingController::class, 'deleteVideo']);
 
 // orders
 Route::post('app/getSalesById', [OrdersController::class, 'getSalesById']);
 Route::post('app/getPurchasesById', [OrdersController::class, 'getPurchasesById']);
 Route::post('app/getOrderById', [OrdersController::class, 'getOrderById']);
-Route::post('app/deleteVideo', [OrdersController::class, 'deleteVideo']);
 
 //App info
 Route::post('/app/getReleaseCurrent', [AppInfoController::class, 'getReleaseCurrent']);

@@ -25,11 +25,4 @@ class OrdersController extends Controller
         return Order::where('id', $request->input('order_id'))->get();
     }
 
-    public function deleteVideo(Request $request)
-    {
-        $video = Video::find($request->input('id'));
-        unlink($video->url);
-        $video->delete();
-        return json_encode("Video eliminado");
-    }
 }
