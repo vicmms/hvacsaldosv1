@@ -37,12 +37,53 @@ class StatusOrder extends Component
     public function update()
     {
         $this->order->status = $this->status;
+        $product = Product::where('id', json_decode($this->order->content)->id)->first();
+        // producto pagado
         if ($this->order->status == 3) {
             $notification = 'Se ha registrado el pago de tu compra. <a class="block underline text-blue-900" href="/products' . json_decode($this->order->content)->options->slug . '">Ver producto</a>';
             $this->createNotification($notification, $this->order->user_id, json_decode($this->order->content)->id, false, 1);
+            $notification = 'Se ha realizado el pago por tu producto, realiza el envío y termina tu venta. <a class="block underline text-blue-900" href="/products' . json_decode($this->order->content)->options->slug . '">Ver producto</a>';
+            $this->createNotification($notification, $this->order->seller_id, json_decode($this->order->content)->id, false, 1);
 
             event(new \App\Events\NavNotification());
+
+            // notificaciones moviles
+            $titulos['es'] = 'Orden pagada!';
+            $contenido['es'] = 'Tu orden ha sido pagada, realiza el envío y termina tu venta.';
+            $users_ids = [strval($this->order->seller_id)];
+            app(NotificationController::class)->triggerNotification($titulos,$contenido, $product, $users_ids, null);
         }
+        // producto enviado
+        if ($this->order->status == 6) {
+            $notification = 'Tu pedido va en camino. <a class="block underline text-blue-900" href="/orders' . json_decode($this->order->content)->id . '">Ver producto</a>';
+            $this->createNotification($notification, $this->order->user_id, json_decode($this->order->content)->id, false, 1);
+            $notification = 'Envío registrado correctamente, nos estaremos comunicando contigo cuando sea entregado para realizar tu pago. <a class="block underline text-blue-900" href="/adin-orders-' . json_decode($this->order->content)->id . '">Ver producto</a>';
+            $this->createNotification($notification, $this->order->seller_id, json_decode($this->order->content)->id, false, 1);
+
+            event(new \App\Events\NavNotification());
+
+            // notificaciones moviles
+            $titulos['es'] = 'Pedido en camino!';
+            $contenido['es'] = 'Tu pedido se encuentra en camino.';
+            $users_ids = [strval($this->order->user_id)];
+            app(NotificationController::class)->triggerNotification($titulos,$contenido, $product, $users_ids, null);
+        }
+        // producto entregado
+        if ($this->order->status == 4) {
+            $notification = 'Orden entregada!. <a class="block underline text-blue-900" href="/orders/' . json_decode($this->order->content)->id . '">Ver orden</a>';
+            $this->createNotification($notification, $this->order->user_id, json_decode($this->order->content)->id, false, 1);
+            $notification = 'Se ha entregado tu pedido satisfactoriamente!. <a class="block underline text-blue-900" href="/admin/orders/' . json_decode($this->order->content)->id . '">Ver orden</a>';
+            $this->createNotification($notification, $this->order->seller_id, json_decode($this->order->content)->id, false, 1);
+
+            event(new \App\Events\NavNotification());
+
+            // notificaciones moviles
+            $titulos['es'] = 'Orden entregada!';
+            $contenido['es'] = 'Tu orden ha sido entregada correctamente.';
+            $users_ids = [strval($this->order->seller_id)];
+            app(NotificationController::class)->triggerNotification($titulos,$contenido, $product, $users_ids, null);
+        }
+        
 
         $this->order->save();
         $this->emit('updated');
