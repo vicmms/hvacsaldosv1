@@ -10,28 +10,28 @@ use Illuminate\Support\Facades\Http;
 
 class OrderController extends Controller
 {
-    public function index()
-    {
-
-        $orders = Order::query()->where('user_id', auth()->user()->id);
-
-        if (request('status')) {
-            $orders->where('status', request('status'));
-        }
-
-        $orders = $orders->orderBy('created_at', 'desc')->get();
-
-
-        $solicitudes = Order::where('status', 2)->where('user_id', auth()->user()->id)->count();
-        $pagados = Order::where('status', 3)->where('user_id', auth()->user()->id)->count();
-        $entregados = Order::where('status', 4)->where('user_id', auth()->user()->id)->count();
-        $cancelados = Order::where('status', 5)->where('user_id', auth()->user()->id)->count();
-        $camino = Order::where('status', 6)->count();
-        $todos = $solicitudes + $pagados + $entregados + $cancelados + $camino;
-
-        // return view('dashboard');
-        return view('orders.index', compact('solicitudes', 'pagados', 'camino', 'entregados', 'cancelados', 'todos', 'orders'));
-    }
+    // public function index($type, $status = false)
+    // {
+    //     $id = $type == "ventas" ? "seller_id" : "user_id";
+    //     $orders = Order::query()->where($id, auth()->user()->id);
+        
+    //     if ($status) {
+    //         $orders->where('status', request('status'));
+    //     }
+        
+    //     $orders = $orders->orderBy('created_at', 'desc')->get();
+        
+        
+    //     $solicitudes = Order::where('status', 2)->where($id, auth()->user()->id)->count();
+    //     $pagados = Order::where('status', 3)->where($id, auth()->user()->id)->count();
+    //     $entregados = Order::where('status', 4)->where($id, auth()->user()->id)->count();
+    //     $cancelados = Order::where('status', 5)->where($id, auth()->user()->id)->count();
+    //     $camino = Order::where('status', 6)->where($id, auth()->user()->id)->count();
+    //     $todos = $solicitudes + $pagados + $entregados + $cancelados + $camino;
+        
+    //     // return view('dashboard');
+    //     return view('orders.index', compact('solicitudes', 'pagados', 'camino', 'entregados', 'cancelados', 'todos', 'orders'));
+    // }
 
     public function show(Order $order)
     {

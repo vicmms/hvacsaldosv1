@@ -15,6 +15,7 @@ use App\Http\Livewire\CreateOrder;
 use App\Http\Livewire\PaymentOrder;
 
 use App\Http\Controllers\WebhooksController;
+use App\Http\Livewire\Orders;
 use App\Http\Livewire\ShowProduct;
 use App\Mail\VentaMailable;
 use App\Models\Order;
@@ -45,7 +46,7 @@ Route::get('seller-review/{id}', [SellerRateController::class, 'show'])->name('s
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
-    Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('orders', Orders::class)->name('orders.index');
 
     Route::get('orders/create', CreateOrder::class)->name('orders.create');
 
