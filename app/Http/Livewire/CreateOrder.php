@@ -10,6 +10,7 @@ use App\Models\Department;
 use App\Models\District;
 use App\Models\Notification;
 use App\Models\Order;
+use App\Models\Product;
 use App\Models\User;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Auth;
@@ -76,6 +77,8 @@ class CreateOrder extends Component
 
     public function create_order()
     {
+        $product = Product::where('id', json_decode($this->order->content)->id)->first();
+
         $this->user = Auth::user();
         $company_info = DB::table('companies')->where('user_id', $this->user->id)->first();
         $this->user->company_info = $company_info;
@@ -117,6 +120,11 @@ class CreateOrder extends Component
 
         $notification = 'Han solicitado la compra de tu producto, te estaremos contactando para poder concretar la venta. <a class="block underline text-blue-900" href="/admin/products/' . json_decode($order->content)->options->slug . '/edit">Ver en SaldoHVAC</a>';
         $this->createNotification($notification, json_decode($order->content)->options->user_id, json_decode($order->content)->id, false, null);
+        // notificaciones moviles
+        $titulos['es'] = 'Orden generada';
+        $contenido['es'] = 'Han solicitado la compra de tu producto, te estaremos contactando para poder concretar la venta.';
+        $users_ids = [strval(json_decode($order->content)->options->user_id)];
+        app(NotificationController::class)->triggerNotification($titulos,$contenido, $product, $users_ids, null);
 
         Cart::destroy();
 
