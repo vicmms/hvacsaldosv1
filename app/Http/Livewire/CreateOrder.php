@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
+use App\Http\Controllers\api\NotificationController;
+
 class CreateOrder extends Component
 {
 
@@ -77,8 +79,6 @@ class CreateOrder extends Component
 
     public function create_order()
     {
-        $product = Product::where('id', json_decode($this->order->content)->id)->first();
-
         $this->user = Auth::user();
         $company_info = DB::table('companies')->where('user_id', $this->user->id)->first();
         $this->user->company_info = $company_info;
@@ -120,6 +120,7 @@ class CreateOrder extends Component
 
         $notification = 'Han solicitado la compra de tu producto, te estaremos contactando para poder concretar la venta. <a class="block underline text-blue-900" href="/admin/products/' . json_decode($order->content)->options->slug . '/edit">Ver en SaldoHVAC</a>';
         $this->createNotification($notification, json_decode($order->content)->options->user_id, json_decode($order->content)->id, false, null);
+        $product = Product::where('id', json_decode($order->content)->id)->first();
         // notificaciones moviles
         $titulos['es'] = 'Orden generada';
         $contenido['es'] = 'Han solicitado la compra de tu producto, te estaremos contactando para poder concretar la venta.';
