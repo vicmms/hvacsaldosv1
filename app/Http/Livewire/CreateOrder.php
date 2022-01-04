@@ -95,6 +95,12 @@ class CreateOrder extends Component
 
 
             discount($item);
+            $product = Product::where('id', json_decode($order->content)->id)->first();
+            // notificaciones moviles
+            $titulos['es'] = 'Orden generada';
+            $contenido['es'] = 'Han solicitado la compra de tu producto, te estaremos contactando para poder concretar la venta.';
+            $users_ids = [strval($order->seller_id)];
+            app(NotificationController::class)->triggerNotification($titulos,$contenido, $product, $users_ids, null);
         }
         $mail = new VentaMailable(Cart::content(), $this->user);
         $emails = array("administracion@saldohvac.com", "victor.morales@nanodela.com");
@@ -120,12 +126,6 @@ class CreateOrder extends Component
 
         $notification = 'Han solicitado la compra de tu producto, te estaremos contactando para poder concretar la venta. <a class="block underline text-blue-900" href="/admin/products/' . json_decode($order->content)->options->slug . '/edit">Ver en SaldoHVAC</a>';
         $this->createNotification($notification, json_decode($order->content)->options->user_id, json_decode($order->content)->id, false, null);
-        $product = Product::where('id', json_decode($order->content)->id)->first();
-        // notificaciones moviles
-        $titulos['es'] = 'Orden generada';
-        $contenido['es'] = 'Han solicitado la compra de tu producto, te estaremos contactando para poder concretar la venta.';
-        $users_ids = [strval(json_decode($order->content)->options->user_id)];
-        app(NotificationController::class)->triggerNotification($titulos,$contenido, $product, $users_ids, null);
 
         Cart::destroy();
 
