@@ -19,7 +19,7 @@
 
         <aside>
 
-            <h2 class="font-semibold text-center mb-2">Subcategorías {{$pags}}</h2>
+            <h2 class="font-semibold text-center mb-2">Subcategorías</h2>
             {{-- computadora --}}
             <ul class="divide-y divide-gray-200 hidden sm:block">
                 <li class="py-2 text-sm">
