@@ -120,7 +120,7 @@ class EditProduct extends Component
                         $notification = 'El producto "' . $this->product->name . '" se ha mandado a revisión, te avisaremos por este medio y correo electrónico cuando sea validado.';
                         $user_id = Auth::user()->id;
                         $product_id = $this->product->id;
-                        $this->createNotification($notification, $user_id, $product_id, false);
+                        $this->createNotification($notification, $user_id, $product_id, false, 3);
 
                         $notification = 'Se ha solicitado la revisión de un nuevo producto. <a class="block underline text-blue-900" href="/admin?status=1">Ver solicitudes</a>';
                         $users = User::whereHas(
@@ -132,7 +132,7 @@ class EditProduct extends Component
                             ->where('country_id', Auth::user()->country_id)
                             ->get();
                         foreach ($users as $user) {
-                            $this->createNotification($notification, $user->id, $product_id, true);
+                            $this->createNotification($notification, $user->id, $product_id, true, 6);
                         }
                         $this->product->status = 1;
                     } else {
@@ -171,13 +171,14 @@ class EditProduct extends Component
         $this->isNew = true;
     }
 
-    public function createNotification($notification, $user_id, $product_id, $isAdmin)
+    public function createNotification($notification, $user_id, $product_id, $isAdmin, $type)
     {
         Notification::create([
             'notification' => $notification,
             'user_id' => $user_id,
             'admin' => $isAdmin,
-            'product_id' => $product_id
+            'product_id' => $product_id,
+            'type', $type
         ]);
     }
 

@@ -39,7 +39,7 @@ class StatusProduct extends Component
                 $notification = 'Tu producto ha sido aprobado y ya está disponible en la página de saldo HVAC. <a class="block underline text-blue-900" href="/products/'.$this->product->slug.'">Ver producto</a>';
                 $user_id = $this->product->user_id;
                 $product_id = $this->product->id;
-                $this->createNotification($notification, $user_id, $product_id, false);
+                $this->createNotification($notification, $user_id, $product_id, false, 1);
                 // notificaciones moviles
                 $titulos['es'] = 'Producto aprobado!';
                 $contenido['es'] = 'Tu producto ha sido aprobado y ya está disponible en la página de saldo HVAC.';
@@ -78,7 +78,7 @@ class StatusProduct extends Component
             $notification = 'Tu producto no ha podido ser aprobado para su publicación, por favor revisa las observaciones realizadas. <a class="block underline text-blue-900" href="/admin/products/'.$this->product->slug.'/edit">Revisar observaciones</a>';
             $user_id = $this->product->user_id;
             $product_id = $this->product->id;
-            $this->createNotification($notification, $user_id, $product_id, false);
+            $this->createNotification($notification, $user_id, $product_id, false, 2);
 
             event(new \App\Events\NavNotification());
 
@@ -93,13 +93,14 @@ class StatusProduct extends Component
         }
     }
 
-    public function createNotification($notification, $user_id, $product_id, $isAdmin)
+    public function createNotification($notification, $user_id, $product_id, $isAdmin, $type)
     {
         Notification::create([
             'notification' => $notification,
             'user_id' => $user_id,
             'admin' => $isAdmin,
-            'product_id' => $product_id
+            'product_id' => $product_id,
+            'type', $type
         ]);
     }
 
