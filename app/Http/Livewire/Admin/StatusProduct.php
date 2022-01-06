@@ -100,7 +100,7 @@ class StatusProduct extends Component
             'user_id' => $user_id,
             'admin' => $isAdmin,
             'product_id' => $product_id,
-            'type', $type
+            'type' => $type
         ]);
     }
 
