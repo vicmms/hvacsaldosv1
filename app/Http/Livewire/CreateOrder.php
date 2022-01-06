@@ -118,14 +118,14 @@ class CreateOrder extends Component
             ->where('country_id', Auth::user()->country_id)
             ->get();
         foreach ($users as $user) {
-            $this->createNotification($notification, $user->id, 0, true, 2);
+            $this->createNotification($notification, $user->id, 0, true, 2, 5);
         }
 
         $notification = 'Tu compra ha sido solicitada correctamente, estaremos comunicandonos contigo lo antes posible para que puedas concluir con la compra. <a class="block underline text-blue-900" href="/orders">Ver mis pedidos</a>';
-        $this->createNotification($notification, Auth::user()->id, 0, false, 1);
+        $this->createNotification($notification, Auth::user()->id, 0, false, 1,4);
 
         $notification = 'Han solicitado la compra de tu producto, te estaremos contactando para poder concretar la venta. <a class="block underline text-blue-900" href="/admin/products/' . json_decode($order->content)->options->slug . '/edit">Ver en SaldoHVAC</a>';
-        $this->createNotification($notification, json_decode($order->content)->options->user_id, json_decode($order->content)->id, false, null);
+        $this->createNotification($notification, json_decode($order->content)->options->user_id, json_decode($order->content)->id, false, null,7);
 
         Cart::destroy();
 
@@ -134,14 +134,15 @@ class CreateOrder extends Component
         return redirect()->route('order.success');
     }
 
-    public function createNotification($notification, $user_id, $product_id, $isAdmin, $icon = null)
+    public function createNotification($notification, $user_id, $product_id, $isAdmin, $icon = null, $type)
     {
         Notification::create([
             'notification' => $notification,
             'user_id' => $user_id,
             'admin' => $isAdmin,
             'product_id' => $product_id,
-            'icon' => $icon
+            'icon' => $icon,
+            'type', $type
         ]);
     }
 

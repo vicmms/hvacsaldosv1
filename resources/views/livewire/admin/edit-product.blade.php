@@ -270,7 +270,6 @@
             <div class="mb-4 {{ $disabled }}">
 
                 {{-- Envio disponible --}}
-                {{json_encode($product->shipping)}}
                 <x-jet-label value="Envio disponible*" />
                 <div class="flex my-2">
                     <x-jet-label class="mr-4 text-base">
