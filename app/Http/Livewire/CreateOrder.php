@@ -142,7 +142,7 @@ class CreateOrder extends Component
             'admin' => $isAdmin,
             'product_id' => $product_id,
             'icon' => $icon,
-            'type', $type
+            'type' => $type
         ]);
     }
 
