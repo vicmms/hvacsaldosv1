@@ -68,7 +68,7 @@ class ProductController extends Controller
         $product->description = $request->input('description');
         $product->model = $request->input('model');
         $product->serie_number = $request->input('serie_number');
-        $product->shipping = $request->input('shipping');
+        $product->shipping = json_encode($request->input('shipping'));
         $product->shipping_cost = $request->input('shipping_cost');
         $product->price = $request->input('price');
         $product->unit = $request->input('unit');
@@ -161,7 +161,7 @@ class ProductController extends Controller
                 'description' => $request->input('description'),
                 'model' => $request->input('model'),
                 'serie_number' => $request->input('serie_number'),
-                'shipping' => $request->input('shipping'),
+                'shipping' => json_encode($request->input('shipping')),
                 'shipping_cost' => $request->input('shipping_cost'),
                 'price' => $request->input('price'),
                 'commercial_price' => $request->input('commercial_price'),

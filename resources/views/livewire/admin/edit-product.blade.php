@@ -270,19 +270,19 @@
             <div class="mb-4 {{ $disabled }}">
 
                 {{-- Envio disponible --}}
-
+                {{json_encode($product->shipping)}}
                 <x-jet-label value="Envio disponible*" />
                 <div class="flex my-2">
                     <x-jet-label class="mr-4 text-base">
-                        <x-jet-checkbox wire:model.defer="product.shipping" name="types[]" value="1" />Envío a cargo del
+                        <x-jet-checkbox wire:key="1" wire:model.defer="product.shipping" name="" value="1" />Envío a cargo del
                         comprador
                     </x-jet-label>
                     <x-jet-label class="mr-4 text-base">
-                        <x-jet-checkbox wire:model.defer="product.shipping" name="types[]" value="2" />Recolección en
+                        <x-jet-checkbox wire:key="2" wire:model.defer="product.shipping" name="" value="2" />Recolección en
                         oficinas del vendedor
                     </x-jet-label>
                     <x-jet-label class=" text-base">
-                        <x-jet-checkbox wire:model.defer="product.shipping" name="types[]" value="3" />Entrega sin costo
+                        <x-jet-checkbox wire:key="3" wire:model.defer="product.shipping" name="" value="3" />Entrega sin costo
                         dentro de la ciudad
                     </x-jet-label>
                 </div>
