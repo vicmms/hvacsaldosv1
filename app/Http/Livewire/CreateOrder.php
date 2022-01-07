@@ -134,7 +134,7 @@ class CreateOrder extends Component
         return redirect()->route('order.success');
     }
 
-    public function createNotification($notification, $user_id, $product_id, $isAdmin, $icon = null, $type)
+    public function createNotification($notification, $user_id, $product_id, $isAdmin, $icon, $type)
     {
         Notification::create([
             'notification' => $notification,
