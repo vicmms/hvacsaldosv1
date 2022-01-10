@@ -11,11 +11,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use App\Http\Controllers\api\NotificationController;
+use App\Mail\Contact;
+use App\Models\OrderNotes;
+use Illuminate\Support\Facades\Mail;
 
 class StatusOrder extends Component
 {
 
-    public $order, $status, $buyer, $isOpen, $message, $comments;
+    public $order, $status, $buyer, $seller, $isOpen,  $isOpenInfo, $isOpenEmail, $message, $comments, $receiver, $email_message;
     protected $listeners = ['changeModal'];
     protected $rules = [
         'message' => 'required',
@@ -24,12 +27,22 @@ class StatusOrder extends Component
     public function mount()
     {
         $this->isOpen = 0;
+        $this->isOpenInfo = 0;
+        $this->isOpenEmail = 0;
         $this->status = $this->order->status;
+        
         $this->buyer = User::where('users.id', $this->order->user_id)->first();
         $company_info = DB::table('companies')
             ->where('user_id', $this->order->user_id)
             ->first();
         $this->buyer->company_info = $company_info;
+
+        $this->seller = User::where('id', $this->order->seller_id)->first();
+        $company_info = DB::table('companies')
+            ->where('user_id', $this->order->seller_id)
+            ->first();
+        $this->seller->company_info = $company_info;
+
         if($this->status == 5){
             $this->comments = Cancellation::where('order_id', $this->order->id)->first()->comments;
         }
@@ -147,15 +160,52 @@ class StatusOrder extends Component
 
     public function render()
     {
-
+        $envios = '';
         $items = json_decode($this->order->content);
-        $envio = json_decode($this->order->envio);
+        // $envio = json_decode($this->order->envio);
+        $product = Product::where('id', json_decode($this->order->content)->id)->first();
+        $shipping_types = explode(',', str_replace(['[',']','"'], '', $product->shipping));
+        foreach ($shipping_types as $type) {
+            switch ($type) {
+                case '1':
+                    $envios = $envios . 'A cargo del comprador; ';
+                    break;
+                case '2':
+                    $envios = $envios . 'Recoleccion en oficinas del vendedor; ';
+                    break;
+                case '3':
+                    $envios = $envios . 'Sin costo dentro de la ciudad; ';
+                    break;
+               
+            }
+        }
+        $envios = substr($envios, 0, 1);
+        $notes = OrderNotes::where('order_id', $this->order->id);
 
-        return view('livewire.status-order', compact('items', 'envio'));
+        return view('livewire.status-order', compact('items', 'envios', 'product', 'notes'));
+    }
+
+    public function sendEmail(){
+        $mail = new Contact($this->email_message);
+        $emails = array($this->receiver->email);
+        Mail::to($emails)->send($mail);
+        $this->changeModalEmail();
     }
 
     public function changeModal()
     {
         $this->isOpen = !$this->isOpen;
+    }
+
+    public function changeModalInfo()
+    {
+        $this->isOpenInfo = !$this->isOpenInfo;
+    }
+
+    public function changeModalEmail($type = null)
+    {
+        if($type)
+            $this->receiver = $type == 1 ? $this->buyer : $this->seller;
+        $this->isOpenEmail = !$this->isOpenEmail;
     }
 }

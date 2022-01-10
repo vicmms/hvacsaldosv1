@@ -9,7 +9,7 @@ module.exports = {
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
     ],
-
+    mode: 'jit',  
     theme: {
         extend: {
             fontFamily: {
