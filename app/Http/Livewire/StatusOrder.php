@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use App\Http\Controllers\api\NotificationController;
 use App\Mail\Contact;
+use App\Models\OrderNotes;
 use Illuminate\Support\Facades\Mail;
 
 class StatusOrder extends Component
@@ -179,8 +180,9 @@ class StatusOrder extends Component
             }
         }
         $envios = substr($envios, 0, 1);
+        $notes = OrderNotes::where('order_id', $this->order->id);
 
-        return view('livewire.status-order', compact('items', 'envios', 'product'));
+        return view('livewire.status-order', compact('items', 'envios', 'product', 'notes'));
     }
 
     public function sendEmail(){

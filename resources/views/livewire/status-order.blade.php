@@ -255,6 +255,17 @@
         </table>
     </div>
 
+    <div class="bg-white rounded-lg shadow-lg p-6 text-gray-700 mb-6" wire:ignore>
+        <p class="flex-1 text-xl font-semibold mb-4">Notas</p>
+        <div class="flex">
+            <textarea name="" id="" rows="2" class="form-control flex-1"></textarea>
+            <button class="ml-4 text-gray-800 rounded-md px-2 py-1"><i class="fas fa-plus-circle text-red-400"></i> Agregar</button>
+        </div>
+        @foreach ($notes as $note)
+            <p>{{$note}}</p>
+        @endforeach
+    </div>
+
     <x-jet-dialog-modal wire:model="isOpenInfo">
         <x-slot name="title">
             <span class="font-bold">Información del producto</span>
