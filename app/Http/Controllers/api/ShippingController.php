@@ -51,7 +51,7 @@ class ShippingController extends Controller
 
         if ($request->input('video')) {
             $request->validate([
-                'file' => 'max:15000'
+                'file' => 'max:30000'
             ]);
 
 
