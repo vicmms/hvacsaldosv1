@@ -273,15 +273,18 @@
                 <x-jet-label value="Envio disponible*" />
                 <div class="flex my-2">
                     <x-jet-label class="mr-4 text-base">
-                        <x-jet-checkbox wire:key="1" wire:model.defer="product.shipping" name="" value="1" />Envío a cargo del
+                        <x-jet-checkbox wire:key="1" wire:model.defer="product.shipping" name="" value="1" />Envío a
+                        cargo del
                         comprador
                     </x-jet-label>
                     <x-jet-label class="mr-4 text-base">
-                        <x-jet-checkbox wire:key="2" wire:model.defer="product.shipping" name="" value="2" />Recolección en
+                        <x-jet-checkbox wire:key="2" wire:model.defer="product.shipping" name="" value="2" />Recolección
+                        en
                         oficinas del vendedor
                     </x-jet-label>
                     <x-jet-label class=" text-base">
-                        <x-jet-checkbox wire:key="3" wire:model.defer="product.shipping" name="" value="3" />Entrega sin costo
+                        <x-jet-checkbox wire:key="3" wire:model.defer="product.shipping" name="" value="3" />Entrega sin
+                        costo
                         dentro de la ciudad
                     </x-jet-label>
                 </div>
@@ -336,12 +339,20 @@
                     HVAC, puede cambiar el stock disponible del producto si lo desea, o bien para cambiar la información
                     del producto es necesario retirarlo primero de la plataforma.</p>
             @endif
+
             <div class="flex justify-end items-center mt-4">
 
                 <x-jet-action-message class="mr-3" on="saved">
                     Actualizado
                 </x-jet-action-message>
+                @role('admin|user')
+                    <div class="flex-1">
+                        <button class="font-semibold px-4 py-1 bg-gray-100 rounded-full" wire:click="$toggle('modalVendedor')">
+                            <i class="fas fa-info-circle"></i> Info vendedor
+                        </button>
+                    </div>
 
+                @endrole
                 @if ($isRejected)
                     <x-jet-danger-button class="mr-4" wire:loading.attr="disabled" wire:target="save(true)"
                         wire:click="save(true)">
@@ -367,24 +378,28 @@
                     Actualizar
                 </x-jet-button>
             </div>
+
         </div>
+        <x-jet-dialog-modal wire:model.lazy="modalVendedor">
 
+            <x-slot name="title">
+                <span class="font-bold text-2xl">Información del vendedor</span>
+            </x-slot>
 
-        @if ($this->subcategory)
+            <x-slot name="content">
+                <p>Nombre: {{ $seller->name }}</p>
+                <p>Correo: {{ $seller->email }}</p>
+                <p>Empresa: {{ $seller->company_info ? $seller->company_info->name : 'Sin datos' }}</p>
+                <p>Datos fiscales: {{ $seller->company_info ? $seller->company_info->tax_data : 'Sin datos' }}</p>
+            </x-slot>
 
-            @if ($this->subcategory->size)
+            <x-slot name="footer">
+                <x-jet-danger-button wire:click="$toggle('modalVendedor')">
+                    cerrar
+                </x-jet-danger-button>
+            </x-slot>
 
-                @livewire('admin.size-product', ['product' => $product], key('size-product-' . $product->id))
-
-            @elseif($this->subcategory->color)
-
-                @livewire('admin.color-product', ['product' => $product], key('color-product-' . $product->id))
-
-            @endif
-
-        @endif
-
-
+        </x-jet-dialog-modal>
     </div>
 
     @push('script')

@@ -33,6 +33,7 @@ class Search extends Component
                 ->select('products.*', 'states.country_id')
                 ->where('products.name', 'LIKE', '%' . $this->search . '%')
                 ->where('status', 2)
+                ->where('quantity', '>', 0)
                 ->where('country_id', session('country_id'))
                 ->take(8)
                 ->get();

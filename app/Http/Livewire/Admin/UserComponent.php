@@ -13,7 +13,7 @@ class UserComponent extends Component
     use WithPagination;
 
     public $search;
-
+    protected $listeners = ['deleteUser'];
 
     public function updatingSearch()
     {
@@ -38,6 +38,10 @@ class UserComponent extends Component
                 $user->removeRole('user');
                 break;
         }
+    }
+
+    public function deleteUser(User $user){
+        $user->delete();
     }
 
     public function render()
