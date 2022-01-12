@@ -100,7 +100,7 @@ class CreateOrder extends Component
             $titulos['es'] = 'Orden generada';
             $contenido['es'] = 'Han solicitado la compra de tu producto, te estaremos contactando para poder concretar la venta.';
             $users_ids = [strval($order->seller_id)];
-            app(NotificationController::class)->triggerNotification($titulos,$contenido, $product, $users_ids, null);
+            app(NotificationController::class)->triggerNotification($titulos,$contenido, $product, $users_ids, null, $order->id, 7);
         }
         $mail = new VentaMailable(Cart::content(), $this->user);
         $emails = array("administracion@saldohvac.com", "victor.morales@nanodela.com");

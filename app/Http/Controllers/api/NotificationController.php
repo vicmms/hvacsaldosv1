@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
-    public function emitNotification($titulos, $contenido, Product $product, $users_ids, $comment)
+    public function emitNotification($titulos, $contenido, Product $product, $users_ids, $comment, $order_id, $type)
     {
         $headings = array(
             "en" => $titulos['es'],
@@ -28,7 +28,9 @@ class NotificationController extends Controller
             'data' => array(
                 "product_id" => $product->id,
                 "status" => $product->status,
-                "comments" => $comment
+                "comments" => $comment,
+                "order_id" => $order_id,
+                "type" => $type
             ),
             // 'small_icon' =>"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/WhatsApp_icon.png/239px-WhatsApp_icon.png",
             'contents' => $content,
@@ -58,9 +60,9 @@ class NotificationController extends Controller
         return $response;
     }
 
-    public function triggerNotification($titulos, $contenido, Product $product, $users_ids, $comment)
+    public function triggerNotification($titulos, $contenido, Product $product, $users_ids, $comment, $order_id, $type)
     {
-        $response = $this->emitNotification($titulos, $contenido, $product, $users_ids, $comment);
+        $response = $this->emitNotification($titulos, $contenido, $product, $users_ids, $comment, $order_id, $type);
         $return["allresponses"] = $response;
         // dd(json_encode($return));
     }
