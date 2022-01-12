@@ -102,7 +102,7 @@ class CategoryFilter extends Component
             });
         }
 
-        $products = $productsQuery->paginate(20);
+        $products = $productsQuery->where('quantity', '>', 0)->paginate(20);
         $subcategories = Subcategory::all();
         
 

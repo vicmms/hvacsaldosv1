@@ -23,7 +23,7 @@ use Illuminate\Support\Str;
 class EditProduct extends Component
 {
 
-    public $product, $categories, $brand_id = "", $subcategories, $brands, $slug, $currencies, $city, $isRejected, $isNew, $modalImages, $serie_number;
+    public $product, $categories, $brand_id = "", $subcategories, $brands, $slug, $currencies, $city, $isRejected, $isNew, $modalImages, $serie_number, $modalVendedor;
 
     public $category_id, $state_id, $firstTime, $currency_id;
 
@@ -237,7 +237,11 @@ class EditProduct extends Component
     {
         $user = Auth::user();
         $disabled = $this->product->status == 2 && Auth::user()->getRoleNames()->first() != "admin" ? 'disabled' : '';
-
-        return view('livewire.admin.edit-product', compact('user', 'disabled'))->layout('layouts.admin');
+        $seller = User::where('id', $this->product->user_id)->first();
+        $company_info = DB::table('companies')
+            ->where('user_id', $seller->id)
+            ->first();
+        $seller->company_info = $company_info;
+        return view('livewire.admin.edit-product', compact('user', 'disabled', 'seller'))->layout('layouts.admin');
     }
 }

@@ -1395,6 +1395,9 @@ select {
 .max-h-96 {
 	max-height: 24rem;
 }
+.max-h-52 {
+	max-height: 13rem;
+}
 .max-h-12 {
 	max-height: 3rem;
 }
@@ -2348,13 +2351,13 @@ select {
 	--tw-text-opacity: 1;
 	color: rgba(30, 58, 138, var(--tw-text-opacity));
 }
-.text-blue-600 {
-	--tw-text-opacity: 1;
-	color: rgba(37, 99, 235, var(--tw-text-opacity));
-}
 .text-red-400 {
 	--tw-text-opacity: 1;
 	color: rgba(248, 113, 113, var(--tw-text-opacity));
+}
+.text-blue-600 {
+	--tw-text-opacity: 1;
+	color: rgba(37, 99, 235, var(--tw-text-opacity));
 }
 .text-yellow-400 {
 	--tw-text-opacity: 1;

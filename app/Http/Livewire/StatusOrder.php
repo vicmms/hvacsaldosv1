@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Mail;
 class StatusOrder extends Component
 {
 
-    public $order, $status, $buyer, $seller, $isOpen,  $isOpenInfo, $isOpenEmail, $message, $comments, $receiver, $email_message;
+    public $order, $notes, $status, $buyer, $seller, $isOpen,  $isOpenInfo, $isOpenEmail, $message, $comments, $receiver, $email_message, $note;
     protected $listeners = ['changeModal'];
     protected $rules = [
         'message' => 'required',
@@ -46,6 +46,7 @@ class StatusOrder extends Component
         if($this->status == 5){
             $this->comments = Cancellation::where('order_id', $this->order->id)->first()->comments;
         }
+        $this->getOrderNotes();
     }
 
     public function update()
@@ -84,9 +85,9 @@ class StatusOrder extends Component
         }
         // producto entregado
         if ($this->order->status == 4) {
-            $notification = 'Orden entregada!. <a class="block underline text-blue-900" href="/orders/' . json_decode($this->order->content)->id . '">Ver orden</a>';
+            $notification = 'Orden entregada!. <a class="block underline text-blue-900" href="/orders/' . $this->order->id . '">Ver orden</a>';
             $this->createNotification($notification, $this->order->user_id, json_decode($this->order->content)->id, false, 1, 10);
-            $notification = 'Se ha entregado tu pedido satisfactoriamente!. <a class="block underline text-blue-900" href="/admin/orders/' . json_decode($this->order->content)->id . '">Ver orden</a>';
+            $notification = 'Se ha entregado tu pedido satisfactoriamente!. <a class="block underline text-blue-900" href="/admin/orders/' . $this->order->id . '">Ver orden</a>';
             $this->createNotification($notification, $this->order->seller_id, json_decode($this->order->content)->id, false, 1, 10);
 
             event(new \App\Events\NavNotification());
@@ -149,6 +150,16 @@ class StatusOrder extends Component
         $this->comments = $this->message;
     }
 
+    public function addNote(){
+        OrderNotes::create([
+            'note' => $this->note,
+            'user_id' => Auth::user()->id,
+            'order_id' => $this->order->id
+        ]);
+        $this->note = '';
+        $this->getOrderNotes();
+    }
+
     public function returnStock(Order $order){
         $product_id = json_decode($order->content)->id;
         $qty = json_decode($order->content)->qty;
@@ -180,9 +191,12 @@ class StatusOrder extends Component
             }
         }
         $envios = substr($envios, 0, 1);
-        $notes = OrderNotes::where('order_id', $this->order->id);
 
-        return view('livewire.status-order', compact('items', 'envios', 'product', 'notes'));
+        return view('livewire.status-order', compact('items', 'envios', 'product'));
+    }
+
+    public function getOrderNotes(){
+        $this->notes = OrderNotes::where('order_id', $this->order->id)->get();
     }
 
     public function sendEmail(){

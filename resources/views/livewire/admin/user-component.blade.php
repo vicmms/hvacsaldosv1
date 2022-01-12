@@ -36,8 +36,13 @@
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Rol
                             </th>
-                            <th scope="col" class="relative px-6 py-3">
-                                <span class="sr-only">Editar</span>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Cambiar Rol
+                            </th>
+                            <th scope="col"
+                                class="text-center px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Eliminar
                             </th>
                         </tr>
                     </thead>
@@ -75,7 +80,7 @@
 
                                     </div>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                     <label>
                                         <input {{ $user->getRolenames()->first() == 'admin' ? 'checked' : '' }}
                                             value="2" type="radio" name="{{ $user->email }}"
@@ -95,6 +100,9 @@
                                             wire:change="assignRole({{ $user->id }}, $event.target.value)">
                                         No
                                     </label>
+                                </td>
+                                <td class="text-center">
+                                    <i wire:click="$emit('delete', {{ $user }})" class="fas fa-trash text-red-400 hover:text-red-600 cursor-pointer"></i>
                                 </td>
                             </tr>
 
@@ -120,4 +128,32 @@
             @endif
         </x-table-responsive>
     </div>
+
+    @push('script')
+    <script>
+        Livewire.on('delete', (user) => {
+            Swal.fire({
+                title: '¿Eliminar al usuario "' + user['name'] + '" ?',
+                text: "Se perderá toda la información relacionada con este usuario!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Eliminar!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emitTo('admin.user-component', 'deleteUser', user);
+
+                    Swal.fire({
+                        title: 'Usuario eliminado exitosamente',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        timer: 1000,
+                    })
+                }
+            })
+
+        });
+    </script>
+    @endpush
 </div>

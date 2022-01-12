@@ -47,6 +47,7 @@ class CategoryProducts extends Component
             ->join('states', 'states.id', '=', 'state_id')
             ->select('products.*', 'states.country_id')
             ->where('status', 2)
+            ->where('quantity', '>', 0)
             ->where('country_id', $country_id)
             ->take(15)->get();
         // }
