@@ -132,7 +132,8 @@ class ProductController extends Controller
                     'notification' => '(App) Se ha solicitado la revisión de un nuevo producto. <a class="block underline text-blue-900" href="/admin?status=1">Ver solicitudes</a>',
                     'user_id' => $user->id,
                     'admin' => true,
-                    'product_id' => $product->id
+                    'product_id' => $product->id,
+                    'type' => 6
                 ]);
                 app(NotificationController::class)->triggerNotification($titulos, $contenido, $product, $id, null);
             }
@@ -142,7 +143,8 @@ class ProductController extends Controller
                 'notification' => $contenido['es'],
                 'user_id' => $request->input('user_id'),
                 'admin' => false,
-                'product_id' => $product->id
+                'product_id' => $product->id,
+                'type' => 3
             ]);
             app(NotificationController::class)->triggerNotification($titulos, $contenido, $product, $id, null);
 
