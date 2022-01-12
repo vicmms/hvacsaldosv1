@@ -30,7 +30,7 @@ class NotificationController extends Controller
                 "status" => $product->status,
                 "comments" => $comment,
                 "order_id" => $order_id,
-                "type" => $type
+                "type" => $type,
             ),
             // 'small_icon' =>"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/WhatsApp_icon.png/239px-WhatsApp_icon.png",
             'contents' => $content,
