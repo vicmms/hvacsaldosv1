@@ -66,7 +66,7 @@ class StatusOrder extends Component
             $titulos['es'] = 'Orden pagada!';
             $contenido['es'] = 'Tu orden ha sido pagada, realiza el envío y termina tu venta.';
             $users_ids = [strval($this->order->seller_id)];
-            app(NotificationController::class)->triggerNotification($titulos,$contenido, $product, $users_ids, null);
+            app(NotificationController::class)->triggerNotification($titulos,$contenido, $product, $users_ids, null, $this->order->id, 8);
         }
         // producto enviado
         if ($this->order->status == 6) {
@@ -81,7 +81,7 @@ class StatusOrder extends Component
             $titulos['es'] = 'Pedido en camino!';
             $contenido['es'] = 'Tu pedido se encuentra en camino.';
             $users_ids = [strval($this->order->user_id)];
-            app(NotificationController::class)->triggerNotification($titulos,$contenido, $product, $users_ids, null);
+            app(NotificationController::class)->triggerNotification($titulos,$contenido, $product, $users_ids, null, $this->order->id, 9);
         }
         // producto entregado
         if ($this->order->status == 4) {
@@ -96,7 +96,7 @@ class StatusOrder extends Component
             $titulos['es'] = 'Orden entregada!';
             $contenido['es'] = 'Tu orden ha sido entregada correctamente.';
             $users_ids = [strval($this->order->seller_id)];
-            app(NotificationController::class)->triggerNotification($titulos,$contenido, $product, $users_ids, null);
+            app(NotificationController::class)->triggerNotification($titulos,$contenido, $product, $users_ids, null, $this->order->id, 10);
         }
         
 
