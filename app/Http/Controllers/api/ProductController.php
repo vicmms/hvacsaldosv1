@@ -135,7 +135,7 @@ class ProductController extends Controller
                     'product_id' => $product->id,
                     'type' => 6
                 ]);
-                app(NotificationController::class)->triggerNotification($titulos, $contenido, $product, $id, null, null, 6);
+                app(NotificationController::class)->triggerNotification($titulos, $contenido, $product, $id, null);
             }
             $contenido['es'] = 'Se ha solicitado la revisión de tu producto "' . $product->name . '" correctamente.';
             $id = [strval($request->input('user_id'))];
@@ -146,7 +146,7 @@ class ProductController extends Controller
                 'product_id' => $product->id,
                 'type' => 3
             ]);
-            app(NotificationController::class)->triggerNotification($titulos, $contenido, $product, $id, null, null, 6);
+            app(NotificationController::class)->triggerNotification($titulos, $contenido, $product, $id, null);
 
             event(new \App\Events\NavNotification());
         }
