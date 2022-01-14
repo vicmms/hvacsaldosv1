@@ -65,6 +65,24 @@
             <x-jet-input id="email" type="email" class="mt-1 block w-full" wire:model.defer="state.email" />
             <x-jet-input-error for="email" class="mt-2" />
         </div>
+
+        <!-- phone number -->
+        <div class="col-span-6 sm:col-span-4">
+            <x-jet-label for="phone" value="{{ __('Número de Teléfono') }}" />
+            <x-jet-input id="phone" type="text" class="mt-1 block w-full" wire:model.defer="state.phone_number" placeholder="p.e. (+52) 552-123-0000" />
+            <x-jet-input-error for="phone" class="mt-2" />
+        </div>
+
+        <!-- state -->
+        <div class="col-span-6 sm:col-span-4">
+            <x-jet-label for="phone" value="Estado ({{ $country->name }})" />
+            <select name="" id="" class="form-control w-full"  wire:model.lazy="state.state_id">
+                <option value="0">-Selecciona-</option>
+                @foreach ($country->states as $state)
+                   <option value="{{$state->id}}">{{$state->name}}</option>
+                @endforeach
+            </select>
+        </div>
     </x-slot>
 
     <x-slot name="actions">

@@ -30,6 +30,7 @@ class UpdateProfileInformationForm extends Component
      *
      * @return void
      */
+
     public function mount()
     {
         $this->state = Auth::user()->withoutRelations()->toArray();
@@ -44,7 +45,11 @@ class UpdateProfileInformationForm extends Component
     public function updateProfileInformation(UpdatesUserProfileInformation $updater)
     {
         $this->resetErrorBag();
-
+        $user = Auth::user();
+        $user->fill([
+            'phone_number' => $this->state['phone_number'],
+            'state_id' => $this->state['state_id']
+        ]);
         $updater->update(
             Auth::user(),
             $this->photo
@@ -90,6 +95,7 @@ class UpdateProfileInformationForm extends Component
      */
     public function render()
     {
-        return view('profile.update-profile-information-form');
+        $country = Auth::user()->country;
+        return view('profile.update-profile-information-form', compact('country'));
     }
 }
