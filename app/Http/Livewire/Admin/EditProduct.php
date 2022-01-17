@@ -25,7 +25,7 @@ class EditProduct extends Component
 
     public $product, $categories, $brand_id = "", $subcategories, $brands, $slug, $currencies, $city, $isRejected, $isNew, $modalImages, $serie_number, $modalVendedor;
 
-    public $category_id, $state_id, $firstTime, $currency_id;
+    public $category_id, $state_id, $firstTime, $currency_id, $offerPhoto;
 
     protected $rules = [
         'product.category_id' => 'required',
@@ -46,7 +46,7 @@ class EditProduct extends Component
         'product.quantity' => 'required',
     ];
 
-    protected $listeners = ['refreshProduct', 'delete'];
+    protected $listeners = ['refreshProduct', 'delete', 'updateOfferPhoto'];
 
     public function mount(Product $product)
     {
@@ -80,6 +80,8 @@ class EditProduct extends Component
         $this->firstTime = true;
 
         $this->serie_number = $product->serie_number;
+
+        $this->offerPhoto = $this->product->offerPhoto;
     }
 
 
@@ -153,7 +155,6 @@ class EditProduct extends Component
         $this->product->price = str_replace(',', '', $this->product->price);
         $this->product->commercial_price = str_replace(',', '', $this->product->commercial_price);
         $this->product->serie_number = $this->serie_number;
-
         $this->product->save();
 
         $this->emit('saved');
@@ -226,10 +227,22 @@ class EditProduct extends Component
     public function modalImages()
     {
         $this->modalImages = !$this->modalImages;
-
+        $offer = $this->product->isOffer;
         if ($this->modalImages) {
-            $this->emit('showModalImages', $this->product->images);
+            $this->emit('showModalImages', $this->product->images, $this->offerPhoto, $offer);
         }
+    }
+
+    public function modalOferta(){
+        if($this->product->isOffer == 1)
+            $this->modalImages();
+    }
+
+    public function updateOfferPhoto($url){
+        $this->offerPhoto = $url;
+        $this->product->offerPhoto = $this->offerPhoto;
+        $this->product->save();
+        $this->modalImages = false;
     }
 
 
