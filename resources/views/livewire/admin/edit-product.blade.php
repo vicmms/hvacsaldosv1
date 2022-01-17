@@ -80,6 +80,11 @@
                     <div class="space-y-3 fs" wire:ignore>
                         {{-- se llena desde js --}}
                     </div>
+                    @if ($product->isOffer)
+                    <div class="text-center">
+                        <x-jet-button wire:click="$emit('setOfferPhoto')" wire:target="setOfferPhoto"><i class="fas fa-fire-alt"></i> Seleccionar esta foto para oferta</x-jet-button>
+                    </div>
+                    @endif
                 </x-slot>
 
                 <x-slot name="footer">
@@ -131,11 +136,16 @@
                 @role('admin')
                     {{-- is offer --}}
                     <div>
-                        <x-jet-label class="mr-4 text-sm bg-orange-500 rounded-xl font-semibold px-4 py-2 cursor-pointer">
-                            <x-jet-checkbox wire:model.defer="product.isOffer" name="types[]" value="1" />
-                            <span class="text-white mt-1 relative" style="top: 1px;">Marcar como oferta <i
-                                    class="fas fa-fire-alt"></i></span>
-                        </x-jet-label>
+                        <div class="flex items-center">
+                            <x-jet-action-message class="mr-4" on="setOfferPhoto">
+                                Actualizado!
+                            </x-jet-action-message>
+                            <x-jet-label class="mr-4 text-sm bg-orange-500 rounded-xl font-semibold px-4 py-2 cursor-pointer">
+                                <x-jet-checkbox wire:model="product.isOffer" name="types[]" value="1"  wire:click="modalOferta()"/>
+                                <span class="text-white mt-1 relative" style="top: 1px;">Marcar como oferta <i
+                                        class="fas fa-fire-alt"></i></span>
+                            </x-jet-label>
+                        </div>
                     </div>
                 @endrole
             </div>
@@ -341,10 +351,6 @@
             @endif
 
             <div class="flex justify-end items-center mt-4">
-
-                <x-jet-action-message class="mr-3" on="saved">
-                    Actualizado
-                </x-jet-action-message>
                 @role('admin|user')
                     <div class="flex-1">
                         <button class="font-semibold px-4 py-1 bg-gray-100 rounded-full" wire:click="$toggle('modalVendedor')">
@@ -353,6 +359,9 @@
                     </div>
 
                 @endrole
+                <x-jet-action-message class="mr-3" on="saved">
+                    Actualizado
+                </x-jet-action-message>
                 @if ($isRejected)
                     <x-jet-danger-button class="mr-4" wire:loading.attr="disabled" wire:target="save(true)"
                         wire:click="save(true)">
@@ -400,6 +409,8 @@
             </x-slot>
 
         </x-jet-dialog-modal>
+
+       
     </div>
 
     @push('script')
@@ -550,7 +561,7 @@
                 })
             })
 
-            Livewire.on('showModalImages', (images) => {
+            Livewire.on('showModalImages', (images, offerPhoto, offer) => {
                 $('.slides').empty();
                 $('.fs').empty();
                 $('.fs').append(
@@ -563,11 +574,20 @@
                     `
                 );
                 images.forEach(image => {
-                    $('.slides').append('<li><img src="/' + image['url'] + '" class="cover-image"></li>');
+                    if (image['url'] == offerPhoto && offer) {
+                        $('.slides').append('<li><span class="text-lg absolute"><i class="fas fa-fire-alt text-red-400"></i> Seleccionada</span><img src="/' + image['url'] + '" class="cover-image"><span class="hidden photoUrl">'+image['url']+'</span></li>');
+                    } else {
+                        $('.slides').append('<li><img src="/' + image['url'] + '" class="cover-image"><span class="hidden photoUrl">'+image['url']+'</span></li>');
+                    }
                 });
                 $('.flexslider').flexslider();
                 $('.flex-next').text('');
                 $('.flex-prev').text('');
+            });
+
+            Livewire.on('setOfferPhoto', () => {
+                url = $('.flex-active-slide .photoUrl').text();
+                Livewire.emit('updateOfferPhoto', url);
             });
 
             Livewire.on('company_info', () => {
