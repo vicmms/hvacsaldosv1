@@ -1,9 +1,9 @@
 <div class="container py-12">
 
-    <div class="flex mb-6">
+    {{-- <div class="flex mb-6">
         <button class="text-lg px-4 py-2 font-semibold rounded-sm {{$type==1 ? 'bg-orange-500 text-white' : ''}}" wire:click="$set('type',1)">Mis Compras</button>
         <button class="text-lg px-4 py-2 font-semibold rounded-sm {{$type==2 ? 'bg-orange-500 text-white' : ''}}" wire:click="$set('type',2)">Mis Ventas</button>
-    </div>
+    </div> --}}
 
     <section class="grid grid-cols-6 gap-6 text-white">
         <a href="{{ route('admin.orders.index') }}" class="bg-blue-500 bg-opacity-75 rounded-lg pt-8 pb-4">
