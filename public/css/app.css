@@ -1066,17 +1066,6 @@ select {
 .prose > :last-child {
 	margin-bottom: 0;
 }
-.sr-only {
-	position: absolute;
-	width: 1px;
-	height: 1px;
-	padding: 0;
-	margin: -1px;
-	overflow: hidden;
-	clip: rect(0, 0, 0, 0);
-	white-space: nowrap;
-	border-width: 0;
-}
 .pointer-events-none {
 	pointer-events: none;
 }
@@ -1619,6 +1608,9 @@ select {
 .items-center {
 	align-items: center;
 }
+.items-start {
+	align-items: flex-start;
+}
 .justify-between {
 	justify-content: space-between;
 }
@@ -1962,6 +1954,10 @@ select {
 .bg-gray-400 {
 	--tw-bg-opacity: 1;
 	background-color: rgba(156, 163, 175, var(--tw-bg-opacity));
+}
+.bg-orange-400 {
+	--tw-bg-opacity: 1;
+	background-color: rgba(251, 146, 60, var(--tw-bg-opacity));
 }
 .bg-blue-50 {
 	--tw-bg-opacity: 1;
@@ -2347,13 +2343,13 @@ select {
 	--tw-text-opacity: 1;
 	color: rgba(6, 95, 70, var(--tw-text-opacity));
 }
-.text-blue-900 {
-	--tw-text-opacity: 1;
-	color: rgba(30, 58, 138, var(--tw-text-opacity));
-}
 .text-red-400 {
 	--tw-text-opacity: 1;
 	color: rgba(248, 113, 113, var(--tw-text-opacity));
+}
+.text-blue-900 {
+	--tw-text-opacity: 1;
+	color: rgba(30, 58, 138, var(--tw-text-opacity));
 }
 .text-blue-600 {
 	--tw-text-opacity: 1;
