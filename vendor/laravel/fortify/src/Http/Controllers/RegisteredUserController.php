@@ -60,12 +60,13 @@ class RegisteredUserController extends Controller
     public function store(
         Request $request,
         CreatesNewUsers $creator
-    ): RegisterResponse {
+    )/*: RegisterResponse*/ {
         Role::firstOrCreate(['name' => 'user']);
         event(new Registered($user = $creator->create($request->all())));
 
         $this->guard->login($user);
 
-        return app(RegisterResponse::class);
+        // return app(RegisterResponse::class);
+        return redirect('user/profile');
     }
 }

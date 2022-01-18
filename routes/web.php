@@ -23,7 +23,7 @@ use Illuminate\Mail\Markdown;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('home/{country?}', WelcomeController::class);
-Route::get('/', WelcomeController::class);
+Route::get('/', WelcomeController::class)->name('home');
 
 Route::get('/mail', function(){
     $user = Auth::user();
