@@ -67,6 +67,6 @@ class RegisteredUserController extends Controller
         $this->guard->login($user);
 
         // return app(RegisterResponse::class);
-        return redirect('user/profile');
+        return redirect('user/profile/first-loging');
     }
 }
