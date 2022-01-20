@@ -38,6 +38,8 @@ Route::get('categories/{category}/{country?}', [CategoryController::class, 'show
 
 Route::get('offers/{country?}', [CategoryController::class, 'offers'])->name('offers');
 
+Route::get('seller products/{seller}', [CategoryController::class, 'getProductsBySeller'])->name('bySeller');
+
 Route::get('products/{product}', ShowProduct::class)->name('products.show');
 
 Route::get('shopping-cart', ShoppingCart::class)->name('shopping-cart');

@@ -1174,6 +1174,10 @@ select {
 	margin-top: 1rem;
 	margin-bottom: 1rem;
 }
+.my-5 {
+	margin-top: 1.25rem;
+	margin-bottom: 1.25rem;
+}
 .mx-1 {
 	margin-left: 0.25rem;
 	margin-right: 0.25rem;
@@ -2354,6 +2358,10 @@ select {
 .text-blue-600 {
 	--tw-text-opacity: 1;
 	color: rgba(37, 99, 235, var(--tw-text-opacity));
+}
+.text-yellow-600 {
+	--tw-text-opacity: 1;
+	color: rgba(217, 119, 6, var(--tw-text-opacity));
 }
 .text-yellow-400 {
 	--tw-text-opacity: 1;
