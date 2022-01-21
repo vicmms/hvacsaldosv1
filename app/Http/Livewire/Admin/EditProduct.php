@@ -240,8 +240,7 @@ class EditProduct extends Component
 
     public function updateOfferPhoto($url){
         $this->offerPhoto = $url;
-        $this->product->offerPhoto = $this->offerPhoto;
-        $this->product->save();
+        $this->product->update(['offerPhoto' => $this->offerPhoto]);
         $this->modalImages = false;
     }
 
