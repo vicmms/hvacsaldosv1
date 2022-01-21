@@ -4,6 +4,14 @@
             height: 550px !important;
             object-fit: contain;
         }
+        .flex-control-nav li {
+            border-right: 2px solid white;
+        }
+        .flex-control-nav li img{
+            width: 140px;
+            height: 100px;
+            object-fit: cover;
+        }
 
     </style>
     <div class="container py-8">
