@@ -17,11 +17,14 @@ use App\Http\Livewire\Admin\BrandComponent;
 use App\Http\Livewire\Admin\DepartmentComponent;
 use App\Http\Livewire\Admin\ShowDepartment;
 use App\Http\Livewire\Admin\CityComponent;
+use App\Http\Livewire\Admin\Dashboard;
 use App\Http\Livewire\Admin\Notifications;
 use App\Http\Livewire\Admin\Orders;
 use App\Http\Livewire\Admin\UserComponent;
 
-Route::get('/', ShowProducts::class)->name('admin.index');
+Route::get('/products', ShowProducts::class)->name('admin.index');
+
+Route::get('/dashboard', Dashboard::class)->name('admin.dashboard');
 
 Route::get('products/create', CreateProduct::class)->name('admin.products.create');
 

@@ -6,7 +6,7 @@
         </figure> --}}
 
 
-        @livewire('category-filter', ['category' => $category, 'country' => $country])
+        @livewire('category-filter', ['category' => $category , 'country' => $country, 'seller' => $seller])
 
     </div>
 

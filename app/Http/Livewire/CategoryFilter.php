@@ -16,7 +16,7 @@ class CategoryFilter extends Component
 {
     use WithPagination;
 
-    public $category, $subcategoria, $marca, $country, $pags = 0;
+    public $category, $subcategoria, $marca, $country, $pags = 0, $seller;
 
     public $view = "list";
 
@@ -74,6 +74,13 @@ class CategoryFilter extends Component
             ->where('status', 2)
             ->where('country_id', $country_id)
             ->where('isOffer', 1);
+
+            $brands = Brand::orderBy('name', 'asc')->get();
+        }else if($this->category == 'bySeller'){
+            $productsQuery = Product::join('states', 'states.id', '=', 'state_id')
+            ->select('products.*', 'states.country_id')
+            ->where('status', 2)
+            ->where('user_id', $this->seller->id);
 
             $brands = Brand::orderBy('name', 'asc')->get();
         }else {

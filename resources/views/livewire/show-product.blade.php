@@ -4,6 +4,14 @@
             height: 550px !important;
             object-fit: contain;
         }
+        .flex-control-nav li {
+            border-right: 2px solid white;
+        }
+        .flex-control-nav li img{
+            width: 140px;
+            height: 100px;
+            object-fit: cover;
+        }
 
     </style>
     <div class="container py-8">
@@ -83,9 +91,13 @@
                         @endif
                 </div>
 
-                <p class="text-xl font-semibold capitalize my-4">Ubicación:
-                    {{ $product->city . ', ' . $product->state->name }}
-                </p>
+                <div class="flex">
+                    <p class="text-xl font-semibold capitalize my-4 flex-1">
+                        <i class="fas fa-map-marker-alt text-red-500"></i> 
+                        {{ $product->city . ', ' . $product->state->name }}
+                    </p>
+                    <a href="{{route('bySeller', $product->user)}}" class="text-sm my-5 underline text-yellow-600">Más artículos del vendedor</a>
+                </div>
 
                 <div class="bg-white shadow-lg mb-6">
                     <p class="text-xl font-semibold text-gray-900 p-2">Envios Disponibles</p>
