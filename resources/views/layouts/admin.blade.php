@@ -77,9 +77,6 @@
     @stack('modals')
 
     @livewireScripts
-
-    @stack('script')
-
     <script>
         Livewire.on('errorSize', mensaje => {
             Swal.fire({
@@ -90,6 +87,10 @@
         });
     </script>
     <script src="{{asset('js/formatter.js')}}"></script>
+    {{-- charts --}}
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    @stack('script')
+
 
 </body>
 

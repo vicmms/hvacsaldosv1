@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\api\BrandController;
 use App\Http\Controllers\api\CategoryController;
 use Illuminate\Http\Request;
@@ -12,7 +13,7 @@ use App\Http\Controllers\api\AppInfoController;
 use App\Http\Controllers\api\NotificationController;
 use App\Http\Controllers\api\OrdersController;
 use App\Http\Controllers\api\ShippingController;
-use Illuminate\Routing\Router;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -66,6 +67,9 @@ Route::post('app/deleteVideo', [ShippingController::class, 'deleteVideo']);
 Route::post('app/getSalesById', [OrdersController::class, 'getSalesById']);
 Route::post('app/getPurchasesById', [OrdersController::class, 'getPurchasesById']);
 Route::post('app/getOrderById', [OrdersController::class, 'getOrderById']);
+
+// dashboard
+Route::post('getSalesData', [DashboardController::class, 'getSalesData']);
 
 //App info
 Route::post('/app/getReleaseCurrent', [AppInfoController::class, 'getReleaseCurrent']);
