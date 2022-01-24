@@ -41,7 +41,7 @@ function paintSalesChart(data){
             enabled: false
           },
         series: [{
-          name: 'Mes',
+          name: 'Ventas',
           data: data
         }],
         xaxis: {
