@@ -240,7 +240,9 @@ class EditProduct extends Component
 
     public function updateOfferPhoto($url){
         $this->offerPhoto = $url;
-        $this->product->update(['offerPhoto' => $this->offerPhoto]);
+        Product::where('id', $this->product->id)->update([
+            'offerPhoto' => $this->offerPhoto
+        ]);
         $this->modalImages = false;
     }
 
