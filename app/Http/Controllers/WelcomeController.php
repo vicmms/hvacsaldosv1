@@ -34,7 +34,7 @@ class WelcomeController extends Controller
 
         $categories = Category::all();
 
-        $ofertas = Product::where('isOffer', 1)->limit(3)->get();
+        $ofertas = Product::where('isOffer', 1)->limit(6)->get();
 
         return view('welcome', compact('categories', 'country', 'ofertas'));
     }

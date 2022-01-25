@@ -42,6 +42,15 @@ class CreateProduct extends Component
         'state_id' => 'required'
     ];
 
+    public function mount()
+    {
+        $this->categories = Category::all();
+        $this->user_id = Auth::user()->id;
+        $this->currencies = Currency::where('id', Auth::user()->country->currency_id)->orWhere('id', 2)->get(); //2 = USD
+        $this->envios = ["1"];
+        $this->state_id = Auth::user()->state_id ? Auth::user()->state_id : null;
+    }
+
     public function updatedCategoryId($value)
     {
         // $this->subcategories = Subcategory::where('category_id', $value)->get();
@@ -68,15 +77,6 @@ class CreateProduct extends Component
     {
         return Subcategory::find($this->subcategory_id);
     }
-
-    public function mount()
-    {
-        $this->categories = Category::all();
-        $this->user_id = Auth::user()->id;
-        $this->currencies = Currency::where('id', Auth::user()->country->currency_id)->orWhere('id', 2)->get(); //2 = USD
-        $this->envios = ["1"];
-    }
-
 
     public function save()
     {

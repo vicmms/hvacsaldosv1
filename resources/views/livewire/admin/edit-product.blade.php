@@ -138,7 +138,7 @@
                     <div>
                         <div class="flex items-center">
                             <x-jet-action-message class="mr-4" on="setOfferPhoto">
-                                Actualizado!
+                                Foto seleccionada!
                             </x-jet-action-message>
                             <x-jet-label class="mr-4 text-sm bg-orange-500 rounded-xl font-semibold px-4 py-2 cursor-pointer">
                                 <x-jet-checkbox wire:model="product.isOffer" name="types[]" value="1"  wire:click="modalOferta()"/>
