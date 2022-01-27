@@ -30,17 +30,17 @@ function paintSalesChart(data, type = '2') {
     labels = [];
     switch (type) {
         case '1':
-            labels = ["> Hace 2 semanas", "Hace 1 semana", "Última semana"];
+            labels = ["'  Hace 2 semanas", "Hace 1 semana", "Última semana"];
             $('#last_sales_label').text('Ventas en la última semana');
             $('#increase_label').text('La última semana');
             break;
         case '2':
-            labels = ["> Hace 2 meses", "Hace 1 mes", "Último mes"];
+            labels = ["'  Hace 2 meses", "Hace 1 mes", "Último mes"];
             $('#last_sales_label').text('Ventas en el último mes');
             $('#increase_label').text('El último mes');
             break;
         case '3':
-            labels = ["> Hace 2 años", "Hace 1 año", "Último año"];
+            labels = ["'  Hace 2 años", "Hace 1 año", "Último año"];
             $('#last_sales_label').text('Ventas en el último año');
             $('#increase_label').text('El último año');
             break;
