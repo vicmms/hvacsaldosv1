@@ -4,14 +4,18 @@ namespace App\Http\Livewire\Admin;
 
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\User;
+use Carbon\Carbon;
 use Livewire\Component;
 
 class Dashboard extends Component
 {
-    public $publishedProducts, $allProducts, $currencies_published, $all_sales;
+    public $publishedProducts, $allProducts, $currencies_published, $currencies_all, $totalSales, $newProducts, $newUsers, $filter, $increase;
     public $money_by_country_published = array(), $money_by_country_all = array();
 
-    public function mount(){
+    public function mount()
+    {
+        $days = 30;
         $this->publishedProducts = Product::where('status', '2')->where('currency_id', '<>', 0)->get();
         $this->allProducts = Product::where('currency_id', '<>', 0)->get();
 
@@ -20,15 +24,48 @@ class Dashboard extends Component
 
         foreach ($this->currencies_published as $currency) {
             $amount = Product::where('status', '2')->where('currency_id', $currency->currency_id)->sum('price');
-            array_push($this->money_by_country_published, (object)["currency" => $currency->currency->currency, "amount" => $amount]);
+            array_push($this->money_by_country_published, ["currency" => $currency->currency->currency, "amount" => $amount]);
         }
         foreach ($this->currencies_all as $currency) {
             $amount = Product::where('currency_id', $currency->currency_id)->sum('price');
-            array_push($this->money_by_country_all, (object)["currency" => $currency->currency->currency, "amount" => $amount]);
+            array_push($this->money_by_country_all, ["currency" => $currency->currency->currency, "amount" => $amount]);
         }
 
-        $this->all_sales = Order::where('status', 4)->get();
+        $this->totalSales = Order::where('status', 4)->get();
         // $this->allProducts = Product::groupBy('currency_id')->get();
+        $this->newProducts = Product::whereBetween('created_at', [Carbon::now()->subDays(30), Carbon::now()])->get();
+        $this->newUsers = User::whereBetween('created_at', [Carbon::now()->subDays(30), Carbon::now()])->get();
+        $this->filter = 2;
+
+        $m1 = Order::where('status', 4)->whereBetween('created_at', [Carbon::now()->subDays($days),Carbon::now()])->count();
+        $m2 = Order::where('status', 4)->whereBetween('created_at', [Carbon::now()->subDays($days*2),Carbon::now()->subDays($days)])->count();
+        $this->increase = $m2 != 0 ? $m1 * 100 / $m2 - 100 : 100;
+    }
+
+    public function updatedFilter()
+    {
+        switch ($this->filter) {
+            case '1':
+                $days = 7;
+                break;
+
+            case '2':
+                $days = 30;
+                break;
+
+            case '3':
+                $days = 365;
+                break;
+        }
+        $this->newProducts = Product::whereBetween('created_at', [Carbon::now()->subDays($days), Carbon::now()])->get();
+        $this->newUsers = User::whereBetween('created_at', [Carbon::now()->subDays($days), Carbon::now()])->get();
+        $m1 = Order::where('status', 4)->whereBetween('created_at', [Carbon::now()->subDays($days),Carbon::now()])->count();
+        $m2 = Order::where('status', 4)->whereBetween('created_at', [Carbon::now()->subDays($days*2),Carbon::now()->subDays($days)])->count();
+        $m3 = Order::where('status', 4)->whereBetween('created_at', [Carbon::now()->subDays($days*3),Carbon::now()->subDays($days*2)])->count();
+        $this->increase = $m2 != 0 ? $m1 * 100 / $m2 - 100 : 100;
+        // $data = json_encode([$m1, $m2, $m3]);
+        $data = [$m3, $m2, $m1];
+        $this->emit('repaintChart',$data, $this->filter);
     }
 
     public function render()
