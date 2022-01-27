@@ -35,24 +35,25 @@
             </div>
         </div>
         {{-- charts --}}
-        <div class="grid gap-7 sm:grid-cols-3 sm:grid-rows-3 mt-4">
+        <div class="grid gap-7 sm:grid-cols-3 sm:grid-rows-4 mt-4">
             <div class="p-5 bg-white rounded-md shadow-sm sm:col-span-2 sm:row-span-3">
                 <div class="text-2xl text-gray-400 flex">
                     <span class="flex-1">Total de Ventas</span>
                     <div class="text-xs flex self-center">
-                        <span class="flex items-center px-2 py-0.5 mx-2 text-green-600 bg-green-100 rounded-full">
-                            <i class="fas fa-sort-up"></i> 
-                            &nbsp;1.8%
+                        <span class="flex items-center px-2 py-0.5 mx-2 {{$increase > 0 ? 'text-green-600 bg-green-100' : 'text-red-600 bg-red-100'}}  rounded-full">
+                            <i class="fas {{$increase > 0 ? 'fa-sort-up' : 'fa-sort-down'}}"></i> 
+                            &nbsp;{{$increase}}%
                         </span>
-                        <span class="self-center">El último mes</span>
+                        <span class="self-center" id="increase_label"></span>
                     </div>
                 </div>
                 <div class="relative z-10 flex items-center pt-1">
                     <div class="text-2xl font-bold text-gray-900 ">{{count($totalSales)}}</div>
                 </div>
-                <div class="max-w-lg mx-auto pt-4">
+                <div class="max-w-lg mx-auto pt-4 text-center">
                     <div id="chart">
                     </div>
+                    <p class="text-md text-gray-500"><span id="last_sales_label"></span> <span class="font-semibold" id="last_sales"></span></p>
                 </div>
             </div>
             <div class="flex items-center justify-between p-5 bg-white rounded shadow-sm">
@@ -85,6 +86,7 @@
                 <i class="fas fa-user-plus text-orange-500 text-4xl"></i>
             </div>
         </div>
+        
     </div>
     @push('script')
         <script src="{{ asset('js/charts.js') }}"></script>

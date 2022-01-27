@@ -10,11 +10,12 @@ use Livewire\Component;
 
 class Dashboard extends Component
 {
-    public $publishedProducts, $allProducts, $currencies_published, $currencies_all, $totalSales, $newProducts, $newUsers, $filter;
+    public $publishedProducts, $allProducts, $currencies_published, $currencies_all, $totalSales, $newProducts, $newUsers, $filter, $increase;
     public $money_by_country_published = array(), $money_by_country_all = array();
 
     public function mount()
     {
+        $days = 30;
         $this->publishedProducts = Product::where('status', '2')->where('currency_id', '<>', 0)->get();
         $this->allProducts = Product::where('currency_id', '<>', 0)->get();
 
@@ -35,6 +36,10 @@ class Dashboard extends Component
         $this->newProducts = Product::whereBetween('created_at', [Carbon::now()->subDays(30), Carbon::now()])->get();
         $this->newUsers = User::whereBetween('created_at', [Carbon::now()->subDays(30), Carbon::now()])->get();
         $this->filter = 2;
+
+        $m1 = Order::where('status', 4)->whereBetween('created_at', [Carbon::now()->subDays($days),Carbon::now()])->count();
+        $m2 = Order::where('status', 4)->whereBetween('created_at', [Carbon::now()->subDays($days*2),Carbon::now()->subDays($days)])->count();
+        $this->increase = $m2 != 0 ? $m1 * 100 / $m2 - 100 : 100;
     }
 
     public function updatedFilter()
@@ -57,6 +62,7 @@ class Dashboard extends Component
         $m1 = Order::where('status', 4)->whereBetween('created_at', [Carbon::now()->subDays($days),Carbon::now()])->count();
         $m2 = Order::where('status', 4)->whereBetween('created_at', [Carbon::now()->subDays($days*2),Carbon::now()->subDays($days)])->count();
         $m3 = Order::where('status', 4)->whereBetween('created_at', [Carbon::now()->subDays($days*3),Carbon::now()->subDays($days*2)])->count();
+        $this->increase = $m2 != 0 ? $m1 * 100 / $m2 - 100 : 100;
         // $data = json_encode([$m1, $m2, $m3]);
         $data = [$m3, $m2, $m1];
         $this->emit('repaintChart',$data, $this->filter);
