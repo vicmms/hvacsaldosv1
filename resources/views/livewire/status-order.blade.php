@@ -117,7 +117,7 @@
                     </x-jet-action-message>
                     @if ($status != 5)
                         <x-jet-button class="mr-4" wire:click="update" wire:loading.attr="disabled"
-                            wire:target="status">
+                            wire:target="update">
                             Actualizar
                         </x-jet-button>
                     @else
@@ -342,8 +342,8 @@
             <x-jet-secondary-button wire:click="changeModalInfo()" wire:loading.attr="disabled">
                 Cerrar
             </x-jet-secondary-button>
-            <x-jet-button class="mr-4" wire:click="sendEmail();" wire:loading.attr="disabled"
-                wire:target="changeModalEmail">
+            <x-jet-button class="mr-4 {{$email_message ? '' : 'pointer-events-none opacity-50'}}" wire:click="sendEmail" wire:loading.attr="disabled"
+                wire:target="sendEmail">
                 Enviar
             </x-jet-button>
 
@@ -352,6 +352,19 @@
             </x-jet-danger-button> --}}
         </x-slot>
     </x-jet-dialog-modal>
+    <x-jet-action-message class="mr-3 font-semibold text-lg absolute right-0 top-8" on="emailSent">
+        <div class="bg-green-100 border-t-4 border-green-500 rounded-b text-green-900 px-4 py-3 shadow-md"
+            role="alert">
+            <div class="flex items-center">
+                <div class="py-1 mr-2">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="w-64">
+                    Email Enviado!
+                </div>
+            </div>
+        </div>
+    </x-jet-action-message>
 
     @push('script')
         <script>

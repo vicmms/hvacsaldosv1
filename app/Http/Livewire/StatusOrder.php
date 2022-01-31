@@ -200,10 +200,13 @@ class StatusOrder extends Component
     }
 
     public function sendEmail(){
-        $mail = new Contact($this->email_message);
+        if(strlen($this->email_message) > 0){
+            $mail = new Contact($this->email_message);
         $emails = array($this->receiver->email);
         Mail::to($emails)->send($mail);
         $this->changeModalEmail();
+        $this->emit('emailSent');
+        }
     }
 
     public function changeModal()
@@ -221,5 +224,6 @@ class StatusOrder extends Component
         if($type)
             $this->receiver = $type == 1 ? $this->buyer : $this->seller;
         $this->isOpenEmail = !$this->isOpenEmail;
+        $this->email_message = '';
     }
 }
