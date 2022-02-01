@@ -1,8 +1,8 @@
-<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<div class="max-w-5xl mx-auto px-2 sm:px-6 lg:px-8 py-12">
 
 
     @if ($order->status != 5)
-        <div class="bg-white rounded-lg shadow-lg px-12 py-8 mb-6 flex items-center">
+        <div class="bg-white rounded-lg shadow-lg px-6 md:px-12 py-8 mb-6 flex items-center">
 
             <div class="relative">
                 <div
@@ -176,7 +176,7 @@
             </a>
         </div>
         <hr>
-        <div class="flex">
+        <div class="md:flex">
             <div class="mr-[20%]">
                 <p class="my-4 text-lg font-semibold">
                     Información del Comprador <button wire:click="changeModalEmail(1)"
@@ -208,57 +208,61 @@
                 </div>
             </div>
         </div>
-        <table class="table-auto w-full">
-            <thead>
-                <tr>
-                    <th>Producto</th>
-                    <th>Precio unitario</th>
-                    <th>Cantidad</th>
-                    <th>Total</th>
-                    <th>Info</th>
-                </tr>
-            </thead>
+        <x-table-responsive>
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="tracking-wider" scope="col">Producto</th>
+                        <th class="tracking-wider whitespace-nowrap" scope="col">Precio unitario</th>
+                        <th class="tracking-wider" scope="col">Cantidad</th>
+                        <th class="tracking-wider" scope="col">Total</th>
+                        <th class="tracking-wider" scope="col">Info</th>
+                    </tr>
+                </thead>
 
-            <tbody class="divide-y divide-gray-200">
-                <td>
-                    <div class="flex">
-                        <img class="h-15 w-20 object-cover mr-4"
-                            src="{{ asset($items->options->image ? $items->options->image : 'images/image-not-found.png') }}"
-                            alt="">
-                        <article>
-                            <h1 class="font-bold">{{ $items->name }}</h1>
-                            <div class="flex text-xs">
+                <tbody class="divide-y divide-gray-200">
+                    <tr>
+                        <td class="sm:whitespace-nowrap py-4">
+                            <div class="sm:flex">
+                                <img class="hidden sm:block h-15 w-20 object-cover mr-4"
+                                    src="{{ asset($items->options->image ? $items->options->image : 'images/image-not-found.png') }}"
+                                    alt="">
+                                <article>
+                                    <h1 class="font-bold">{{ $items->name }}</h1>
+                                    <div class="flex text-xs">
 
-                                @isset($items->options->color)
-                                    Color: {{ __($items->options->color) }}
-                                @endisset
+                                        @isset($items->options->color)
+                                            Color: {{ __($items->options->color) }}
+                                        @endisset
 
-                                @isset($items->options->size)
-                                    - {{ $items->options->size }}
-                                @endisset
+                                        @isset($items->options->size)
+                                            - {{ $items->options->size }}
+                                        @endisset
+                                    </div>
+                                </article>
                             </div>
-                        </article>
-                    </div>
-                </td>
+                        </td>
 
-                <td class="text-center">
-                    {{ json_decode($order->content)->options->currency ? json_decode($order->content)->options->currency : '$' }}
-                    {{ number_format($items->price, 0, '.', ',') }}
-                </td>
+                        <td class="text-center whitespace-nowrap">
+                            {{ json_decode($order->content)->options->currency ? json_decode($order->content)->options->currency : '$' }}
+                            {{ number_format($items->price, 0, '.', ',') }}
+                        </td>
 
-                <td class="text-center">
-                    {{ $items->qty }}
-                </td>
+                        <td class="text-center whitespace-nowrap">
+                            {{ $items->qty }}
+                        </td>
 
-                <td class="text-center">
-                    {{ json_decode($order->content)->options->currency ? json_decode($order->content)->options->currency : '$' }}
-                    {{ number_format($items->price * $items->qty, 0, '.', ',') }}
-                </td>
-                <td class="text-center">
-                    <i class="fas fa-eye text-blue-900 cursor-pointer" wire:click="changeModalInfo()"></i>
-                </td>
-            </tbody>
-        </table>
+                        <td class="text-center whitespace-nowrap">
+                            {{ json_decode($order->content)->options->currency ? json_decode($order->content)->options->currency : '$' }}
+                            {{ number_format($items->price * $items->qty, 0, '.', ',') }}
+                        </td>
+                        <td class="text-center whitespace-nowrap">
+                            <i class="fas fa-eye text-blue-900 cursor-pointer" wire:click="changeModalInfo()"></i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </x-table-responsive>
     </div>
 
     <div class="bg-white rounded-lg shadow-lg p-6 text-gray-700 mb-6">
@@ -342,8 +346,8 @@
             <x-jet-secondary-button wire:click="changeModalInfo()" wire:loading.attr="disabled">
                 Cerrar
             </x-jet-secondary-button>
-            <x-jet-button class="mr-4 {{$email_message ? '' : 'pointer-events-none opacity-50'}}" wire:click="sendEmail" wire:loading.attr="disabled"
-                wire:target="sendEmail">
+            <x-jet-button class="mr-4 {{ $email_message ? '' : 'pointer-events-none opacity-50' }}"
+                wire:click="sendEmail" wire:loading.attr="disabled" wire:target="sendEmail">
                 Enviar
             </x-jet-button>
 
@@ -352,7 +356,7 @@
             </x-jet-danger-button> --}}
         </x-slot>
     </x-jet-dialog-modal>
-    <x-jet-action-message class="mr-3 font-semibold text-lg absolute right-0 top-8" on="emailSent">
+    <x-jet-action-message class="mr-3 font-semibold text-lg fixed right-0 top-8" on="emailSent">
         <div class="bg-green-100 border-t-4 border-green-500 rounded-b text-green-900 px-4 py-3 shadow-md"
             role="alert">
             <div class="flex items-center">

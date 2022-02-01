@@ -423,7 +423,7 @@
                 dictDefaultMessage: "Da clic o arrastra imagenes al recuadro, máximo 4.",
                 acceptedFiles: 'image/jpg, image/png, image/jpeg', //, video/mp4
                 paramName: "file", // The name that will be used to transfer the file
-                maxFilesize: 5, // MB
+                maxFilesize: 10, // MB
                 init: function() {
                     this.on("addedfiles", function(listFiles) {
                         errorMessage = false;

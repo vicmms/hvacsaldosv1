@@ -98,7 +98,7 @@
             </div>
         </div>
 
-        {{-- menu mobil --}}
+        {{-- menu movil --}}
         <div class="bg-white h-full overflow-y-auto md:hidden relative" style="z-index: 1000;">
 
             <div class="container bg-gray-200 py-3 mb-2 relative">
@@ -114,7 +114,7 @@
                 Ir a ofertas
             </a>
             <h5 class="text-gray-400 px-6 my-2">CATEGORÍAS</h5>
-            <ul class="max-h-96 overflow-y-scroll">
+            <ul class="max-h-96 ">
                 @foreach ($categories as $category)
                     <li class="text-trueGray-500 hover:bg-orange-500 hover:text-white ml-2">
                         <a href="{{ route('categories.show', $category) }}"
