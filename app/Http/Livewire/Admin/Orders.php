@@ -8,7 +8,7 @@ use Livewire\Component;
 
 class Orders extends Component
 {
-    public $type;
+    public $type, $status, $filter_orders;
 
     public function mount(){
         $this->type = 2;
@@ -18,10 +18,22 @@ class Orders extends Component
         $this->type = $value;
     }
 
+    public function updateStatus($value = null){
+        $this->status = $value;
+    }
+
+    public function updatedFilterOrders(){
+        $this->updateStatus($this->filter_orders);
+    }
+
     public function render()
     {
         // $id = $this->type == 2 ? "seller_id" : "user_id";
         $orders = Order::query()->where('status', '<>', 1);
+
+        if ($this->status) {
+            $orders->where('status', $this->status);
+        }
 
         if (request('status')) {
             $orders->where('status', request('status'));

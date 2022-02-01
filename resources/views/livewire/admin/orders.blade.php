@@ -5,7 +5,7 @@
         <button class="text-lg px-4 py-2 font-semibold rounded-sm {{$type==2 ? 'bg-orange-500 text-white' : ''}}" wire:click="$set('type',2)">Mis Ventas</button>
     </div> --}}
 
-    <section class="grid grid-cols-6 gap-6 text-white">
+    <section class="hidden md:grid grid-cols-6 gap-6 text-white">
         <a href="{{ route('admin.orders.index') }}" class="bg-blue-500 bg-opacity-75 rounded-lg pt-8 pb-4">
             <p class="text-center text-2xl">
                 {{ $todos }}
@@ -71,16 +71,37 @@
             </p>
         </a>
     </section>
+    {{-- movil --}}
+    <section class="md:hidden">
+        <span class="text-xl font-semibold">Mostrar: </span>
+        <select name="" id="" class="form-control" wire:model="filter_orders">
+            <option value="">Todos</option>
+            <option value="2">Solicitudes</option>
+            <option value="3">Pagados</option>
+            <option value="6">En camino</option>
+            <option value="4">Entregados</option>
+            <option value="5">Cancelados</option>
+        </select>
+        {{-- <button wire:click="updateStatus()" class="bg-blue-500 bg-opacity-75 rounded-lg pt-8 pb-4">
+            <p class="text-center text-2xl">
+                {{ $todos }}
+            </p>
+            <p class="uppercase text-center">Todos</p>
+            <p class="text-center text-2xl mt-2">
+                <i class="fas fa-business-time"></i>
+            </p>
+        </button> --}}
+    </section>
 
     @if ($orders->count())
 
-        <section class="bg-white shadow-lg rounded-lg px-12 py-8 mt-12 text-gray-700">
+        <section class="bg-white shadow-lg rounded-lg px-4 md:px-12 py-8 mt-12 text-gray-700">
             <h1 class="text-2xl mb-4">Pedidos recientes</h1>
             <ul>
                 @foreach ($orders as $order)
-                    <li>
+                    <li class="flex items-center py-2 md:px-4">
                         <a href="{{ route('admin.orders.show', $order) }}"
-                            class="flex items-center py-2 px-4 hover:bg-gray-100 {{ count(Auth::user()->roles->pluck('name')) ? '' : 'pointer-events-none' }}">
+                            class="flex flex-1 items-center py-2 md:px-4 hover:bg-gray-100 {{ count(Auth::user()->roles->pluck('name')) ? '' : 'pointer-events-none' }}">
                             <span class="w-12 text-center">
                                 @switch($order->status)
                                     @case(1)
