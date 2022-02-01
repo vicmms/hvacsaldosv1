@@ -22,7 +22,7 @@
                         Califica al vendedor
                     </x-jet-label>
 
-                    <div class="rating rating2">
+                    <div class="rating rating2 text-xl">
                         @if (!$stars)
                         <a class="star" href="#5" wire:click="setStars(5)" title="Give 5 stars">★</a>
                         <a class="star" href="#4" wire:click="setStars(4)" title="Give 4 stars">★</a>

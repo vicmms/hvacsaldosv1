@@ -18,6 +18,10 @@ class Orders extends Component
         $this->status = $value;
     }
 
+    public function updatedFilterOrders(){
+        $this->updateStatus($this->filter_orders);
+    }
+
     public function render()
     {
         $id = $this->type == 2 ? "seller_id" : "user_id";

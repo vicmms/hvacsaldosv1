@@ -3,8 +3,8 @@
         <button class="text-lg px-4 py-2 font-semibold rounded-sm {{$type==1 ? 'bg-orange-500 text-white' : ''}}" wire:click="updateType(1)">Mis Compras</button>
         <button class="text-lg px-4 py-2 font-semibold rounded-sm {{$type==2 ? 'bg-orange-500 text-white' : ''}}" wire:click="updateType(2)">Mis Ventas</button>
     </div>
-
-    <section class="grid grid-cols-6 gap-6 text-white">
+    {{-- web --}}
+    <section class="md:grid grid-cols-6 gap-6 text-white hidden">
         <button wire:click="updateStatus()" class="bg-blue-500 bg-opacity-75 rounded-lg pt-8 pb-4">
             <p class="text-center text-2xl">
                 {{ $todos }}
@@ -65,17 +65,37 @@
             </p>
         </button>
     </section>
+    {{-- movil --}}
+    <section class="md:hidden">
+        <select name="" id="" class="form-control" wire:model="filter_orders">
+            <option value="">Todos</option>
+            <option value="2">Solicitudes</option>
+            <option value="3">Pagados</option>
+            <option value="6">En camino</option>
+            <option value="4">Entregados</option>
+            <option value="5">Cancelados</option>
+        </select>
+        {{-- <button wire:click="updateStatus()" class="bg-blue-500 bg-opacity-75 rounded-lg pt-8 pb-4">
+            <p class="text-center text-2xl">
+                {{ $todos }}
+            </p>
+            <p class="uppercase text-center">Todos</p>
+            <p class="text-center text-2xl mt-2">
+                <i class="fas fa-business-time"></i>
+            </p>
+        </button> --}}
+    </section>
     
     @if ($orders->count())
 
-        <section class="bg-white shadow-lg rounded-lg px-12 py-8 mt-12 text-gray-700">
+        <section class="bg-white shadow-lg rounded-lg px-2 md:px-12 py-8 mt-12 text-gray-700">
             <h1 class="text-2xl mb-4">Pedidos recientes</h1>
 
             <ul>
                 @foreach ($orders as $order)
-                    <li class="flex items-center py-2 px-4">
+                    <li class="flex items-center py-2 md:px-4">
                         <a href="{{ route('orders.show', $order) }}"
-                            class="flex flex-1 items-center py-2 px-4 hover:bg-gray-100">
+                            class="flex flex-1 items-center py-2 md:px-4 hover:bg-gray-100">
                             <span class="w-12 text-center">
                                 @switch($order->status)
                                     @case(1)
@@ -92,6 +112,9 @@
                                     @break
                                     @case(5)
                                         <i class="fas fa-times-circle text-red-500 opacity-50"></i>
+                                    @break
+                                    @case(6)
+                                        <i class="fas fa-truck text-orange-500 opacity-50"></i>
                                     @break
                                     @default
 
@@ -131,6 +154,15 @@
                                         @case(5)
 
                                             Cancelado
+
+                                        @break@case(5)
+
+                                            Cancelado
+
+                                        @break
+                                        @case(6)
+
+                                            En camino
 
                                         @break
                                         @default
