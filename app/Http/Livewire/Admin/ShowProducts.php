@@ -42,7 +42,18 @@ class ShowProducts extends Component
         if ($role == 'admin') {
             $products = Product::join('users', 'users.id', '=', 'user_id')
                 ->select('products.*', 'users.name as username')
-                ->where('products.status', $condicion, $valor)
+                // ->where('products.status', $condicion, $valor)
+                ->where(function($query){
+                    if($this->status){
+                        $condicion = '=';
+                        $valor = $this->status;
+                    }else{
+                        $condicion = '<>';
+                        $valor = 4;
+                    }
+                    $query->where('user_id', Auth::user()->id)
+                          ->orWhere('products.status', $condicion, $valor);
+                })
                 ->where(function($query){
                     $query->where('products.name', 'LIKE', '%'.$this->search.'%')
                           ->orWhere('users.name', 'LIKE', '%'.$this->search.'%');
