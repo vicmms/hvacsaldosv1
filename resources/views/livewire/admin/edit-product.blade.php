@@ -105,7 +105,7 @@
         @endif
 
         <div class="bg-white shadow-xl rounded-lg p-6">
-            <div class="flex justify-between">
+            <div class="sm:flex justify-between">
                 @switch($product->status)
                     @case(1)
                         <span
@@ -135,7 +135,7 @@
                 @endswitch
                 @role('admin')
                     {{-- is offer --}}
-                    <div>
+                    <div class="mb-4 sm:mb-0">
                         <div class="flex items-center">
                             <x-jet-action-message class="mr-4" on="setOfferPhoto">
                                 Foto seleccionada!
@@ -149,7 +149,7 @@
                     </div>
                 @endrole
             </div>
-            <div class="grid grid-cols-2 gap-6 mb-4 {{ $disabled }}">
+            <div class="grid sm:grid-cols-2 gap-6 mb-4 {{ $disabled }}">
 
                 {{-- Categoría --}}
                 <div>
@@ -197,7 +197,7 @@
                 <x-jet-input-error for="slug" />
             </div>
 
-            <div class="grid grid-cols-3 gap-6 mb-4 {{ $disabled }}">
+            <div class="grid sm:grid-cols-3 gap-6 mb-4 {{ $disabled }}">
 
                 {{-- Marca --}}
                 <div>
@@ -228,7 +228,7 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-3 gap-6 mb-4 {{ $disabled }}">
+            <div class="grid sm:grid-cols-3 gap-6 mb-4 {{ $disabled }}">
                 {{-- Precio --}}
                 <div>
                     <x-jet-label value="Precio en Saldo HVAC (iva incluido)*" />
@@ -281,7 +281,7 @@
 
                 {{-- Envio disponible --}}
                 <x-jet-label value="Envio disponible*" />
-                <div class="flex my-2">
+                <div class="sm:flex my-2">
                     <x-jet-label class="mr-4 text-base">
                         <x-jet-checkbox wire:key="1" wire:model.defer="product.shipping" name="" value="1" />Envío a
                         cargo del
@@ -302,7 +302,7 @@
                 <x-jet-input-error for="product.shipping" />
             </div>
 
-            <div class="grid grid-cols-2 gap-6 mb-4 {{ $disabled }}">
+            <div class="grid sm:grid-cols-2 gap-6 mb-4 {{ $disabled }}">
                 {{-- Pais / estado --}}
                 <div>
                     <x-jet-label value="Selecciona un estado ({{ $user->country->name }})*" />
@@ -350,7 +350,7 @@
                     del producto es necesario retirarlo primero de la plataforma.</p>
             @endif
 
-            <div class="flex justify-end items-center mt-4">
+            <div class="sm:flex justify-end items-center mt-4 space-y-2">
                 @role('admin|user')
                     <div class="flex-1">
                         <button class="font-semibold px-4 py-1 bg-gray-100 rounded-full" wire:click="$toggle('modalVendedor')">

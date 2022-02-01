@@ -1,7 +1,7 @@
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-gray-700">
 
     <h1 class="text-3xl text-center font-semibold mb-8">Complete esta información para crear un producto</h1>
-    <div class="grid grid-cols-2 gap-6 mb-4">
+    <div class="grid sm:grid-cols-2 gap-6 mb-4">
 
         {{-- Categoría --}}
         <div>
@@ -48,7 +48,7 @@
         <x-jet-input-error for="slug" />
     </div>
 
-    <div class="grid grid-cols-3 gap-6 mb-4">
+    <div class="grid sm:grid-cols-3 gap-6 mb-4">
         {{-- marca --}}
         <div>
             <x-jet-label value="Marca*" />
@@ -79,7 +79,7 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-3 gap-6 mb-4">
+    <div class="grid sm:grid-cols-3 gap-6 mb-4">
         {{-- Precio --}}
         <div>
             <x-jet-label value="Precio en Saldo HVAC (iva incluido)*" />
@@ -143,7 +143,7 @@
        
     </div>
 
-    <div class="grid grid-cols-2 gap-6 mb-4">
+    <div class="grid sm:grid-cols-2 gap-6 mb-4">
         {{-- Pais / estado --}}
         <div>
             <x-jet-label value="Selecciona un estado ({{ $user->country->name }})*" />

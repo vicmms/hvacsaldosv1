@@ -67,6 +67,7 @@
     </section>
     {{-- movil --}}
     <section class="md:hidden">
+        <span class="text-xl font-semibold">Mostrar: </span>
         <select name="" id="" class="form-control" wire:model="filter_orders">
             <option value="">Todos</option>
             <option value="2">Solicitudes</option>

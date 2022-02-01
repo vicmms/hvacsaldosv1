@@ -15,28 +15,32 @@
     <!-- This example requires Tailwind CSS v2.0+ -->
     <div class="container py-12">
 
-        <x-table-responsive>
-
-            <div class="px-6 py-4 grid grid-cols-4">
-                <div class="flex">
-                    <h2 class="self-center font-semibold mr-2">Status: </h2>
-                    <select name="" id="" class="form-control" wire:model.lazy="status">
-                        <option value="0" selected wire:key="0">Todos</option>
-                        <option value="1" wire:key="1">En revisión</option>
-                        <option value="2" wire:key="2">Aceptados</option>
-                        <option value="3" wire:key="3">Rechazados</option>
-                    </select>
-                </div>
-                <div class="col-span-3">
-                    <x-jet-input type="text" wire:model="search" class="w-full" placeholder="Buscar..." />
-                </div>
+        <div class="px-6 py-4 grid md:grid-cols-4">
+            <div class="flex mb-4 md:mb-0">
+                <h2 class="self-center font-semibold mr-2">Status: </h2>
+                <select name="" id="" class="form-control" wire:model.lazy="status">
+                    <option value="0" selected wire:key="0">Todos</option>
+                    <option value="1" wire:key="1">En revisión</option>
+                    <option value="2" wire:key="2">Aceptados</option>
+                    <option value="3" wire:key="3">Rechazados</option>
+                </select>
             </div>
+            <div class="col-span-3">
+                <x-jet-input type="text" wire:model="search" class="w-full" placeholder="Buscar..." />
+            </div>
+        </div>
+
+        <x-table-responsive>
 
             @if ($products->count())
 
                 <table class="min-w-full divide-y divide-gray-200" id="showProducts">
                     <thead class="bg-gray-50">
                         <tr>
+                            <th scope="col"
+                                class="md:hidden px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Acciones
+                            </th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Nombre
@@ -66,7 +70,7 @@
                                 Fecha
                             </th>
                             <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                class="hidden md:block px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Acciones
                             </th>
                         </tr>
@@ -75,6 +79,12 @@
 
                         @foreach ($products as $product)
                             <tr>
+                                <td class="md:hidden px-4 py-4 whitespace-nowrap text-center text-sm font-medium">
+                                    <a href="{{ route('admin.products.edit', $product) }}"
+                                        class="text-gray-400 hover:text-indigo-600"><i class="fas fa-pen"></i></a>
+                                    <i class="fas fa-trash text-red-400 hover:text-red-600 ml-2 cursor-pointer"
+                                        wire:click="$emit('deleteProduct', {{ $product }})"></i>
+                                </td>
                                 <td class="px-4 py-4 whitespace-nowrap">
                                     <div class="flex items-center">
                                         <div class="flex-shrink-0 h-10 w-10">
@@ -151,7 +161,7 @@
                                 <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">
                                     {{ explode(' ', $product->created_at)[0] }}
                                 </td>
-                                <td class="px-4 py-4 whitespace-nowrap text-center text-sm font-medium">
+                                <td class="hidden md:block px-4 py-4 whitespace-nowrap text-center text-sm font-medium">
                                     <a href="{{ route('admin.products.edit', $product) }}"
                                         class="text-gray-400 hover:text-indigo-600"><i class="fas fa-pen"></i></a>
                                     <i class="fas fa-trash text-red-400 hover:text-red-600 ml-2 cursor-pointer"
