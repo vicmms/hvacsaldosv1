@@ -6,7 +6,7 @@
     </div> --}}
 
     <section class="hidden md:grid grid-cols-6 gap-6 text-white">
-        <a href="{{ route('admin.orders.index') }}" class="bg-blue-500 bg-opacity-75 rounded-lg pt-8 pb-4">
+        <a wire:click="updateStatus()"  class="bg-blue-500 bg-opacity-75 rounded-lg pt-8 pb-4 cursor-pointer">
             <p class="text-center text-2xl">
                 {{ $todos }}
             </p>
@@ -16,8 +16,8 @@
             </p>
         </a>
 
-        <a href="{{ route('admin.orders.index') . '?status=2' }}"
-            class="bg-gray-500 bg-opacity-75 rounded-lg pt-8 pb-4">
+        <a wire:click="updateStatus(2)" 
+            class="bg-gray-500 bg-opacity-75 rounded-lg pt-8 pb-4 cursor-pointer">
             <p class="text-center text-2xl">
                 {{ $solicitudes }}
             </p>
@@ -27,8 +27,8 @@
             </p>
         </a>
 
-        <a href="{{ route('admin.orders.index') . '?status=3' }}"
-            class="bg-yellow-500 bg-opacity-75 rounded-lg pt-8 pb-4">
+        <a  wire:click="updateStatus(3)" 
+            class="bg-yellow-500 bg-opacity-75 rounded-lg pt-8 pb-4 cursor-pointer">
             <p class="text-center text-2xl">
                 {{ $pagados }}
             </p>
@@ -38,8 +38,8 @@
             </p>
         </a>
 
-        <a href="{{ route('admin.orders.index') . '?status=6' }}"
-            class="bg-orange-500 bg-opacity-75 rounded-lg pt-8 pb-4">
+        <a wire:click="updateStatus(6)" 
+            class="bg-orange-500 bg-opacity-75 rounded-lg pt-8 pb-4 cursor-pointer">
             <p class="text-center text-2xl">
                 {{ $camino }}
             </p>
@@ -49,8 +49,8 @@
             </p>
         </a>
 
-        <a href="{{ route('admin.orders.index') . '?status=4' }}"
-            class="bg-green-500 bg-opacity-75 rounded-lg pt-8 pb-4">
+        <a wire:click="updateStatus(4)" 
+            class="bg-green-500 bg-opacity-75 rounded-lg pt-8 pb-4 cursor-pointer">
             <p class="text-center text-2xl">
                 {{ $entregados }}
             </p>
@@ -60,8 +60,8 @@
             </p>
         </a>
 
-        <a href="{{ route('admin.orders.index') . '?status=5' }}"
-            class=" bg-red-500 bg-opacity-75 rounded-lg pt-8 pb-4">
+        <a wire:click="updateStatus(5)" 
+            class=" bg-red-500 bg-opacity-75 rounded-lg pt-8 pb-4 cursor-pointer">
             <p class="text-center text-2xl">
                 {{ $cancelados }}
             </p>
@@ -82,7 +82,7 @@
             <option value="4">Entregados</option>
             <option value="5">Cancelados</option>
         </select>
-        {{-- <button wire:click="updateStatus()" class="bg-blue-500 bg-opacity-75 rounded-lg pt-8 pb-4">
+        {{-- <button wire:click="updateStatus()" class="bg-blue-500 bg-opacity-75 rounded-lg pt-8 pb-4 cursor-pointer">
             <p class="text-center text-2xl">
                 {{ $todos }}
             </p>

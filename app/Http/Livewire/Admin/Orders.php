@@ -34,7 +34,7 @@ class Orders extends Component
         if ($this->status) {
             $orders->where('status', $this->status);
         }
-
+        
         if (request('status')) {
             $orders->where('status', request('status'));
         }
@@ -43,7 +43,11 @@ class Orders extends Component
         if($role_name){
             switch ($role_name) {
                 case 'admin':
-                    
+                    $solicitudes = Order::where('status', 2)->count();
+                    $pagados = Order::where('status', 3)->count();
+                    $entregados = Order::where('status', 4)->count();
+                    $cancelados = Order::where('status', 5)->count();
+                    $camino = Order::where('status', 6)->count();
                     break;
                 case 'user':
                     $orders->where('country_id', Auth::user()->country->id);
@@ -55,15 +59,16 @@ class Orders extends Component
             }
         }else{
             $orders->where('user_id', Auth::user()->id);
+            $solicitudes = Order::where('status', 2)->where('user_id', Auth::user()->id)->count();
+            $pagados = Order::where('status', 3)->where('user_id', Auth::user()->id)->count();
+            $entregados = Order::where('status', 4)->where('user_id', Auth::user()->id)->count();
+            $cancelados = Order::where('status', 5)->where('user_id', Auth::user()->id)->count();
+            $camino = Order::where('status', 6)->where('user_id', Auth::user()->id)->count();
         }
 
         $orders = $orders->orderBy('created_at', 'desc')->get();
 
-        $solicitudes = $orders->where('status', 2)->count();
-        $pagados = $orders->where('status', 3)->count();
-        $entregados = $orders->where('status', 4)->count();
-        $cancelados = $orders->where('status', 5)->count();
-        $camino = $orders->where('status', 6)->count();
+        
         $todos = $solicitudes + $pagados + $entregados + $camino + $cancelados;
 
         return view('livewire.admin.orders', compact('solicitudes', 'pagados', 'entregados', 'cancelados', 'camino', 'todos', 'orders'))->layout('layouts.admin');
